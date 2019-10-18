@@ -10,7 +10,7 @@ class Login
 
         //Effetuate the login if appened a post request of it.
         if (isset($_POST['login'])) {
-          
+
         }
 
     }

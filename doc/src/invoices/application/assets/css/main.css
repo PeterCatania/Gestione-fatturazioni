@@ -1,0 +1,14 @@
+body {
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.very-small {
+  font-size: 0.7rem;
+}
+
+.personalized-card {
+  width: 18rem;
+  margin-top: 10%;
+}
