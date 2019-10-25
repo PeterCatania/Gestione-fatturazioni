@@ -1,0 +1,39 @@
+body {
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #B4CFEC;
+}
+
+.very-small {
+  font-size: 0.7rem;
+}
+
+.personalized-card {
+  width: 25rem;
+  margin-top: 10%;
+}
+
+@media (min-width: 576px) {
+  .mt-sm-8{margin-top: 3rem;}
+}
+
+.input-group-prepend {
+  text-transform: capitalize;
+}
+
+.input-group-append {
+  background-color: #ccc;
+  border-top-right-radius: 5px;
+}
+
+.input-group-append,
+.form-control {
+  border-radius: 5px;
+}
+
+hr{
+  border: 0;
+  height: 1px;
+  color:
+}

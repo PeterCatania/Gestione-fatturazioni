@@ -1,10 +1,15 @@
 <?php
+/**
+ * @author Peter Catania
+ * @version 22.10.2019
+ */
 
-// carico il file di configurazione
-require 'application/config/config.php';
+// Import the config file
+require 'app/config/config.php';
 
-// carico le classi dell'applicazione
-require 'application/libs/application.php';
+// Import the application main classes
+require_once 'app/core/App.php';
+require_once 'app/core/Controller.php';
 
-// faccio partire l'applicazione
-$app = new Application();
+// Start the application
+$app = new App;

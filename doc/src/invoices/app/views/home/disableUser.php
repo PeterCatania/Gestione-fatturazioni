@@ -14,7 +14,7 @@
 	<!-- Navbar CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL?>navbar.css">
 
-	<title>Registrazione</title>
+	<title>Accesso</title>
 </head>
 
 <body class="bg-light">
@@ -72,34 +72,14 @@
     <div class="row justify-content-center align-self-center">
 			<div class="card center personalized-card">
 			  <div class="card-body">
-
-					<h2 class="mb-4">Accedi<h2>
-
-					<form method="POST" action="<?php echo URL?>login/logIn">
-            <div class="form-group mb-3">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="username">
-            </div>
-            <div class="form-group mb-3">
-              <label for="username">Email</label>
-              <input type="mail" class="form-control" id="email" placeholder="email">
-            </div>
-            
-						<div class="input-group mb-3">
-						  <div class="input-group-prepend">
-						    <span class="input-group-text" id="username">@</span>
-						  </div>
-						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
-						</div>
-						<div class="input-group mb-2">
-						  <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password">
-						</div>
-            <div class="input-group mb-2">
-						  <input type="password" class="form-control" placeholder="Conferma Password" aria-label="Conferma Password" aria-describedby=" Conferma Password">
-						</div>
-						<p class="form-control-static very-small mb-3">Non sei registrato? <a class="text-primary" href="<?php echo URL; ?>registration">Crea un account</a></p>
-					  <button type="submit" class="btn btn-primary">Login</button>
-					</form>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Attenzione!</h4>
+            <p>L’accesso non può essere effettuato, perché questo utente non è ancora stato abilitato.<br><hr>
+Per contattare l’amministratore si prega di inviare un email all’indirizzo: <strong>administrator@email.com</strong></p>
+            <a class="close"  aria-label="Close" href="<?=URL?>home/index">
+              <span >&times;</span>
+            </a>
+          </div>
 			  </div>
 			</div>
 		</div>

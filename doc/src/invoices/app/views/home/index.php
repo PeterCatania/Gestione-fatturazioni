@@ -75,18 +75,15 @@
 
 					<h2 class="mb-4">Accedi<h2>
 
-					<form method="POST" action="<?php echo URL?>login/logIn">
+					<form method="POST" action="<?php echo URL?>home/login" autocomplete="on">
 						<div class="input-group mb-3">
-						  <div class="input-group-prepend">
-						    <span class="input-group-text" id="username">@</span>
-						  </div>
-						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+						  <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
 						</div>
 						<div class="input-group mb-2">
-						  <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password">
+						  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password">
 						</div>
-						<p class="form-control-static very-small mb-3">Non sei registrato? <a class="text-primary" href="<?php echo URL; ?>registration.php">Crea un account</a></p>
-					  <button type="submit" class="btn btn-primary">Login</button>
+						<p class="form-control-static very-small mb-3">Non sei registrato? <a class="text-primary" href="<?=URL?>registration/index">Crea un account</a></p>
+					  <button type="submit" name="login" class="btn btn-primary">Login</button>
 					</form>
 			  </div>
 			</div>
