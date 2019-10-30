@@ -6,13 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Login CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL?>main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>main.css">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo BOOTSTRAP_URL?>css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BOOTSTRAP_URL; ?>css/bootstrap.min.css">
 	<!-- Font Awesome JS  -->
-	<link rel="stylesheet" type="text/css" href="<?php echo FONTAWESOME_URL?>css/all.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo FONTAWESOME_URL; ?>css/all.css">
 	<!-- Navbar CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL?>navbar.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>navbar.css">
 
 	<title>Accesso</title>
 </head>
@@ -90,14 +90,14 @@
 	</footer>
 
 	<!-- jQuery -->
-	<script src="<?php echo JQUERY_URL?>"></script>
+	<script src="<?php echo JQUERY_URL; ?>"></script>
 	<!-- Popper -->
-	<script src="<?php echo POPPER_URL?>"></script>
+	<script src="<?php echo POPPER_URL; ?>"></script>
 	<!-- Login JS -->
-	<script src="<?php echo JS_URL?>login.js"></script>
+	<script src="<?php echo JS_URL; ?>login.js"></script>
 	<!-- Bootstrap JS -->
-	<script src="<?php print BOOTSTRAP_URL?>js/bootstrap.min.js"></script>
+	<script src="<?php print BOOTSTRAP_URL; ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->
-	<script src="<?php echo FONTAWESOME_URL?>js/all.js"></script>
+	<script src="<?php echo FONTAWESOME_URL; ?>js/all.js"></script>
 </body>
 </html>

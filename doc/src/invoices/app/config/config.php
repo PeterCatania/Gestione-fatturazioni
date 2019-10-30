@@ -28,21 +28,21 @@ define('ROOT', '/invoices/app/');
  *
  * Depends on URL of the site
  */
-define('CSS_URL', ROOT.'assets/css/');
+define('CSS_URL', ROOT . 'assets/css/');
 
 /**
  * JS Files URL
  *
  * Depends on URL of the site
  */
-define('JS_URL', ROOT.'assets/js/');
+define('JS_URL', ROOT . 'assets/js/');
 
 /**
  * Vendor files URL
  *
  * Depends on URL of the site
  */
-define('VENDOR_URL', ROOT.'assets/vendor/');
+define('VENDOR_URL', ROOT . 'assets/vendor/');
 
 /**
  * jQuery URL
@@ -51,7 +51,7 @@ define('VENDOR_URL', ROOT.'assets/vendor/');
  * Depends on VENDER_URL
  * @link https://jquery.com
  */
-define('JQUERY_URL', VENDOR_URL.'jquery/jquery-3.4.1.min.js');
+define('JQUERY_URL', VENDOR_URL . 'jquery/jquery-3.4.1.min.js');
 
 /**
  * Popper URL
@@ -60,7 +60,7 @@ define('JQUERY_URL', VENDOR_URL.'jquery/jquery-3.4.1.min.js');
  * Depends on VENDER_URL
  * @link https://popper.js.org
  */
-define('POPPER_URL', VENDOR_URL.'popper/popper.min.js');
+define('POPPER_URL', VENDOR_URL . 'popper/popper.min.js');
 
 /**
  * Font Awesome files URL
@@ -69,7 +69,7 @@ define('POPPER_URL', VENDOR_URL.'popper/popper.min.js');
  * Depends on VENDER_URL
  * @link https://fontawesome.com
  */
-define('FONTAWESOME_URL', VENDOR_URL.'fontawesome/5.11.2/');
+define('FONTAWESOME_URL', VENDOR_URL . 'fontawesome/5.11.2/');
 
 /**
  * Bootstrap files URL
@@ -78,9 +78,7 @@ define('FONTAWESOME_URL', VENDOR_URL.'fontawesome/5.11.2/');
  * Depends on VENDER_URL
  * @link https://getbootstrap.com
  */
-define('BOOTSTRAP_URL', VENDOR_URL.'bootstrap/4.3.1/');
-
-
+define('BOOTSTRAP_URL', VENDOR_URL . 'bootstrap/4.3.1/');
 
 /**
  * Define the constants of the Database
