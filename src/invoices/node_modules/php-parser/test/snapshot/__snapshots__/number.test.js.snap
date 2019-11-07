@@ -1,0 +1,379 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test numbers test common cases 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "1.5",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1234",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "9223372036854775807",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "9223372036854775808",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0x1A",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0xFF",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "e",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0b1011",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0123",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "g",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1.2e3",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "h",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "7E-10",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test numbers test common cases 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Number {
+        "kind": "number",
+        "value": "1234",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test numbers test edge cases 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Identifier {
+        "kind": "identifier",
+        "name": ClassReference {
+          "kind": "classreference",
+          "name": "xx",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Identifier {
+        "kind": "identifier",
+        "name": ClassReference {
+          "kind": "classreference",
+          "name": "b2",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "01239",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "7",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Identifier {
+          "kind": "identifier",
+          "name": ClassReference {
+            "kind": "classreference",
+            "name": "E",
+            "resolution": "uqn",
+          },
+        },
+        "right": Identifier {
+          "kind": "identifier",
+          "name": ClassReference {
+            "kind": "classreference",
+            "name": "a",
+            "resolution": "uqn",
+          },
+        },
+        "type": "-",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "e",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "7",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Identifier {
+        "kind": "identifier",
+        "name": ClassReference {
+          "kind": "classreference",
+          "name": "EX",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected 'xx' (T_STRING), expecting ';' on line 2",
+      "token": "'xx' (T_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'b2' (T_STRING), expecting ';' on line 3",
+      "token": "'b2' (T_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 5,
+      "message": "Parse Error : syntax error, unexpected 'E' (T_STRING), expecting ';' on line 5",
+      "token": "'E' (T_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 6,
+      "message": "Parse Error : syntax error, unexpected 'EX' (T_STRING), expecting ';' on line 6",
+      "token": "'EX' (T_STRING)",
+    },
+  ],
+  "kind": "program",
+}
+`;

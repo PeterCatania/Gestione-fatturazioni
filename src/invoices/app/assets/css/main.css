@@ -1,5 +1,4 @@
 body {
-	font-size: 1rem;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-style: normal;
 	font-variant: normal;
@@ -17,8 +16,6 @@ h7 {
 }
 
 p,
-blockquote,
-pre,
 span {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
@@ -27,7 +24,6 @@ span {
 hr {
 	border: 0;
 	height: 1px;
-	color: ;
 }
 
 .btn {

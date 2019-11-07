@@ -1,0 +1,19 @@
+#Prevents access to  MVC important folders like "App",
+#this is very important for security
+Options -Indexes
+
+# With this you can name every page "index.php" just "index"
+Options -MultiViews
+RewriteEngine On
+
+# Allows you to pinpoint the index.php files,
+# we want to call on the "RewriteRule"
+RewriteBase /Gestione-fatturazioni/src/invoices/
+
+# If the condition is true, it will rewrite directory, file, link
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+# Provides the App class to take the url string
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

@@ -16,7 +16,7 @@ ini_set("display_errors", 1);
 /**
  * Define the URL of the site
  */
-define('URL', 'http://localhost/invoices/');
+define('URL', 'http://localhost/Gestione-fatturazioni/src/invoices/');
 
 /**
  * Define the ROTT of the site
@@ -86,3 +86,10 @@ define('BOOTSTRAP_URL', VENDOR_URL . 'bootstrap/4.3.1/');
 define('MYSQLUSER', 'peter');
 define('MYSQLPASS', 'Password&1');
 define('DSN', 'mysql:dbname=invoices;host=127.0.0.1');
+
+/**
+ * Define the CSS classes, that indicate that a input is valid or invalid.
+ * This classes show the messages contained in the HTML.
+ */
+define('VALID','is-valid');
+define('INVALID','is-invalid');
