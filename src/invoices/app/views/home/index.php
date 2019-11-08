@@ -6,16 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=BOOTSTRAP_URL?>css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= BOOTSTRAP_URL ?>css/bootstrap.min.css">
 	<!-- Font Awesome JS  -->
-	<link rel="stylesheet" type="text/css" href="<?=FONTAWESOME_URL?>css/all.css">
+	<link rel="stylesheet" type="text/css" href="<?= FONTAWESOME_URL ?>css/all.css">
 	<!-- Navbar CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=CSS_URL?>navbar.css">
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>navbar.css">
 	<!-- Main CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=CSS_URL?>main.css">
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 
 	<!-- Favicon -->
-	<link rel="icon" href="<?=ROOT?>assets/img/favicon.png"/>
+	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
 
 	<title>Accesso</title>
 </head>
@@ -85,14 +85,12 @@
 	</footer>
 
 	<!-- jQuery -->
-	<script src="<?=JQUERY_URL?>"></script>
+	<script src="<?= JQUERY_URL ?>"></script>
 	<!-- Popper -->
-	<script src="<?=POPPER_URL?>"></script>
-	<!-- Login JS -->
-	<script src="<?=JS_URL?>login.js"></script>
+	<script src="<?= POPPER_URL ?>"></script>
 	<!-- Bootstrap JS -->
-	<script src="<?=BOOTSTRAP_URL?>js/bootstrap.min.js"></script>
+	<script src="<?= BOOTSTRAP_URL ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->
-	<script src="<?=FONTAWESOME_URL?>js/all.js"></script>
+	<script src="<?= FONTAWESOME_URL ?>js/all.js"></script>
 </body>
 </html>

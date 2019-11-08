@@ -20,7 +20,7 @@
 <body class="bg-light">
 	<div class"container">
 		<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
-			<a class="navbar-brand" href="<?=URL?>home/index">Accesso</a>
+			<a class="navbar-brand" href="<?= URL ?>home/index">Accesso</a>
 			<button class="navbar-toggler"
 							type="button"
 							data-toggle="collapse"
@@ -64,8 +64,6 @@ Per contattare l’amministratore si prega di inviare un email all’indirizzo: 
 	<script src="<?php echo JQUERY_URL; ?>"></script>
 	<!-- Popper -->
 	<script src="<?php echo POPPER_URL; ?>"></script>
-	<!-- Login JS -->
-	<script src="<?php echo JS_URL; ?>login.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="<?php print BOOTSTRAP_URL; ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->

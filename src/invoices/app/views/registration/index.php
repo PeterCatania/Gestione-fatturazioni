@@ -6,16 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=BOOTSTRAP_URL?>css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= BOOTSTRAP_URL ?>css/bootstrap.min.css">
 	<!-- Font Awesome JS  -->
-	<link rel="stylesheet" type="text/css" href="<?=FONTAWESOME_URL?>css/all.css">
+	<link rel="stylesheet" type="text/css" href="<?= FONTAWESOME_URL ?>css/all.css">
 	<!-- Navbar CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=CSS_URL?>navbar.css">
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>navbar.css">
 	<!-- Main CSS -->
-	<link rel="stylesheet" type="text/css" href="<?=CSS_URL?>main.css">
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 
 	<!-- Favicon -->
-	<link rel="icon" href="<?=ROOT?>assets/img/favicon.png"/>
+	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
 
 	<title>Registrazione</title>
 </head>
@@ -51,8 +51,13 @@
 							<div class="row">
 								<div class="col-md-5">
 		            	<div class="form-group mb-3">
-			              <label for="username" class="mb-n1"><p class="h4">Nome Utente <?=$data['usernameCSSValidityClass']?></p></label>
-			              <input name="username" type="text" class="form-control mt-1 shadow-sm " required>
+			              <label for="username" class="mb-n1"><p class="h4">Nome Utente</p></label>
+			              <input
+											name="username"
+											type="text"
+											class="form-control mt-1 shadow-sm
+												<?= $_SESSION['usernameCSSValidityClass'] ?>"
+											value="<?= $_SESSION['username'] ?>">
 										<div class="invalid-feedback very-small">
 						        	Inserire un nome utente
 						        </div>
@@ -61,7 +66,12 @@
 								<div class="col-md-7">
 			            <div class="form-group mb-3">
 			              <label for="email" class="mb-n1"><p class="h4">Email</p></label>
-			              <input name="email" type="mail" class="form-control mt-1 shadow-sm" required>
+			              <input
+											name="email"
+											type="mail"
+											class="form-control mt-1 shadow-sm
+												<?= $_SESSION['emailCSSValidityClass'] ?>"
+											value="<?= $_SESSION['email'] ?>">
 										<div class="invalid-feedback very-small">
 						        	Inserire un email
 						        </div>
@@ -73,7 +83,12 @@
 								<div class="col-md-6">
 									<div class="form-group mb-3">
 										<label for="password" class="mb-n1"><p class="h4">Password</p></label>
-									  <input name="password" type="password" class="form-control mt-1 shadow-sm" required>
+									  <input
+											name="password"
+											type="password"
+											class="form-control mt-1 shadow-sm
+												<?= $_SESSION['passwordCSSValidityClass'] ?>"
+												value="<?= $_SESSION['password'] ?>">
 										<div class="invalid-feedback very-small">
 						        	Inserire una password
 						        </div>
@@ -82,7 +97,12 @@
 								<div class="col-md-6">
 			            <div class="form-group mb-3">
 										<label for="confirmedPassword" class="mb-n1"><p class="h4">Conferma Password</p></label>
-									  <input name="confirmedPassword" type="password" class="form-control mt-1 shadow-sm" required>
+									  <input
+											name="confirmedPassword"
+											type="password"
+											class="form-control mt-1 shadow-sm
+												<?= $_SESSION['confirmedPasswordCSSValidityClass'] ?>"
+												value="<?= $_SESSION['confirmedPassword'] ?>">
 										<div class="invalid-feedback very-small">
 						        	Inserire la stessa password
 						        </div>
@@ -109,14 +129,12 @@
 	</footer>
 
 	<!-- jQuery -->
-	<script src="<?=JQUERY_URL?>"></script>
+	<script src="<?= JQUERY_URL ?>"></script>
 	<!-- Popper -->
-	<script src="<?=POPPER_URL?>"></script>
-	<!-- Login JS -->
-	<script src="<?=JS_URL?>login.js"></script>
+	<script src="<?= POPPER_URL ?>"></script>
 	<!-- Bootstrap JS -->
-	<script src="<?=BOOTSTRAP_URL?>js/bootstrap.min.js"></script>
+	<script src="<?= BOOTSTRAP_URL ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->
-	<script src="<?=FONTAWESOME_URL?>js/all.js"></script>
+	<script src="<?= FONTAWESOME_URL ?>js/all.js"></script>
 </body>
 </html>

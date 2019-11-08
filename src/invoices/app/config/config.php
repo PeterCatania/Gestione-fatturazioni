@@ -91,5 +91,5 @@ define('DSN', 'mysql:dbname=invoices;host=127.0.0.1');
  * Define the CSS classes, that indicate that a input is valid or invalid.
  * This classes show the messages contained in the HTML.
  */
-define('VALID','is-valid');
-define('INVALID','is-invalid');
+define('VALID', 'is-valid');
+define('INVALID', 'is-invalid');
