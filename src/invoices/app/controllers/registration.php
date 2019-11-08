@@ -138,7 +138,7 @@ class Registration extends Controller
 				unset($_SESSION['confirmedPasswordCSSValidityClass']);
 
 				// return to the login form
-				$this->view('login/index');
+				$this->view('home/index');
 			}
 		}
 	}

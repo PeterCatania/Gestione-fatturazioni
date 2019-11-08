@@ -21,23 +21,23 @@
 </head>
 
 <body class="bg-light">
-	<div class"container">
-		<!-- Navigation bar -->
-		<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
-			<a class="navbar-brand" href="#">Accesso</a>
-			<button class="navbar-toggler"
-							type="button"
-							data-toggle="collapse"
-							data-target="#navbarSupportedContent"
-							aria-controls="navbarSupportedContent"
-							aria-expanded="false"
-							aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			</div>
-		</nav>
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
+		<a class="navbar-brand" href="#">Accesso</a>
+		<button class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		</div>
+	</nav>
 
-		<!-- Login Card -->
+	<!-- Login Card -->
+	<div class"container">
 		<div class="row d-flex justify-content-center mt-sm-6">
 	    <div class="col-md-6 col-xl-4">
 				<div class="card card-primary">
@@ -73,7 +73,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<!-- Footer -->

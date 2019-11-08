@@ -89,6 +89,6 @@ class Validator
 	{
 		$validEmail = $this->generalValidation($email);
 		filter_var($validEmail, FILTER_VALIDATE_EMAIL);
-		return $validEmail;
+		return strtolower($validEmail);
 	}
 }

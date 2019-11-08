@@ -5,87 +5,111 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Login CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>main.css">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo BOOTSTRAP_URL; ?>css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= BOOTSTRAP_URL ?>css/bootstrap.min.css">
 	<!-- Font Awesome JS  -->
-	<link rel="stylesheet" type="text/css" href="<?php echo FONTAWESOME_URL; ?>css/all.css">
+	<link rel="stylesheet" type="text/css" href="<?= FONTAWESOME_URL ?>css/all.css">
 	<!-- Navbar CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>navbar.css">
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>navbar.css">
+	<!-- Main CSS -->
+	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 
-	<title>Accesso</title>
+	<!-- Favicon -->
+	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
+
+	<title>Fatture</title>
 </head>
 
 <body class="bg-light">
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
+		<a class="navbar-brand" href="#">Fatture</a>
+		<button class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="far fa-address-card"></i>
+						Clienti
+						<span class="badge badge-danger"></span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="fas fa-cubes"></i>
+						Prodotti
+						<span class="badge badge-warning"></span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="fas fa-user-friends"></i>
+						Utenti
+						<span class="badge badge-warning"></span>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+	<!-- Invoices Card -->
 	<div class"container">
-		<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-			<button class="navbar-toggler"
-							type="button"
-							data-toggle="collapse"
-							data-target="#navbarSupportedContent"
-							aria-controls="navbarSupportedContent"
-							aria-expanded="false"
-							aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+		<div class="row d-flex justify-content-center mt-sm-6">
+	    <div class="col-md-11 col-xl-10">
+				<div class="card card-primary">
+				  <div class="card-body">
+						<!-- Login Form Title-->
+						<h2 class="card-title">Fatture<h2>
+						<hr class="bg-dark mt-n1">
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-
-					<li class="nav-item active">
-						<a class="nav-link" href="#">
-							<i class="fa fa-file-invoice"></i>
-							Fatture
-							<span class="sr-only">(current)</span>
-						</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="far fa-address-card"></i>
-							Clienti
-							<span class="badge badge-danger"></span>
-						</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-cubes"></i>
-							Prodotti
-							<span class="badge badge-warning"></span>
-						</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-user-friends"></i>
-							Utenti
-							<span class="badge badge-warning"></span>
-						</a>
-					</li>
-
-				</ul>
-			</div>
-		</nav>
-
-    <div class="row justify-content-center align-self-center">
-			<div class="card center personalized-card">
-			  <div class="card-body">
-
-					<h2 class="mb-4">Fatture<h2>
-
-			  </div>
+						<!-- List of products -->
+					  <table class="table table-striped mt-md-4 mt-2">
+					    <thead class="thead-dark">
+					      <tr>
+					        <th scope="col">Descrizione</th>
+					        <th scope="col">Prezzo</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>Legna da ardere per il camino</td>
+					        <td>200 CHF</td>
+					      </tr>
+					      <tr>
+					        <td>Sega con motore a fusione nuclueare over 9000</td>
+					        <td>20 000 CHF</td>
+					      </tr>
+					      <tr>
+					        <td>Lavabo industriale per la cucina di tomas</td>
+					        <td>500 CHF</td>
+					      </tr>
+					    </tbody>
+					  </table>
+						
+				  </div>
+				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<!-- Footer -->
-	<footer class="page-footer fixed-bottom font-small ">
+	<footer class="page-footer fixed-bottom font-small bg-dark">
 		<!-- Copyright -->
-		<div class="footer-copyright text-center py-3">© 2019 Copyright:
-			<a href="#">Invoices</a>
+		<div class="footer-copyright text-center py-1 text-secondary">© 2019 Copyright:
+			<a class="text-info active no-underline" href="#">Invoices</a>
 		</div>
 	</footer>
 
