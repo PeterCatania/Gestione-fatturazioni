@@ -10,8 +10,8 @@ class Controller
 	/**
 	 * Import and return an istance of a Model.
 	 *
-	 * @param $model The Model to import
-	 * @return $model The instance of the Model imported
+	 * @param model The Model to import
+	 * @return The instance of the Model imported
 	 */
 	public function model($model)
 	{
@@ -24,11 +24,20 @@ class Controller
 	 *
 	 * @param view The view to import
 	 * @param view The data that is needed for the view
-	 * @return void
 	 */
 	public function view($view, $data = [])
 	{
 		require 'app/views/' . $view . '.php';
+	}
+
+	/**
+	 * Redirect to a page that is related with the given controller, and the method.
+	 */
+	private function redirectToPage(
+		$controller = DEFAULT_CONTROLLER,
+		$method = DEFAULT_METHOD
+	) {
+		header("Location: " . URL . $controller . "/" . $method);
 	}
 
 	/**
@@ -47,7 +56,7 @@ class Controller
 	public function redirectToHomePageIfAnyoneIsLogged()
 	{
 		if (!$this->existsLoginSessionData()) {
-			header("Location: " . URL . "home/index");
+			$this->redirectToPage();
 		}
 	}
 
@@ -60,9 +69,10 @@ class Controller
 	{
 		if (
 			isset($_SESSION[USER_SESSION_DATA]) ||
+			empty($_SESSION[USER_SESSION_DATA]) ||
 			!$this->existsLoginSessionData()
 		) {
-			header("Location: " . URL . "home/index");
+			$this->redirectToPage();
 		}
 	}
 }

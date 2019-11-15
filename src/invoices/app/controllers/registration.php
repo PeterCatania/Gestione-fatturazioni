@@ -127,15 +127,8 @@ class Registration extends Controller
 				// insert the user data in the database
 				$registrationModel->insertUser($username, $password, $email);
 
-				// unset the no longer needed var, memoraised in the Session
-				unset($_SESSION['username']);
-				unset($_SESSION['email']);
-				unset($_SESSION['password']);
-				unset($_SESSION['confirmedPassword']);
-				unset($_SESSION['usernameCSSValidityClass']);
-				unset($_SESSION['emailCSSValidityClass']);
-				unset($_SESSION['passwordCSSValidityClass']);
-				unset($_SESSION['confirmedPasswordCSSValidityClass']);
+				// reset the session
+				$_SESSION = array();
 
 				// return to the login form
 				$this->view('home/index');

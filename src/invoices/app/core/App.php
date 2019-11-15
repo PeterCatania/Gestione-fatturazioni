@@ -12,13 +12,13 @@ class App
 	 * The controller parsed fro the URL,
 	 * (Default = "login")
 	 */
-	protected $controller = 'home';
+	protected $controller = DEFAULT_CONTROLLER;
 
 	/**
 	 * The method parsed from the URL
 	 * (Default = "index")
 	 */
-	protected $method = 'index';
+	protected $method = DEFAULT_METHOD;
 
 	/**
 	 * The params parsed from the URL

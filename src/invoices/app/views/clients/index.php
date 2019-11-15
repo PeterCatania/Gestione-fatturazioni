@@ -72,7 +72,7 @@
 				<div class="card card-primary">
 				  <div class="card-body">
 						<!-- Login Form Title-->
-						<h2 class="card-title">Clienti<h2>
+						<h2 class="card-title">Clienti</h2>
 						<hr class="bg-dark mt-n1">
 
 				  </div>

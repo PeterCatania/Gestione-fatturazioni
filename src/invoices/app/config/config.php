@@ -88,6 +88,12 @@ define('MYSQLPASS', 'Password&1');
 define('DSN', 'mysql:dbname=invoices;host=127.0.0.1');
 
 /**
+ * Define the default controller and method
+ */
+define('DEFAULT_CONTROLLER', 'home');
+define('DEFAULT_METHOD', 'index');
+
+/**
  * Define the CSS classes, that indicate that a input is valid or invalid.
  * This classes show the messages contained in the HTML.
  */

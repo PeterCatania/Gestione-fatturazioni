@@ -19,8 +19,25 @@ class Home extends Controller
 	 */
 	public function index()
 	{
+		// The username and the email of the registration form,
+		// They will bee printed in their corrispective fields
+		$_SESSION['username'] = '';
+		$_SESSION['password'] = '';
+
+		/**
+		 * Contains names of CSS classes.
+		 * This classes indicate if the registration inputs are valid or invalid.
+		 * If the input is valid contains: "is-valid"
+		 * If the input is not valid contains: "is-invalid"
+		 * This variable indicate if the username or the password are valid or not.
+		 */
+		$_SESSION['usernameOrPasswordCSSValidityClass'] = '';
+
 		// require the default page
 		$this->view('home/index');
+
+		echo "User: ";
+		print_r($_SESSION[USER_SESSION_DATA]);
 	}
 
 	/**
@@ -35,9 +52,15 @@ class Home extends Controller
 			$this->model('Validator');
 			$validator = new Validator();
 
-			// get the validated username, and the hash of the password, from login form
+			// get the validated username, from login form
 			$username = $validator->validateString($_POST['username']);
+
+			// get the hash of the password, from login form
 			$password = hash('sha256', $_POST['password']);
+
+			// the getted field from the registration form are inserted in the Session
+			$_SESSION['username'] = $username;
+			$_SESSION['password'] = $_POST['password'];
 
 			// Import the LoginModel Model class, and inizialize a new istance.
 			$this->model('LoginModel');
@@ -57,9 +80,12 @@ class Home extends Controller
 				// save the user login data in the session
 				$_SESSION[USER_SESSION_DATA] = $user;
 
+				// check if the user is enabled or not
 				if ($user['enabled'] == 0) {
+					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
 					$this->view('home/disableUser');
 				} else {
+					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
 					$this->view('invoices/index');
 				}
 			} else {
@@ -77,8 +103,11 @@ class Home extends Controller
 					// save the administrator data in the session
 					$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administator;
 
+					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
 					$this->view('invoices/index');
 				} else {
+					$_SESSION['usernameOrPasswordCSSValidityClass'] = INVALID;
+					$this->view('home/index');
 				}
 			}
 		}
@@ -92,7 +121,7 @@ class Home extends Controller
 		// unset all saved session variables
 		$_SESSION = array();
 
-		// require the default page
-		$this->view('home/index');
+		// redirect to the default page
+		header("Location: " . URL . "home/index");
 	}
 }

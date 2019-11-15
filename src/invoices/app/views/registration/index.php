@@ -43,7 +43,7 @@
 				<div class="card card-primary">
 				  <div class="card-body">
 						<!-- Registration Form Title-->
-						<h2 class="mb-4">Registrati<h2>
+						<h2 class="mb-4">Registrati</h2>
 						<hr class="bg-dark mt-n1">
 						<!-- Registration Form -->
 						<form method="POST" action="<?php echo URL; ?>registration/register">

@@ -43,7 +43,7 @@
 				<div class="card card-primary">
 				  <div class="card-body">
 						<!-- Login Form Title-->
-						<h2 class="card-title">Accedi<h2>
+						<h2 class="card-title">Accedi</h2>
 						<hr class="bg-dark mt-n1">
 						<!-- Login Form -->
 						<form method="POST" action="<?php echo URL; ?>home/login" autocomplete="on">
@@ -51,8 +51,17 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group mb-3">
-										<label for="username" class="mb-n1"><p class="h4">Username</p></label>
-									  <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+										<label for="username" class="mb-n1">
+											<p class="h4">Nome Utente</p>
+										</label>
+									  <input
+											type="text"
+											name="username"
+											value="<?= $_SESSION['username'] ?>"
+											class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>"
+											placeholder="Username"
+											aria-label="Username"
+											aria-describedby="Username">
 									</div>
 								</div>
 							</div>
@@ -60,14 +69,33 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group mb-3">
-										<label for="password" class="mb-n1"><p class="h4">Password</p></label>
-									  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="Password">
+										<label for="password" class="mb-n1">
+											<p class="h4">Password</p>
+										</label>
+									  <input
+											type="password"
+											name="password"
+											value="<?= $_SESSION['password'] ?>"
+											class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>"
+											placeholder="Password"
+											aria-label="Password"
+											aria-describedby="Password">
+										<div class="invalid-feedback very-small">
+						         Nome utente o password non corretti.
+						        </div>
 									</div>
 								</div>
 							</div>
 							<!-- Submit -->
-							<p class="form-control-static very-small mb-3">Non sei registrato? <a class="text-primary" href="<?= URL ?>registration/index">Crea un account</a></p>
-						  <button type="submit" name="login" class="btn btn-primary">Login</button>
+							<p class="form-control-static very-small mb-3">
+								Non sei registrato?
+								<a class="text-primary" href="<?= URL ?>registration/index">
+									Crea un account
+								</a>
+							</p>
+						  <button type="submit" name="login" class="btn btn-primary">
+								Login
+							</button>
 						</form>
 				  </div>
 				</div>
@@ -78,7 +106,8 @@
 	<!-- Footer -->
 	<footer class="page-footer fixed-bottom font-small bg-dark">
 		<!-- Copyright -->
-		<div class="footer-copyright text-center py-1 text-secondary">© 2019 Copyright:
+		<div class="footer-copyright text-center py-1 text-secondary">
+			© 2019 Copyright:
 			<a class="text-info active no-underline" href="#">Invoices</a>
 		</div>
 	</footer>
