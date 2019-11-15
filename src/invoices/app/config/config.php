@@ -93,3 +93,8 @@ define('DSN', 'mysql:dbname=invoices;host=127.0.0.1');
  */
 define('VALID', 'is-valid');
 define('INVALID', 'is-invalid');
+
+// the session variable name, that contains the login data of a User
+define('USER_SESSION_DATA', 'user');
+// the session variable name, that contains the login data of the Administrator
+define('ADMINISTRATOR_SESSION_DATA', 'is-invalid');

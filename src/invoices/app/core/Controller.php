@@ -13,7 +13,7 @@ class Controller
 	 * @param $model The Model to import
 	 * @return $model The instance of the Model imported
 	 */
-	protected function model($model)
+	public function model($model)
 	{
 		require_once 'app/models/' . $model . '.php';
 		return new $model();
@@ -26,8 +26,43 @@ class Controller
 	 * @param view The data that is needed for the view
 	 * @return void
 	 */
-	protected function view($view, $data = [])
+	public function view($view, $data = [])
 	{
 		require 'app/views/' . $view . '.php';
+	}
+
+	/**
+	 * Check if the login data of a user or of the administrator
+	 * is saved in the session.
+	 */
+	private function existsLoginSessionData()
+	{
+		return isset($_SESSION[USER_SESSION_DATA]) ||
+			isset($_SESSION[ADMINISTRATOR_SESSION_DATA]);
+	}
+
+	/**
+	 * Redirect to the home page, if the login is not been effectuated by anyone.
+	 */
+	public function redirectToHomePageIfAnyoneIsLogged()
+	{
+		if (!$this->existsLoginSessionData()) {
+			header("Location: " . URL . "home/index");
+		}
+	}
+
+	/**
+	 * Redirect to the home page, if is logged a user or anyone.
+	 *
+	 * @param session The current session saved on the server.
+	 */
+	public function redirectToHomePageIfUserOrAnyoneIsLogged()
+	{
+		if (
+			isset($_SESSION[USER_SESSION_DATA]) ||
+			!$this->existsLoginSessionData()
+		) {
+			header("Location: " . URL . "home/index");
+		}
 	}
 }

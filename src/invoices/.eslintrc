@@ -20,6 +20,20 @@
 		"one-var-declaration-per-line": ["error", "always"],
 		"one-var": ["error", { "var": "always", "let": "never", "const": "never" }],
 		"eslint array-element-newline": ["error", "consistent"],
-		"spaced-comment": ["error", "always"]
+		"spaced-comment": ["error", "always"],
+		"key-spacing": [
+			2,
+			{
+				"singleLine": {
+					"beforeColon": true,
+					"afterColon": true
+				},
+				"multiLine": {
+					"beforeColon": true,
+					"afterColon": true,
+					"align": "colon"
+				}
+			}
+		]
 	}
 }

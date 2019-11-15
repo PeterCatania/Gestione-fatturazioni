@@ -19,6 +19,7 @@ class Home extends Controller
 	 */
 	public function index()
 	{
+		// require the default page
 		$this->view('home/index');
 	}
 
@@ -53,8 +54,8 @@ class Home extends Controller
 				// get the first array, in this case is our user
 				$user = $user[0];
 
-				// save the user data in the session
-				$_SESSION['user'] = $user;
+				// save the user login data in the session
+				$_SESSION[USER_SESSION_DATA] = $user;
 
 				if ($user['enabled'] == 0) {
 					$this->view('home/disableUser');
@@ -70,16 +71,28 @@ class Home extends Controller
 
 				// if the query have find the administrator with the login credentials
 				if ($administator) {
-					// get the first array, in this case is our user
+					// get the first array, in this case is the administrator
 					$administator = $administator[0];
 
 					// save the administrator data in the session
-					$_SESSION['administrator'] = $administator;
+					$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administator;
 
-					$this->view('registration/index');
+					$this->view('invoices/index');
 				} else {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Effetuate the logout
+	 */
+	public function logout()
+	{
+		// unset all saved session variables
+		$_SESSION = array();
+
+		// require the default page
+		$this->view('home/index');
 	}
 }

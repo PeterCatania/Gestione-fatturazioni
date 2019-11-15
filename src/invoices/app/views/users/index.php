@@ -17,13 +17,13 @@
 	<!-- Favicon -->
 	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
 
-	<title>Fatture</title>
+	<title>Utenti</title>
 </head>
 
 <body class="bg-light">
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
-		<a class="navbar-brand" href="#">Fatture</a>
+		<a class="navbar-brand" href="#">Utenti</a>
 		<button class="navbar-toggler"
 						type="button"
 						data-toggle="collapse"
@@ -38,10 +38,10 @@
 			<ul class="navbar-nav mr-auto">
 
 				<li class="nav-item">
-					<a class="nav-link" href="<?= URL ?>clients/index">
-						<i class="far fa-address-card"></i>
-						Clienti
-						<span class="badge badge-danger"></span>
+					<a class="nav-link" href="<?= URL ?>invoices/index">
+						<i class="fas fa-file-invoice"></i>
+						Fatture
+						<span class="badge badge-warning"></span>
 					</a>
 				</li>
 
@@ -49,23 +49,19 @@
 					<a class="nav-link" href="<?= URL ?>products/index">
 						<i class="fas fa-cubes"></i>
 						Prodotti
-						<span class="badge badge-warning"></span>
+						<span class="badge badge-danger"></span>
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="<?= URL ?>users/index">
-						<i class="fas fa-user-friends"></i>
-						Utenti
+					<a class="nav-link" href="<?= URL ?>clients/index">
+						<i class="far fa-address-card"></i>
+						Clienti
 						<span class="badge badge-warning"></span>
 					</a>
 				</li>
 
 			</ul>
-
-			<form class="form-inline my-2 my-lg-0">
-				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border" >logout</a>
-			</form>
 		</div>
 	</nav>
 
@@ -76,46 +72,50 @@
 				<div class="card card-primary">
 				  <div class="card-body">
 						<!-- Login Form Title-->
-						<h2 class="card-title">Fatture<h2>
+						<h2 class="card-title">Utenti</h2>
 						<hr class="bg-dark mt-n1">
 
-						<!-- List of invoices -->
-						<div class="table-responsive">
-						  <table class="table table-striped mt-md-4 mt-2" class="col-12">
-						    <thead class="thead-dark">
-						      <tr>
-						        <th scope="col">Tipologia</th>
-						        <th scope="col">Creata il</th>
-										<th scope="col">Pagata il</th>
-										<th scope="col">No. Stampe</th>
-										<th scope="col">Importo</th>
-						      </tr>
-						    </thead>
-						    <tbody class="f-normal">
-						      <tr>
-						        <td>Fattura Legna da ardere per il camino</td>
-						        <td>20/10/19</td>
-										<td>20/10/19</td>
-										<td>0</td>
-										<td>200 CHF</td>
-						      </tr>
-						      <tr>
-						        <td>Fattura Sega con motore a fusione nuclueare over 9000</td>
-						        <td>20/11/19</td>
-										<td>20/10/19</td>
-										<td>1</td>
-										<td>100 CHF</td>
-						      </tr>
-						      <tr>
-						        <td>Richiamo Lavabo industriale per la cucina di tomas</td>
-						        <td>21/10/19</td>
-										<td>20/10/19</td>
-										<td>2</td>
-										<td>120 CHF</td>
-						      </tr>
-						    </tbody>
-						  </table>
-						</div>
+						<?php if (!empty($data['users'])): ?>
+						<!-- List of users -->
+						<form method="POST" action="<?php echo URL; ?>users/enable">
+							<div class="table-responsive">
+								<table class="table table-striped mt-md-4 mt-2" class="col-12">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">Nome Utente</th>
+											<th scope="col">Email</th>
+											<td scope="col" class="bg-white border-white text-center">
+												<button class="btn btn-primary" type="submit" name="enable">Salva</button>
+											</td>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($data['users'] as $user): ?>
+										<tr>
+											<td><?= $user['username'] ?></td>
+											<td><?= $user['email'] ?></td>
+											<td class="bg-white border-white pl-3">
+												<div class="custom-control custom-checkbox">
+												    <input
+															type="checkbox"
+															class="custom-control-input"
+															id="enabled<?= $user['id'] ?>"
+															name="usersIdToEnable[]"
+															value="<?= $user['id'] ?>">
+												    <label
+															class="custom-control-label"
+															for="enabled<?= $user['id'] ?>">Abilita</label>
+												</div>
+										  </td>
+										</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						</form>
+						<?php else: ?>
+						<p>Non ci sono utenti da abilitare</p>
+						<?php endif; ?>
 
 				  </div>
 				</div>
@@ -126,7 +126,8 @@
 	<!-- Footer -->
 	<footer class="page-footer fixed-bottom font-small bg-dark">
 		<!-- Copyright -->
-		<div class="footer-copyright text-center py-1 text-secondary">© 2019 Copyright:
+		<div class="footer-copyright text-center py-1 text-secondary">
+			© 2019 Copyright:
 			<a class="text-info active no-underline" href="#">Invoices</a>
 		</div>
 	</footer>
