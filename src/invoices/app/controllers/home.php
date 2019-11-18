@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 22.10.2019
@@ -11,14 +12,15 @@ class Home extends Controller
 	 * Empty constructor.
 	 */
 	public function __construct()
-	{
-	}
+	{ }
 
 	/**
 	 * Method that comunicate with the default page.
 	 */
 	public function index()
 	{
+		session_start();
+
 		// The username and the email of the registration form,
 		// They will bee printed in their corrispective fields
 		$_SESSION['username'] = '';
@@ -35,9 +37,6 @@ class Home extends Controller
 
 		// require the default page
 		$this->view('home/index');
-
-		echo "User: ";
-		print_r($_SESSION[USER_SESSION_DATA]);
 	}
 
 	/**
@@ -45,7 +44,8 @@ class Home extends Controller
 	 */
 	public function login()
 	{
-		session_start();
+		session_start(); // !important
+
 		// Effetuate the login, if is submit a POST request
 		if (isset($_POST['login'])) {
 			// Import the Validator Model class, and inizialize a new istance.
@@ -118,6 +118,8 @@ class Home extends Controller
 	 */
 	public function logout()
 	{
+		session_start(); // !important
+
 		// unset all saved session variables
 		$_SESSION = array();
 

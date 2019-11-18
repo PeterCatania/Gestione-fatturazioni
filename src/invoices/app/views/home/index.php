@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
@@ -15,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 
 	<!-- Favicon -->
-	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
+	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png" />
 
 	<title>Accesso</title>
 </head>
@@ -24,13 +25,7 @@
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
 		<a class="navbar-brand" href="#">Accesso</a>
-		<button class="navbar-toggler"
-						type="button"
-						data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		</div>
@@ -39,9 +34,9 @@
 	<!-- Login Card -->
 	<div class"container">
 		<div class="row d-flex justify-content-center mt-sm-6">
-	    <div class="col-md-6 col-xl-4">
+			<div class="col-md-6 col-xl-4">
 				<div class="card card-primary">
-				  <div class="card-body">
+					<div class="card-body">
 						<!-- Login Form Title-->
 						<h2 class="card-title">Accedi</h2>
 						<hr class="bg-dark mt-n1">
@@ -54,14 +49,7 @@
 										<label for="username" class="mb-n1">
 											<p class="h4">Nome Utente</p>
 										</label>
-									  <input
-											type="text"
-											name="username"
-											value="<?= $_SESSION['username'] ?>"
-											class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>"
-											placeholder="Username"
-											aria-label="Username"
-											aria-describedby="Username">
+										<input type="text" name="username" value="<?= $_SESSION['username'] ?>" class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>" placeholder="Username" aria-label="Username" aria-describedby="Username">
 									</div>
 								</div>
 							</div>
@@ -72,17 +60,10 @@
 										<label for="password" class="mb-n1">
 											<p class="h4">Password</p>
 										</label>
-									  <input
-											type="password"
-											name="password"
-											value="<?= $_SESSION['password'] ?>"
-											class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>"
-											placeholder="Password"
-											aria-label="Password"
-											aria-describedby="Password">
+										<input type="password" name="password" value="<?= $_SESSION['password'] ?>" class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>" placeholder="Password" aria-label="Password" aria-describedby="Password">
 										<div class="invalid-feedback very-small">
-						         Nome utente o password non corretti.
-						        </div>
+											Nome utente o password non corretti.
+										</div>
 									</div>
 								</div>
 							</div>
@@ -93,11 +74,11 @@
 									Crea un account
 								</a>
 							</p>
-						  <button type="submit" name="login" class="btn btn-primary">
+							<button type="submit" name="login" class="btn btn-primary">
 								Login
 							</button>
 						</form>
-				  </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -121,4 +102,5 @@
 	<!-- Font Awesome JS  -->
 	<script src="<?= FONTAWESOME_URL ?>js/all.js"></script>
 </body>
+
 </html>

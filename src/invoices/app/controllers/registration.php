@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 08.11.2019
@@ -11,8 +12,7 @@ class Registration extends Controller
 	 * Empty constructor.
 	 */
 	public function __construct()
-	{
-	}
+	{ }
 
 	/**
 	 * Method that comunicate with the default page.
@@ -107,7 +107,7 @@ class Registration extends Controller
 			// verify if the confirmed password field, from the form is empty
 			if (
 				$confirmedPassword ==
-					'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' ||
+				'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' ||
 				$confirmedPassword != $password
 			) {
 				$_SESSION['confirmedPasswordCSSValidityClass'] = INVALID;

@@ -1,7 +1,7 @@
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-style: normal;
-	font-variant: normal;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-variant: normal;
 }
 
 h1,
@@ -11,163 +11,158 @@ h4,
 h5,
 h6,
 h7 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 700;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: #fff;
 }
 
 p,
 span {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 400;
-}
-
-.f {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 300;
-	font-size: 0.9rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 
 .text-center {
-	text-align: center;
+  text-align: center;
 }
 
 hr {
-	border: 0;
-	height: 1px;
+  border: 0;
+  height: 1px;
 }
 
 .no-underline {
-	text-decoration: none !important;
+  text-decoration: none !important;
 }
 
 .very-small {
-	font-size: 0.7rem;
+  font-size: 0.7rem;
 }
 
 .card-title {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 
 .input-text {
-	font-size: 1rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 576px) {
-	.mt-sm-6 {
-		margin-top: 6rem;
-	}
+  .mt-sm-6 {
+    margin-top: 6rem;
+  }
 
-	.very-small {
-		font-size: 0.8rem;
-	}
+  .very-small {
+    font-size: 0.8rem;
+  }
 
-	.card-title {
-		font-size: 2rem;
-	}
+  .card-title {
+    font-size: 2rem;
+  }
 
-	.fixed-top-sm {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-top-sm {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 
-	.fixed-bottom-sm {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-bottom-sm {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 }
 
 @media (min-width: 768px) {
-	.mt-md-6 {
-		margin-top: 6rem;
-	}
+  .mt-md-6 {
+    margin-top: 6rem;
+  }
 
-	.very-small {
-		font-size: 0.8rem;
-	}
+  .very-small {
+    font-size: 0.8rem;
+  }
 
-	.card-title {
-		font-size: 2.2rem;
-	}
+  .card-title {
+    font-size: 2.2rem;
+  }
 
-	.fixed-top-md {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-top-md {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 
-	.fixed-bottom-md {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-bottom-md {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 }
 
 @media (min-width: 992px) {
-	.mt-lg-6 {
-		margin-top: 6rem;
-	}
+  .mt-lg-6 {
+    margin-top: 6rem;
+  }
 
-	.very-small {
-		font-size: 0.9rem;
-	}
+  .very-small {
+    font-size: 0.9rem;
+  }
 
-	.card-title {
-		font-size: 2.5rem;
-	}
+  .card-title {
+    font-size: 2.5rem;
+  }
 
-	.fixed-top-lg {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-top-lg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 
-	.fixed-bottom-lg {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-bottom-lg {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 }
 
 @media (min-width: 1200px) {
-	.mt-xl-6 {
-		margin-top: 6rem;
-	}
+  .mt-xl-6 {
+    margin-top: 6rem;
+  }
 
-	.very-small {
-		font-size: 0.9rem;
-	}
+  .very-small {
+    font-size: 0.9rem;
+  }
 
-	.card-title {
-		font-size: 2.5rem;
-	}
+  .card-title {
+    font-size: 2.5rem;
+  }
 
-	.fixed-top-xl {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-top-xl {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 
-	.fixed-bottom-xl {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 1030;
-	}
+  .fixed-bottom-xl {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
 }

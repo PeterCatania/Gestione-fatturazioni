@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
@@ -21,31 +22,26 @@
 	<div class"container">
 		<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
 			<a class="navbar-brand" href="<?= URL ?>home/index">Accesso</a>
-			<button class="navbar-toggler"
-							type="button"
-							data-toggle="collapse"
-							data-target="#navbarSupportedContent"
-							aria-controls="navbarSupportedContent"
-							aria-expanded="false"
-							aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			</div>
-		</nav>
+	</div>
+	</nav>
 
-		<div class="row d-flex justify-content-center mt-md-5 mt-lg-6">
-	    <div class="col-md-8 col-xl-6">
-				<div class="card card-primary">
-			  <div class="card-body">
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Attenzione!</h4>
-            <p>L’accesso non può essere effettuato, perché questo utente non è ancora stato abilitato.<br><hr>
-Per contattare l’amministratore si prega di inviare un email all’indirizzo: <strong>administrator@email.com</strong></p>
-            <a class="close"  aria-label="Close" href="<?= URL ?>home/index">
-              <span >&times;</span>
-            </a>
-          </div>
-			  </div>
+	<div class="row d-flex justify-content-center mt-md-5 mt-lg-6">
+		<div class="col-md-8 col-xl-6">
+			<div class="card card-primary">
+				<div class="card-body">
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						<h4 class="alert-heading">Attenzione!</h4>
+						<p>L’accesso non può essere effettuato, perché questo utente non è ancora stato abilitato.<br>
+							<hr>
+							Per contattare l’amministratore si prega di inviare un email all’indirizzo: <strong>administrator@email.com</strong></p>
+						<a class="close" aria-label="Close" href="<?= URL ?>home/index">
+							<span>&times;</span>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -69,4 +65,5 @@ Per contattare l’amministratore si prega di inviare un email all’indirizzo: 
 	<!-- Font Awesome JS  -->
 	<script src="<?php echo FONTAWESOME_URL; ?>js/all.js"></script>
 </body>
+
 </html>

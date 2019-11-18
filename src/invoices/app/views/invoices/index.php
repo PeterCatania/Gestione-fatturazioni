@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
@@ -15,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 
 	<!-- Favicon -->
-	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png"/>
+	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png" />
 
 	<title>Fatture</title>
 </head>
@@ -24,13 +25,7 @@
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
 		<a class="navbar-brand" href="#">Fatture</a>
-		<button class="navbar-toggler"
-						type="button"
-						data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -64,7 +59,7 @@
 			</ul>
 
 			<form class="form-inline my-2 my-lg-0">
-				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border" >logout</a>
+				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border">logout</a>
 			</form>
 		</div>
 	</nav>
@@ -72,52 +67,52 @@
 	<!-- Invoices Card -->
 	<div class"container">
 		<div class="row d-flex justify-content-center mt-sm-6">
-	    <div class="col-md-11 col-xl-10">
+			<div class="col-md-11 col-xl-10">
 				<div class="card card-primary">
-				  <div class="card-body">
+					<div class="card-body">
 						<!-- Login Form Title-->
 						<h2 class="card-title">Fatture</h2>
 						<hr class="bg-dark mt-n1">
 
 						<!-- List of invoices -->
 						<div class="table-responsive">
-						  <table class="table table-striped mt-md-4 mt-2" class="col-12">
-						    <thead class="thead-dark">
-						      <tr>
-						        <th scope="col">Tipologia</th>
-						        <th scope="col">Creata il</th>
+							<table class="table table-striped mt-md-4 mt-2" class="col-12">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Tipologia</th>
+										<th scope="col">Creata il</th>
 										<th scope="col">Pagata il</th>
 										<th scope="col">No. Stampe</th>
 										<th scope="col">Importo</th>
-						      </tr>
-						    </thead>
-						    <tbody class="f-normal">
-						      <tr>
-						        <td>Fattura Legna da ardere per il camino</td>
-						        <td>20/10/19</td>
+									</tr>
+								</thead>
+								<tbody class="f-normal">
+									<tr>
+										<td>Fattura Legna da ardere per il camino</td>
+										<td>20/10/19</td>
 										<td>20/10/19</td>
 										<td>0</td>
 										<td>200 CHF</td>
-						      </tr>
-						      <tr>
-						        <td>Fattura Sega con motore a fusione nuclueare over 9000</td>
-						        <td>20/11/19</td>
+									</tr>
+									<tr>
+										<td>Fattura Sega con motore a fusione nuclueare over 9000</td>
+										<td>20/11/19</td>
 										<td>20/10/19</td>
 										<td>1</td>
 										<td>100 CHF</td>
-						      </tr>
-						      <tr>
-						        <td>Richiamo Lavabo industriale per la cucina di tomas</td>
-						        <td>21/10/19</td>
+									</tr>
+									<tr>
+										<td>Richiamo Lavabo industriale per la cucina di tomas</td>
+										<td>21/10/19</td>
 										<td>20/10/19</td>
 										<td>2</td>
 										<td>120 CHF</td>
-						      </tr>
-						    </tbody>
-						  </table>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 
-				  </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -142,4 +137,5 @@
 	<!-- Font Awesome JS  -->
 	<script src="<?php echo FONTAWESOME_URL; ?>js/all.js"></script>
 </body>
+
 </html>

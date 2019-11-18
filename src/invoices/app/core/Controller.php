@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 22.10.2019
@@ -69,7 +70,6 @@ class Controller
 	{
 		if (
 			isset($_SESSION[USER_SESSION_DATA]) ||
-			empty($_SESSION[USER_SESSION_DATA]) ||
 			!$this->existsLoginSessionData()
 		) {
 			$this->redirectToPage();

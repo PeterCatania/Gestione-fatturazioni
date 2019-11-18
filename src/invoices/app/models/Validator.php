@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 08.11.2019

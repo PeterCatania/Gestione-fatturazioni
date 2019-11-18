@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 12.11.2019
@@ -11,8 +12,7 @@ class Users extends Controller
 	 * Empty constructor.
 	 */
 	public function __construct()
-	{
-	}
+	{ }
 
 	/**
 	 * Show all the not enabled users from the database.
@@ -41,11 +41,6 @@ class Users extends Controller
 		$this->redirectToHomePageIfUserOrAnyoneIsLogged();
 
 		$this->showNotEnabledUsersInDeafultPage();
-
-		echo 'User: ';
-		print_r($_SESSION[USER_SESSION_DATA]);
-		echo 'administrator: ';
-		print_r($_SESSION[ADMINISTRATOR_SESSION_DATA]);
 	}
 
 	/**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 12.11.2019
@@ -11,8 +12,7 @@ class Clients extends Controller
 	 * Empty constructor.
 	 */
 	public function __construct()
-	{
-	}
+	{ }
 
 	/**
 	 * Method that comunicate with the default page.
