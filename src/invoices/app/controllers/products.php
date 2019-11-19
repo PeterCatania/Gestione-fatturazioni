@@ -19,10 +19,13 @@ class Products extends Controller
 	 */
 	public function index()
 	{
-		session_start();
+		session_start(); // important!
 
-		// redirect to the home page, if is logged a user or anyone
-		$this->redirectToHomePageIfUserOrAnyoneIsLogged();
+		// prevents that anyone that is not logged enter this page
+		$this->redirectToHomePageIfAnyoneIsLogged();
+
+		// prevents that users accounts can access this page, and execute this method 
+		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		// require the default page
 		$this->view('products/index');

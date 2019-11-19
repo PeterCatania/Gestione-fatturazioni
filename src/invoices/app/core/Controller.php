@@ -62,17 +62,17 @@ class Controller
 	}
 
 	/**
-	 * Redirect to the home page, if is logged a user or anyone.
+	 * Redirect to the the user default permitted page, 
+	 * that a user can access, if a user is logged.
 	 *
 	 * @param session The current session saved on the server.
 	 */
-	public function redirectToHomePageIfUserOrAnyoneIsLogged()
+	public function redirectToUserDefaultPermittedPageIfUserIsLogged()
 	{
 		if (
-			isset($_SESSION[USER_SESSION_DATA]) ||
-			!$this->existsLoginSessionData()
+			isset($_SESSION[USER_SESSION_DATA])
 		) {
-			$this->redirectToPage();
+			$this->redirectToPage('invoices');
 		}
 	}
 }

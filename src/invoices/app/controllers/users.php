@@ -35,10 +35,13 @@ class Users extends Controller
 	 */
 	public function index()
 	{
-		session_start();
+		session_start(); // important!
 
-		// redirect to the home page, if is logged a user or anyone
-		$this->redirectToHomePageIfUserOrAnyoneIsLogged();
+		// prevents that anyone that is not logged enter this page
+		$this->redirectToHomePageIfAnyoneIsLogged();
+
+		// prevents that users accounts can access this page, and execute this method 
+		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		$this->showNotEnabledUsersInDeafultPage();
 	}
@@ -48,8 +51,13 @@ class Users extends Controller
 	 */
 	public function enable()
 	{
-		// redirect to the home page, if is logged a user or anyone
-		$this->redirectToHomePageIfUserOrAnyoneIsLogged();
+		session_start(); // important!
+
+		// prevents that anyone that is not logged enter this page
+		$this->redirectToHomePageIfAnyoneIsLogged();
+
+		// prevents that users accounts can access this page, and execute this method 
+		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		if (isset($_POST['enable'])) {
 			//get the array that contain the ids of the users to enable

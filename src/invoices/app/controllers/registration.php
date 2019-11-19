@@ -19,7 +19,7 @@ class Registration extends Controller
 	 */
 	public function index()
 	{
-		session_start();
+		session_start(); // important!
 
 		// The username and the email of the registration form,
 		// They will bee printed in their corrispective fields
@@ -47,7 +47,8 @@ class Registration extends Controller
 	 */
 	public function register()
 	{
-		session_start();
+		session_start(); // important!
+
 		// effetuate the registration, if is submit a POST request
 		if (isset($_POST['register'])) {
 			// import the Validator Model class, and inizialize a new istance

@@ -21,7 +21,7 @@ class Invoices extends Controller
 	{
 		session_start();
 
-		// redirect to the home page, if the login is not been effectuated by anyone
+		// prevents that anyone that is not logged enter this page
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
 		// require the default page
