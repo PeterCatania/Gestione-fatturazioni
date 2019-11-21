@@ -34,11 +34,12 @@ class Controller
 	/**
 	 * Redirect to a page that is related with the given controller, and the method.
 	 */
-	private function redirectToPage(
+	public function redirectToPage(
 		$controller = DEFAULT_CONTROLLER,
 		$method = DEFAULT_METHOD
 	) {
 		header("Location: " . URL . $controller . "/" . $method);
+		exit;
 	}
 
 	/**

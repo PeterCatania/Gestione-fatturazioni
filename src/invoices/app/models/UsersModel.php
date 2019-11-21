@@ -5,7 +5,7 @@ require 'Database.php';
  * @author Peter Catania
  * @version 14.11.2019
  *
- * Provide methods usefull for the users controller.
+ * Provide methods usefull for the users Controller.
  */
 class UsersModel
 {
@@ -48,7 +48,7 @@ class UsersModel
 		$selectUserById = "update user set enabled = 1 where id = :id";
 		$stmt = $this->connInvoices->prepare($selectUserById);
 
-		// insert in the query the id of the user
+		// insert in the query the data of the new user
 		$stmt->bindParam(':id', $id);
 
 		// the query statement is executed

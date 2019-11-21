@@ -5,7 +5,7 @@ require 'Database.php';
  * @author Peter Catania
  * @version 19.11.2019
  *
- * Provide methods usefull for the users controller.
+ * Provide methods usefull for the products Controller.
  */
 class ProductsModel
 {
@@ -28,7 +28,7 @@ class ProductsModel
 	 */
 	public function getProducts()
 	{
-		// prepare the query, that get all the not enabled users
+		// prepare the query, that get the saved products
 		$selectProducts = 'select id,description,price from product';
 		$stmt = $this->connInvoices->prepare($selectProducts);
 
@@ -49,7 +49,7 @@ class ProductsModel
 		$selectUserById = "insert into product (id, description, price) values (null, :description, :price)";
 		$stmt = $this->connInvoices->prepare($selectUserById);
 
-		// insert in the query the id of the user
+		// insert in the query the data of the new product
 		$stmt->bindParam(':description', $description);
 		$stmt->bindParam(':price', $price);
 

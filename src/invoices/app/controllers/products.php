@@ -2,7 +2,7 @@
 
 /**
  * @author Peter Catania
- * @version 12.11.2019
+ * @version 21.11.2019
  *
  * Controller for the page that manage the products.
  */
@@ -65,7 +65,7 @@ class Products extends Controller
 	{
 		session_start(); // important!
 
-		// prevents that anyone that is not logged enter this page
+		// prevents that anyone that is not logged enter this page, and execute this method
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
 		// prevents that users accounts can access this page, and execute this method 
@@ -116,18 +116,9 @@ class Products extends Controller
 				// insert the new product in the database
 				$productsModel->saveProduct($description, $price);
 
-				// reset the session variables, used for the new product form
-				$_SESSION['description'] = '';
-				$_SESSION['price'] = '';
-				$_SESSION['descriptionCSSValidityClass'] = '';
-				$_SESSION['priceCSSValidityClass'] = '';
-
-				// reset the array of post values
-				$_POST = array();
+				// redirect to the default method of the products page
+				$this->redirectToPage('products');
 			}
-
-			// show the products, in the products default page.
-			$this->showProducts();
 		}
 	}
 }
