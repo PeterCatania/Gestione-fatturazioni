@@ -23,10 +23,10 @@ class Users extends Controller
 		$this->model("UsersModel");
 		$usersModel = new UsersModel();
 
-		// the array that contain the Users saved in the database.
+		// the array that contains the Users saved in the database.
 		$users = $usersModel->getNotEnabledUsers();
 
-		// require the default page
+		// require the users default page
 		$this->view('users/index', ['users' => $users]);
 	}
 

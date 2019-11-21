@@ -55,12 +55,15 @@
 						<span class="badge badge-warning"></span>
 					</a>
 				</li>
-
 			</ul>
+			<!-- Button Logout -->
+			<form class="form-inline my-2 my-lg-0">
+				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border">logout</a>
+			</form>
 		</div>
 	</nav>
 
-	<!-- Invoices Card -->
+	<!-- Products Card -->
 	<div class"container">
 		<div class="row d-flex justify-content-center mt-sm-6">
 			<div class="col-md-11 col-xl-10">
@@ -70,6 +73,67 @@
 						<h2 class="card-title">Prodotti</h2>
 						<hr class="bg-dark mt-n1">
 
+						<h3 class="mb-4">Nuovo prodotto</h3>
+
+						<!-- New Product Form -->
+						<form method="POST" action="<?php echo URL; ?>products/saveProduct">
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group mb-3">
+										<label for="description" class="mb-n1">
+											<p class="h4">Descrizione</p>
+										</label>
+										<input name="description" type="text" class="form-control mt-1 shadow-sm 
+										<?= $_SESSION['descriptionCSSValidityClass'] ?>" value="<?= $_SESSION['description'] ?>">
+										<div class="invalid-feedback very-small">
+											Inserire una descrizione
+										</div>
+									</div>
+								</div>
+								<div class="col-md-7">
+									<div class="form-group mb-3">
+										<label for="price" class="mb-n1">
+											<p class="h4">Prezzo</p>
+										</label>
+										<input name="price" type="number" step="0.01" class="form-control mt-1 shadow-sm
+											<?= $_SESSION['priceCSSValidityClass'] ?>" value="<?= $_SESSION['price'] ?>">
+										<div class="invalid-feedback very-small">
+											Inserire un prezzo
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Submit -->
+							<button type="submit" name="saveProduct" class="btn btn-primary">Salva</button>
+						</form>
+
+						<hr class="bg-dark mt-4">
+						<?php if (!empty($data['products'])) : ?>
+							<!-- List of products -->
+							<div class="table-responsive">
+								<table class="table table-striped mt-md-4 mt-2" class="col-12">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">Descrizione</th>
+											<th scope="col">Prezzo</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($data['products'] as $product) : ?>
+											<tr>
+												<td><?= $product['description'] ?></td>
+												<td>
+													<?php number_format($product['price'], 2);
+															echo $product['price']; ?>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						<?php else : ?>
+							<p>Non è stato salvato nessun prodotto</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

@@ -58,6 +58,7 @@ class App
 
 		// Call the controller method with the params
 		call_user_func_array([$this->controller, $this->method], $this->params);
+		$url = $this->parseURL();
 	}
 
 	/**

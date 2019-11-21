@@ -28,9 +28,9 @@ class UsersModel
 	 */
 	public function getNotEnabledUsers()
 	{
-		// prepare the query, that get all the not enabled users
-		$insertUser = 'select id,username,email from user where enabled = 0';
-		$stmt = $this->connInvoices->prepare($insertUser);
+		// prepare the query, that get the disabled users
+		$disabledUsers = 'select id,username,email from user where enabled = 0';
+		$stmt = $this->connInvoices->prepare($disabledUsers);
 
 		// the query statement is executed and returned
 		$stmt->execute();

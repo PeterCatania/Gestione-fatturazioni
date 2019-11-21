@@ -55,9 +55,8 @@
 						<span class="badge badge-warning"></span>
 					</a>
 				</li>
-
 			</ul>
-
+			<!-- Button Logout -->
 			<form class="form-inline my-2 my-lg-0">
 				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border">logout</a>
 			</form>

@@ -52,19 +52,31 @@ class Validator
 	}
 
 	/**
-	 * Validate data of type int.
+	 * Validate data to type int.
 	 *
-	 * @param i The integer number to validate
-	 * @return boolean The validated data
+	 * @param intNumber The integer number to validate
+	 * @return boolean The validated int number
 	 */
-	public function validateInt($i)
+	public function validateInt($intNumber)
 	{
-		$validElement = $this->generalValidation($element);
+		$validElement = $this->generalValidation($intNumber);
 		return intval($validElement);
 	}
 
 	/**
-	 * Validate data of type string.
+	 * Validate data to type float.
+	 *
+	 * @param floatNumber The float number to validate
+	 * @return boolean The validated float number
+	 */
+	public function validateFloat($floatNumber)
+	{
+		$validFloat = $this->generalValidation($floatNumber);
+		return floatval($validFloat);
+	}
+
+	/**
+	 * Validate data to type string.
 	 *
 	 * @param str The string to validate
 	 * @return boolean The validated string
@@ -81,7 +93,7 @@ class Validator
 	}
 
 	/**
-	 * Validate data of type string.
+	 * Validate email data.
 	 *
 	 * @param email The email to validate
 	 * @return boolean The validated email
