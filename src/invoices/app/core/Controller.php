@@ -76,4 +76,25 @@ class Controller
 			$this->redirectToPage('invoices');
 		}
 	}
+
+	/**
+	 * Verify the vadility of the field value, from a form.
+	 * if the value is valid true or false if not.
+	 *
+	 * @param fieldValue the field value, from a form
+	 * @param fieldName the field name, from a form
+	 * @return boolean the validity of the field value
+	 */
+	public function isFieldValueValid($fieldValue, $fieldName)
+	{
+		$fieldIsValid = true;
+		// verify if the field value, from the form is empty
+		if (empty($fieldValue)) {
+			$_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
+			$fieldIsValid = false;
+		} else {
+			$_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
+		}
+		return $fieldIsValid;
+	}
 }

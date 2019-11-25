@@ -59,8 +59,8 @@ class Validator
 	 */
 	public function validateInt($intNumber)
 	{
-		$validElement = $this->generalValidation($intNumber);
-		return intval($validElement);
+		$validInt = $this->generalValidation($intNumber);
+		return intval($validInt);
 	}
 
 	/**

@@ -30,9 +30,22 @@ class ClientsModel
 	{
 		// prepare the query, that get the saved clients
 		$selectClients = '
-			select cl.id, cl.name, cl.surname, cl.street, cl.house_no, ci.name, ci.nap, co.name, cl.telephone, cl.email
-			from client cl, client_company co, city ci
-			where cl.id = co.client_id and cl.city_id = ci.id
+			SELECT cl.id, cl.name AS clientName, cl.surname AS clientSurname, cl.street, cl.house_no AS houseNo, ci.name AS city, ci.nap, cl.telephone, cl.email, 
+			CASE 
+				WHEN EXISTS (
+					SELECT co.name
+					FROM client_company co
+					WHERE co.client_id = cl.id
+				) 
+				THEN (
+					SELECT co.name
+					FROM client_company co
+					WHERE co.client_id = cl.id
+				)
+				ELSE null
+			END AS companyName 
+			FROM client cl, city ci
+			WHERE cl.city_id = ci.id;
 		';
 		$stmt = $this->connInvoices->prepare($selectClients);
 
@@ -84,8 +97,8 @@ class ClientsModel
 
 		// prepare the query, to insert a new client in the database
 		$insertClient = "
-			insert into client (id, name, surname, street, house_no, telephone, email) 
-			values (null, :clientName, :clientSurname, :street, :house_no, :telephone, :email)
+			insert into client (id, name, surname, street, house_no, telephone, email, city_id) 
+			values (null, :clientName, :clientSurname, :street, :house_no, :telephone, :email, :cityId)
 		";
 		$stmt = $this->connInvoices->prepare($insertClient);
 
@@ -96,20 +109,27 @@ class ClientsModel
 		$stmt->bindParam(':house_no', $houseNo);
 		$stmt->bindParam(':telephone', $telephone);
 		$stmt->bindParam(':email', $email);
+		$stmt->bindParam(':cityId', $cityId);
 
 		// the query statement that insert the new client is executed
 		$stmt->execute();
 
 		if ($companyName) {
+			// get the id of the new client
+			$selectLastClientClientId = "SELECT MAX(id) FROM client";
+			$stmt = $this->connInvoices->prepare($selectLastClientClientId);
+			$clientLastId = $stmt->execute();
+
 			//prepare the query, to insert a new company name in the database
 			$insertCompanyName = "
-				insert into client_company (id, name) 
-				values (null, :companyName)
+				insert into client_company (id, name, client_id) 
+				values (null, :companyName, :clientId)
 			";
 			$stmt = $this->connInvoices->prepare($insertCompanyName);
 
 			// insert in the query, the new company name
 			$stmt->bindParam(':companyName', $companyName);
+			$stmt->bindParam(':clientId', $clientLastId);
 
 			// the query statement that insert the new company name is executed
 			$stmt->execute();

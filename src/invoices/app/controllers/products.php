@@ -40,11 +40,11 @@ class Products extends Controller
 		// prevents that anyone that is not logged enter this page
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
-		// prevents that users accounts can access this page, and execute this method 
+		// prevents that products accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		// The description and the price fields values, in the form for save a new product,
-		// They will be printed in their corrispective fields
+		// Their values will be printed in their corrispective fields
 		$_SESSION['description'] = '';
 		$_SESSION['price'] = '';
 
@@ -61,6 +61,9 @@ class Products extends Controller
 		$this->showProducts();
 	}
 
+	/**
+	 * Save a new products in the database.
+	 */
 	public function saveProduct()
 	{
 		session_start(); // important!
@@ -68,7 +71,7 @@ class Products extends Controller
 		// prevents that anyone that is not logged enter this page, and execute this method
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
-		// prevents that users accounts can access this page, and execute this method 
+		// prevents that products accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		if (isset($_POST['saveProduct'])) {
@@ -92,21 +95,9 @@ class Products extends Controller
 			// tell if all the fields are valid
 			$allFieldAreValid = true;
 
-			// verify if the description field, from the form is empty
-			if (empty($description)) {
-				$_SESSION['descriptionCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['descriptionCSSValidityClass'] = VALID;
-			}
-
-			// verify if the price field, from the form is empty
-			if (empty($price)) {
-				$_SESSION['priceCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['priceCSSValidityClass'] = VALID;
-			}
+			// verify if the fields values are valid
+			$allFieldAreValid = $this->isFieldValueValid($description, 'description') ? $allFieldAreValid : false;
+			$allFieldAreValid = $this->isFieldValueValid($price, 'price') ? $allFieldAreValid : false;
 
 			if ($allFieldAreValid) {
 				// instance a new object of the model class "ProductsModel"
@@ -119,6 +110,8 @@ class Products extends Controller
 				// redirect to the default method of the products page
 				$this->redirectToPage('products');
 			}
+			// show the products, in the products default page.
+			$this->showProducts();
 		}
 	}
 }

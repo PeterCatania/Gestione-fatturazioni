@@ -22,7 +22,7 @@ class Registration extends Controller
 		session_start(); // important!
 
 		// The username and the email of the registration form,
-		// They will bee printed in their corrispective fields
+		// Their values will be printed in their corrispective fields
 		$_SESSION['username'] = '';
 		$_SESSION['email'] = '';
 		$_SESSION['password'] = '';
@@ -78,44 +78,11 @@ class Registration extends Controller
 			// tell if all the fields are valid
 			$allFieldAreValid = true;
 
-			// verify if the username field, from the form is empty
-			if (empty($username)) {
-				$_SESSION['usernameCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['usernameCSSValidityClass'] = VALID;
-			}
-
-			// verify if the email field, from the form is empty
-			if (empty($email)) {
-				$_SESSION['emailCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['emailCSSValidityClass'] = VALID;
-			}
-
-			// verify if the password field, from the form is empty
-			if (
-				$password ==
-				'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-			) {
-				$_SESSION['passwordCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['passwordCSSValidityClass'] = VALID;
-			}
-
-			// verify if the confirmed password field, from the form is empty
-			if (
-				$confirmedPassword ==
-				'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' ||
-				$confirmedPassword != $password
-			) {
-				$_SESSION['confirmedPasswordCSSValidityClass'] = INVALID;
-				$allFieldAreValid = false;
-			} else {
-				$_SESSION['confirmedPasswordCSSValidityClass'] = VALID;
-			}
+			// verify if the fields values are valid
+			$allFieldAreValid = $this->isFieldValueValid($username, 'username');
+			$allFieldAreValid = $this->isFieldValueValid($email, 'email');
+			$allFieldAreValid = $this->isFieldValueValid($password, 'password');
+			$allFieldAreValid = $this->isFieldValueValid($confirmedPassword, 'confirmedPassword');
 
 			if (!$allFieldAreValid) {
 				// return to the default page for registration
