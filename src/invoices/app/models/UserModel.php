@@ -1,14 +1,12 @@
 <?php
 
-
-
 /**
  * @author Peter Catania
- * @version 14.11.2019
+ * @version 29.11.2019
  *
  * Provide methods that interact with the table user of the database.
  */
-class UsersModel
+class UserModel
 {
 	/**
 	 * Connection with the database.
@@ -17,6 +15,8 @@ class UsersModel
 
 	/**
 	 * Empty constructor.
+	 * 
+	 * @return void
 	 */
 	public function __construct()
 	{
@@ -27,42 +27,31 @@ class UsersModel
 
 	/**
 	 * Get the users from the database, that are not enabled.
+	 * 
+	 * @return User[] The users saved in the database
 	 */
-	public function getNotEnabledUsers()
+	public function getUsers()
 	{
 
 		$users =  new UserQuery();
-		$users->filterByEnabled(0);
-		$users->find();
-
-
-		/*// prepare the query, that get the disabled users
-		$disabledUsers = 'select id,username,email from user where enabled = 0';
-		$stmt = $this->connInvoices->prepare($disabledUsers);
-
-		// the query statement is executed and returned
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);*/
-
-		return $users;
+		$users->orderByEnabled();
+		return $users->find();
 	}
 
 	/**
-	 * Enable a user, where the id corrispond with the given.
+	 * Modify the value that tell if a user is enable or not. 
+	 * Modify only the users with the id corrispond with the given.
 	 *
-	 * @param id the id of the user
+	 * @param int $id The id of the user
+	 * @param bool $enabled The value that tell if a user is enabled or not
+	 * @return void
 	 */
-	public function enableUserById($id)
+	public function enableUserById($id, $enabled = 1)
 	{
-		// prepare the query, to update enabled field of the user with the given id.
-		$selectUserById = "update user set enabled = 1 where id = :id";
-		$stmt = $this->connInvoices->prepare($selectUserById);
-
-		// insert in the query the data of the new user
-		$stmt->bindParam(':id', $id);
-
-		// the query statement is executed
-		$stmt->execute();
+		$users = new UserQuery();
+		$user = $users->findPK($id);
+		$user->setEnabled($enabled);
+		$user->save();
 	}
 
 	/**

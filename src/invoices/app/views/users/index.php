@@ -90,12 +90,12 @@
 										<tbody>
 											<?php foreach ($data['users'] as $user) : ?>
 												<tr>
-													<td><?= $user['username'] ?></td>
-													<td><?= $user['email'] ?></td>
+													<td><?= $user->getUsername() ?></td>
+													<td><?= $user->getEmail() ?></td>
 													<td class="bg-white border-white pl-3">
 														<div class="custom-control custom-checkbox">
-															<input type="checkbox" class="custom-control-input" id="enabled<?= $user['id'] ?>" name="usersIdToEnable[]" value="<?= $user['id'] ?>">
-															<label class="custom-control-label" for="enabled<?= $user['id'] ?>">Abilita</label>
+															<input type="checkbox" class="custom-control-input" id="enabled<?= $user->getId() ?>" name="usersIdToEnable[]" value="<?= $user->getId() ?>" <?= $user->getEnabled() ? 'checked' : '' ?>>
+															<label class="custom-control-label" for="enabled<?= $user->getId() ?>">Abilita</label>
 														</div>
 													</td>
 												</tr>

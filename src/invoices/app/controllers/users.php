@@ -20,11 +20,12 @@ class Users extends Controller
 	private function showNotEnabledUsersInDeafultPage()
 	{
 		// instance a new object of the model class "UsersModel"
-		$this->model("UsersModel");
-		$usersModel = new UsersModel();
+		$this->model("UserModel");
+		$userModel = new UserModel();
 
 		// the array that contains the Users saved in the database.
-		$users = $usersModel->getNotEnabledUsers();
+		$users = $userModel->getUsers();
+		$_SESSION['users'] = $users;
 
 		// require the users default page
 		$this->view('users/index', ['users' => $users]);
@@ -64,12 +65,18 @@ class Users extends Controller
 			$usersIdToEnable = $_POST['usersIdToEnable'];
 
 			// instance a new object of the model class "UsersModel"
-			$this->model("UsersModel");
-			$usersModel = new UsersModel();
+			$this->model("UserModel");
+			$userModel = new UserModel();
 
 			//enable all users by id
-			foreach ($usersIdToEnable as $userId) {
-				$usersModel->enableUserById($userId);
+			foreach ($_SESSION['users'] as $user) {
+				$id = $user->getId();
+
+				if (in_array($id, $usersIdToEnable)) {
+					$userModel->enableUserById($id, true);
+				} else {
+					$userModel->enableUserById($id, false);
+				}
 			}
 
 			//Show all the not enabled users from the database.
