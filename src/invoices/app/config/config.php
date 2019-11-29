@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Peter Catania
  * @version 22.10.2019
@@ -12,6 +13,12 @@
  */
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+
+// setup the autoloading
+require_once 'vendor/autoload.php';
+
+// setup Propel
+require_once 'generated-conf/config.php';
 
 /**
  * Define the URL of the site

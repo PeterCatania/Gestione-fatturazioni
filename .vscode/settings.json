@@ -1,4 +1,10 @@
 {
-    "editor.fontSize": 14,
-    "liveServer.settings.CustomBrowser": "chrome"
+  "editor.fontSize": 14,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.run": "onSave",
+  "eslint.options": {
+    "configFile": "src/invoices/.eslintrc.json"
+  }
 }

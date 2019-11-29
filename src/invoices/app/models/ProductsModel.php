@@ -1,16 +1,15 @@
 <?php
-require 'Database.php';
 
 /**
  * @author Peter Catania
  * @version 19.11.2019
  *
- * Provide methods usefull for the products Controller.
+ * Provide methods that interact with the table product of the database.
  */
 class ProductsModel
 {
 	/**
-	 * Connection with the database "Invoices".
+	 * Connection with the database.
 	 */
 	private $connInvoices = null;
 
@@ -20,6 +19,7 @@ class ProductsModel
 	public function __construct()
 	{
 		// get the connection with the database
+		require_once 'Database.php';
 		$this->connInvoices = Database::getDBConnection();
 	}
 

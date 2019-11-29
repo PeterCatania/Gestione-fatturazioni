@@ -92,7 +92,7 @@
 										<label for="companyName" class="mb-n1">
 											<p class="h4">Nome Azienda</p>
 										</label>
-										<input name="companyName" type="text" class="form-control mt-1 shadow-sm
+										<input id="companyName" name="companyName" type="text" class="form-control mt-1 shadow-sm
 											<?= $_SESSION['companyNameCSSValidityClass'] ?>" value="<?= $_SESSION['companyName'] ?>" disabled>
 										<div class="invalid-feedback very-small">
 											Inserire il nome dell'azienda, o disabilitare il campo se non necessario
@@ -188,7 +188,7 @@
 										<label for="telephone" class="mb-n1">
 											<p class="h4">Telefono</p>
 										</label>
-										<input name="telephone" type="text" class="form-control mt-1 shadow-sm 
+										<input name="telephone" type="tel" class="form-control mt-1 shadow-sm 
 										<?= $_SESSION['telephoneCSSValidityClass'] ?>" value="<?= $_SESSION['telephone'] ?>">
 										<div class="invalid-feedback very-small">
 											Inserire il telefono del cliente
@@ -200,7 +200,7 @@
 										<label for="email" class="mb-n1">
 											<p class="h4">Email</p>
 										</label>
-										<input name="email" type="text" class="form-control mt-1 shadow-sm
+										<input name="email" type="email" class="form-control mt-1 shadow-sm
 											<?= $_SESSION['emailCSSValidityClass'] ?>" value="<?= $_SESSION['email'] ?>">
 										<div class="invalid-feedback very-small">
 											Inserire l'email del cliente
@@ -268,11 +268,20 @@
 	<!-- Popper -->
 	<script src="<?php echo POPPER_URL; ?>"></script>
 	<!-- Login JS -->
-	<script src="<?php echo JS_URL; ?>login.js"></script>
+	<script src="<?php echo JS_URL; ?>clients.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="<?php print BOOTSTRAP_URL; ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->
 	<script src="<?php echo FONTAWESOME_URL; ?>js/all.js"></script>
+	<script>
+		$("#cbCompany").change(function() {
+			if (this.checked) {
+				$("#companyName").prop("disabled", false);
+			} else {
+				$("#companyName").prop("disabled", true);
+			}
+		});
+	</script>
 </body>
 
 </html>

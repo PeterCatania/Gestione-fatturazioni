@@ -55,19 +55,13 @@ class Registration extends Controller
 			$this->model('Validator');
 			$validator = new Validator();
 
-			/**
-			 * get the validated username and email,
-			 * from the registration form field
-			 */
-			$username = $validator->validateString($_POST['username']);
+			// get the validated data from the form that contains the informations about a new user
+			$username = $validator->validateName($_POST['username']);
 			$email = $validator->validateEmail($_POST['email']);
 
-			/**
-			 * get the sha256 hash of the password and confirmed password,
-			 * from the registration form field
-			 */
-			$password = hash('sha256', $_POST['password']);
-			$confirmedPassword = hash('sha256', $_POST['confirmedPassword']);
+			// get the hash of the password and it's confirmation from the form that contains the informations about a new user
+			$password = hash('sha256', $validator->generalValidation($_POST['password']));
+			$confirmedPassword = hash('sha256', $validator->generalValidation($_POST['confirmedPassword']));
 
 			// the getted field from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;

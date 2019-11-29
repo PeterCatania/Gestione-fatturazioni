@@ -1,0 +1,18 @@
+propel:
+  database:
+    connections:
+      invoices:
+        adapter: mysql
+        classname: Propel\Runtime\Connection\ConnectionWrapper
+        dsn: "mysql:host=localhost;dbname=invoices"
+        user: peter
+        password: Password&1
+        attributes:
+  runtime:
+    defaultConnection: invoices
+    connections:
+      - invoices
+  generator:
+    defaultConnection: invoices
+    connections:
+      - invoices

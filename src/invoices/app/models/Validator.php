@@ -2,7 +2,7 @@
 
 /**
  * @author Peter Catania
- * @version 08.11.2019
+ * @version 28.11.2019
  *
  * Validate differents type of data.
  */
@@ -11,8 +11,8 @@ class Validator
 	/**
 	 *  Return true if the given email is valid, structurally and syntactically.
 	 *
-	 * @param email The email to check the validation
-	 * @return boolean If the email is valid return true otherwise false
+	 * @param mixed $email The email to check the validation
+	 * @return bool If the email is valid return true otherwise false
 	 */
 	function isValidEmail($email)
 	{
@@ -21,10 +21,10 @@ class Validator
 	}
 
 	/**
-	 *  Return true if the given name is valid.
+	 *  Return true if the given data is valid as a name.
 	 *
-	 * @param name The name to check the validation
-	 * @return boolean If the name is valid return true otherwise false
+	 * @param mixed $data The data to validate as a name is valid
+	 * @return bool If the name is valid return true otherwise false
 	 */
 	function isValidName($name)
 	{
@@ -36,13 +36,13 @@ class Validator
 			']+,\s[a-zA-Z' .
 			$accentedChars .
 			']+$/';
-		return preg_match('/^[A-Za-z]{1}[A-Za-z0-9]{5-31}$/', $name);
+		return preg_match($pattern, $name);
 	}
 
 	/**
 	 * Validate data of any kind.
 	 *
-	 * @param data The data to validate
+	 * @param mixed $data The data to validate
 	 * @return boolean The validated data
 	 */
 	private function generalValidation($data)
@@ -54,54 +54,124 @@ class Validator
 	/**
 	 * Validate data to type int.
 	 *
-	 * @param intNumber The integer number to validate
-	 * @return boolean The validated int number
+	 * @param mixed $data The data to validate to int
+	 * @return int The validated int
 	 */
-	public function validateInt($intNumber)
+	public function validateInt($data)
 	{
-		$validInt = $this->generalValidation($intNumber);
-		return intval($validInt);
+		$data = $this->generalValidation($data);
+		$data = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+		return intval($data);
 	}
 
 	/**
-	 * Validate data to type float.
+	 * Validate data to type float/double.
 	 *
-	 * @param floatNumber The float number to validate
-	 * @return boolean The validated float number
+	 * @param mixed $data The data to validate to float
+	 * @return float The validated float
 	 */
-	public function validateFloat($floatNumber)
+	public function validateFloat($data)
 	{
-		$validFloat = $this->generalValidation($floatNumber);
-		return floatval($validFloat);
+		$data = $this->generalValidation($data);
+		return floatval($data);
+	}
+
+	/**
+	 * Validate data to type bool.
+	 *
+	 * @param mixed $data The data to validate to bool
+	 * @return bool The validated bool
+	 */
+	public function validateBool($data)
+	{
+		$data = $this->generalValidation($data);
+		return boolval($data);
 	}
 
 	/**
 	 * Validate data to type string.
 	 *
-	 * @param str The string to validate
-	 * @return boolean The validated string
+	 * @param mixed $data The data to validate to string
+	 * @return string The validated string
 	 */
-	public function validateString($str)
+	public function validateString($data)
 	{
-		$validStr = $this->generalValidation($str);
-
-		$pattern = '/^[A-Za-z0-9_-]*$/';
-		if (!preg_match($pattern, $validStr)) {
-			$validStr = strval($validStr);
-		}
-		return $validStr;
+		$data = $this->generalValidation($data);
+		return strval($data);
 	}
 
 	/**
-	 * Validate email data.
+	 * Validate data as a name.
+	 * Es "peTer123" => "Peter123".
 	 *
-	 * @param email The email to validate
-	 * @return boolean The validated email
+	 * @param mixed $data The data to validate as a name
+	 * @return string The validated name
 	 */
-	public function validateEmail($email)
+	public function validateName($data)
 	{
-		$validEmail = $this->generalValidation($email);
-		filter_var($validEmail, FILTER_VALIDATE_EMAIL);
-		return strtolower($validEmail);
+		$data = $this->validateString($data);
+		$data = strtolower($data);
+		return ucfirst($data);
+	}
+
+	/**
+	 * Validate data as email.
+	 * es "Paolo.Vercisio@gmail.com" => "paolo.vercisio@gmail.com".
+	 *
+	 * @param mixed $data The data to validate as an email
+	 * @return string The validated email
+	 */
+	public function validateEmail($data)
+	{
+		$data = filter_var($data, FILTER_VALIDATE_EMAIL);
+		$data = $this->validateString($data);
+		return strtolower($data);
+	}
+
+	/**
+	 * Validate data as a price.
+	 * Es "14.000,566" => "14000.57".
+	 *
+	 * @param mixed $data The data to validate as a price
+	 * @return float The validated price
+	 */
+	public function validatePrice($data)
+	{
+		$data = $this->validateFloat($data);
+		return number_format($data, 2, '.', '');
+	}
+
+	/**
+	 * Validate data as capitalized words.
+	 * Es "San gallO" => "San Gallo".
+	 *
+	 * @param mixed $data The data to validate as capitalized words
+	 * @return string The validated capitalized words
+	 */
+	public function validateCapitalizedWords($data)
+	{
+		$data = $this->validateString($data);
+		return ucwords($data, " ");
+	}
+
+	/**
+	 * Validate data as a telephone number.
+	 * Es "+41 787  322299" => "+41 78 732 22 99".
+	 *
+	 * @param mixed $data The data to validate as a telephone number
+	 * @return string The validated telephone number
+	 */
+	public function validateTelephoneNumber($data)
+	{
+		// validate telephone number
+		$data = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+		$data = str_replace("-", "", $data);
+
+		// construct the structur of the telephone number
+		$data = substr_replace($data, substr($data, 0, 3) . ' ', 0, 3);
+		$data = substr_replace($data, substr($data, 4, 2) . ' ', 4, 2);
+		$data = substr_replace($data, substr($data, 7, 3) . ' ', 7, 3);
+		$data = substr_replace($data, substr($data, 11, 2) . ' ', 11, 2);
+		return $data;
 	}
 }

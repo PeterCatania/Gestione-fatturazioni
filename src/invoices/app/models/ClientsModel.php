@@ -1,16 +1,15 @@
 <?php
-require 'Database.php';
 
 /**
  * @author Peter Catania
- * @version 21.11.2019
+ * @version 26.11.2019
  *
- * Provide methods usefull for the clients Controller.
+ * Provide methods that interact with the table client of the database.
  */
 class ClientsModel
 {
 	/**
-	 * Connection with the database "Invoices".
+	 * Connection with the database.
 	 */
 	private $connInvoices = null;
 
@@ -20,6 +19,7 @@ class ClientsModel
 	public function __construct()
 	{
 		// get the connection with the database
+		require_once 'Database.php';
 		$this->connInvoices = Database::getDBConnection();
 	}
 
@@ -55,17 +55,17 @@ class ClientsModel
 	}
 
 	/**
-	 * Insert a new client in the database, also it might be a company.
+	 * Save a new client in the database, also it might be a company.
 	 *
-	 * @param clientName the new name of the client, or the responsible of the company
-	 * @param clientSurname the new surname of the client, or the responsible of the company
-	 * @param street the new street of the client address
-	 * @param houseNo the new client house_no of the client address
-	 * @param city the new city of the client address
-	 * @param nap the new nap of the client address 
-	 * @param telephone the new telephone of the client
-	 * @param email the new email of the client
-	 * @param companyName the new company name of the client, if the client is a company
+	 * @param string $clientName the new name of the client, or the responsible of the company
+	 * @param string $clientSurname the new surname of the client, or the responsible of the company
+	 * @param string $street the new street of the client address
+	 * @param string $houseNo the new client house_no of the client address
+	 * @param string $city the new city of the client address
+	 * @param int $nap the new nap of the client address 
+	 * @param string $telephone the new telephone of the client
+	 * @param string $email the new email of the client
+	 * @param string $companyName the new company name of the client, if the client is a company
 	 */
 	public function saveClient(
 		$clientName,
@@ -78,22 +78,14 @@ class ClientsModel
 		$email,
 		$companyName = null
 	) {
-		// prepare the query, to insert a new city in the database
-		$insertCity = "insert into city (id, name, nap) values (null, :city, :nap)";
-		$stmt = $this->connInvoices->prepare($insertCity);
+		require_once 'CityModel.php';
+		$cityModel = new CityModel();
 
-		// insert in the query, the data of the new city
-		$stmt->bindParam(':city', $city);
-		$stmt->bindParam(':nap', $nap);
+		// save the associeted city in the database
+		$cityModel->saveCity($city, $nap);
 
-		// the query statement that insert the new city is executed
-		$stmt->execute();
-
-		// get the id of the new city
-		$selectNewCityId = "select id from city where nap = :nap";
-		$stmt = $this->connInvoices->prepare($selectNewCityId);
-		$stmt->bindParam(':nap', $nap);
-		$cityId = $stmt->execute();
+		// get the last id of the new city
+		$cityLastId = $cityModel->getCityLastId();
 
 		// prepare the query, to insert a new client in the database
 		$insertClient = "
@@ -109,18 +101,16 @@ class ClientsModel
 		$stmt->bindParam(':house_no', $houseNo);
 		$stmt->bindParam(':telephone', $telephone);
 		$stmt->bindParam(':email', $email);
-		$stmt->bindParam(':cityId', $cityId);
+		$stmt->bindParam(':cityId', $cityLastId);
 
-		// the query statement that insert the new client is executed
+		// execute the query
 		$stmt->execute();
 
 		if ($companyName) {
-			// get the id of the new client
-			$selectLastClientClientId = "SELECT MAX(id) FROM client";
-			$stmt = $this->connInvoices->prepare($selectLastClientClientId);
-			$clientLastId = $stmt->execute();
+			// get the last id of the new client
+			$clientLastId = $this->getClientLastId();
 
-			//prepare the query, to insert a new company name in the database
+			//prepare the query, to save the associeted company name in the database
 			$insertCompanyName = "
 				insert into client_company (id, name, client_id) 
 				values (null, :companyName, :clientId)
@@ -134,5 +124,22 @@ class ClientsModel
 			// the query statement that insert the new company name is executed
 			$stmt->execute();
 		}
+	}
+
+	/**
+	 * Get the last id from the client city.
+	 *
+	 * @return string The last id from the table client.
+	 */
+	public function getClientLastId()
+	{
+		// prepare the query, to get the last id from the table client
+		$selectLastId = "select max(id) from client";
+		$stmt = $this->connInvoices->prepare($selectLastId);
+
+		// execute and get the last id 
+		$stmt->execute();
+		$lastId = ($stmt->fetch(PDO::FETCH_NUM))[0];
+		return $lastId;
 	}
 }

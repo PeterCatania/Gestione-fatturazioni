@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="invoices" defaultIdMethod="native">
+  <table name="administrator" idMethod="native" phpName="Administrator">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="username" type="VARCHAR" size="50" required="true"/>
+    <column name="password" type="CHAR" size="64" required="true"/>
+    <column name="email" type="VARCHAR" size="100" required="true"/>
+  </table>
+  <table name="city" phpName="City">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="nap" type="INTEGER" required="true"/>
+  </table>
+  <table name="client" phpName="Client">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="surname" type="VARCHAR" size="50" required="true"/>
+    <column name="street" type="VARCHAR" size="100" required="true"/>
+    <column name="house_no" type="VARCHAR" size="6" required="true"/>
+    <column name="telephone" type="VARCHAR" size="16" required="true"/>
+    <column name="email" type="VARCHAR" size="100" required="true"/>
+    <column name="city_id" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="city">
+      <reference local="city_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="client_company" phpName="ClientCompany">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="client_id" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="client">
+      <reference local="client_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="company" phpName="Company">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+    <column name="logo_path" type="VARCHAR" size="100" required="true"/>
+    <column name="iban" type="VARCHAR" size="30" required="true"/>
+    <column name="street" type="VARCHAR" size="100" required="true"/>
+    <column name="house_no" type="VARCHAR" size="6" required="true"/>
+    <column name="email" type="VARCHAR" size="100" required="true"/>
+    <column name="site" type="VARCHAR" size="100" required="true"/>
+    <column name="telefone" type="VARCHAR" size="16" required="true"/>
+    <column name="city_id" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="city">
+      <reference local="city_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="inserted" phpName="Inserted">
+    <column name="product_id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="invoice_id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="sell_date" type="DATE" required="true"/>
+    <column name="quantity" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="product">
+      <reference local="product_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="invoice">
+      <reference local="invoice_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="invoice" phpName="Invoice">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="print_no" type="INTEGER" required="true"/>
+    <column name="payment_date" type="DATE" required="true"/>
+    <column name="creation_date" type="DATE" required="true"/>
+    <column name="status" type="VARCHAR" size="7" required="true"/>
+    <column name="callback" type="TINYINT" required="true"/>
+    <column name="client_id" type="INTEGER" required="true"/>
+    <column name="typology_id" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="client">
+      <reference local="client_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="typology">
+      <reference local="typology_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="product" phpName="Product">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="description" type="VARCHAR" size="100" required="true"/>
+    <column name="price" type="DECIMAL" size="19" scale="2" required="true"/>
+  </table>
+  <table name="typology" phpName="Typology">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" type="VARCHAR" size="50" required="true"/>
+  </table>
+  <table name="user" phpName="User">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="username" type="VARCHAR" size="50" required="true"/>
+    <column name="password" type="CHAR" size="64" required="true"/>
+    <column name="email" type="VARCHAR" size="100" required="true"/>
+    <column name="enabled" type="TINYINT" required="true"/>
+  </table>
+</database>

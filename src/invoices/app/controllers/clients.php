@@ -95,21 +95,18 @@ class Clients extends Controller
 			$this->model('Validator');
 			$validator = new Validator();
 
-			/**
-			 * get the validated clientName, clientSurname, street, houseNo, city, nap, telephone, email and companyName,
-			 * from the new clients form fields
-			 */
-			$clientName = $validator->validateString($_POST['clientName']);
-			$clientSurname = $validator->validateString($_POST['clientSurname']);
-			$street = $validator->validateString($_POST['street']);
+			// get the validated data from the form that contains the informations about a new client
+			$clientName = $validator->validateName($_POST['clientName']);
+			$clientSurname = $validator->validateName($_POST['clientSurname']);
+			$street = $validator->validateCapitalizedWords($_POST['street']);
 			$houseNo = $validator->validateString($_POST['houseNo']);
-			$city = $validator->validateString($_POST['city']);
+			$city = $validator->validateCapitalizedWords($_POST['city']);
 			$nap = $validator->validateInt($_POST['nap']);
-			$telephone = $validator->validateString($_POST['telephone']);
+			$telephone = $validator->validateTelephoneNumber($_POST['telephone']);
 			$email = $validator->validateEmail($_POST['email']);
 			$companyName = null;
 			if (isset($_POST['companyName'])) {
-				$companyName = $validator->validateString($_POST['companyName']);
+				$companyName = $validator->validateName($_POST['companyName']);
 			}
 
 			// the getted fields values from the registration form are inserted in the Session.
@@ -136,7 +133,7 @@ class Clients extends Controller
 			$allFieldAreValid = $this->isFieldValueValid($telephone, 'telephone') ? $allFieldAreValid : false;
 			$allFieldAreValid = $this->isFieldValueValid($email, 'email') ? $allFieldAreValid : false;
 			if (isset($_POST['companyName'])) {
-				$allFieldAreValid = $this->isFieldValueValid($companyName, 'companyName') ? $allFieldAreValid : false;;
+				$allFieldAreValid = $this->isFieldValueValid($companyName, 'companyName') ? $allFieldAreValid : false;
 			}
 
 			if ($allFieldAreValid) {

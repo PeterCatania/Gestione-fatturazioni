@@ -84,11 +84,11 @@ class Products extends Controller
 			 * get the validated description and price,
 			 * from the new product form fields
 			 */
-			$description = $validator->validateString($_POST['description']);
-			$price = $validator->validateFloat($_POST['price']);
+			$description = $validator->validateName($_POST['description']);
+			$price = $validator->validatePrice($_POST['price']);
 			number_format($price, 2);
 
-			// the getted fields values from the registration form are inserted in the Session.
+			// get the validated data from the form that contains the informations about a new product
 			$_SESSION['description'] = $description;
 			$_SESSION['price'] = $price;
 
