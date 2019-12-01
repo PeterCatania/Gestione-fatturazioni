@@ -161,7 +161,7 @@ class Users extends Controller
 				}
 			}
 
-			//Show all the users saved in the database
+			// show all the users saved in the database
 			$this->showUsers();
 		} elseif (isset($_POST['updateUser'])) {
 			$userIdToSave = $_POST['updateUser'];
@@ -200,7 +200,7 @@ class Users extends Controller
 				}
 			}
 
-			//Show all the users saved in the database
+			// show all the users saved in the database
 			$this->showUsers();
 		} elseif (isset($_POST['deleteUser'])) {
 			// the id of the user
@@ -211,7 +211,7 @@ class Users extends Controller
 			$userModel = new UserModel();
 			$userModel->deleteUserById($userId);
 
-			//Show all the users saved in the database
+			// show all the users saved in the database
 			$this->showUsers();
 		}
 	}

@@ -46,8 +46,13 @@ $(document).ready(function() {
 
   $(".icon-modify").click(function() {
     var userId = $(this).val();
-    var userFields = ".user-" + userId + "-field";
-    $(userFields).prop("disabled", false);
+    var userFields = $(".user-" + userId + "-field");
+    userFields.prop("disabled", function(i, v) {
+      return !v;
+    });
+    userFields.each(function() {
+      $(this).val($(this)[0].defaultValue);
+    });
   });
 
   /*$(".icon-save").click(function() {
