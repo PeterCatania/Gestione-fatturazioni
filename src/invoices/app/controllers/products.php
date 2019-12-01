@@ -73,7 +73,7 @@ class Products extends Controller
 		// prevents that anyone that is not logged enter this page, and execute this method
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
-		// prevents that products accounts can access this page, and execute this method 
+		// prevents that users accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		if (isset($_POST['saveProduct'])) {

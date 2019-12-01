@@ -75,10 +75,10 @@ class Registration extends Controller
 			$allFieldAreValid = true;
 
 			// verify if the fields values are valid
-			$allFieldAreValid = $this->isFieldValueValid($username, 'username');
-			$allFieldAreValid = $this->isFieldValueValid($email, 'email');
-			$allFieldAreValid = $this->isFieldValueValid($password, 'password');
-			$allFieldAreValid = $this->isFieldValueValid($confirmedPassword, 'confirmedPassword');
+			$allFieldAreValid = $this->isFieldValueValid($username, 'username') ? $allFieldAreValid : false;
+			$allFieldAreValid = $this->isFieldValueValid($email, 'email') ? $allFieldAreValid : false;
+			$allFieldAreValid = $this->isPasswordValueValid($password, 'password') ? $allFieldAreValid : false;
+			$allFieldAreValid = $this->isPasswordValueValid($confirmedPassword, 'confirmedPassword') ? $allFieldAreValid : false;
 
 			if (!$allFieldAreValid) {
 				// return to the default page for registration

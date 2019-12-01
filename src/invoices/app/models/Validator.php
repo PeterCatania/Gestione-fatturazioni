@@ -45,7 +45,7 @@ class Validator
 	 * @param mixed $data The data to validate
 	 * @return boolean The validated data
 	 */
-	private function generalValidation($data)
+	public function generalValidation($data)
 	{
 		$data = trim(stripslashes(htmlspecialchars($data)));
 		return $data;

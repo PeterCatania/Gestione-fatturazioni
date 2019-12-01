@@ -97,4 +97,26 @@ class Controller
 		}
 		return $fieldIsValid;
 	}
+
+	/**
+	 * Verify the vadility of the passsword field value, from a form.
+	 * if the value is valid true or false if not.
+	 *
+	 * @param fieldValue the password field value, from a form
+	 * @param fieldName the password field name, from a form
+	 * @return boolean the validity of the password field value
+	 */
+	public function isPasswordValueValid($fieldValue, $fieldName)
+	{
+		$fieldIsValid = true;
+		$emptyPasswordHash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+		// verify if the password field value, from the form is empty
+		if (empty($fieldValue) || $fieldValue == $emptyPasswordHash) {
+			$_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
+			$fieldIsValid = false;
+		} else {
+			$_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
+		}
+		return $fieldIsValid;
+	}
 }

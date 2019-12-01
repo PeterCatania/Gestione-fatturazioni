@@ -35,7 +35,7 @@
 			</ul>
 		</div><!-- /.navbar-collapse -->
 		<!-- Logout Button -->
-		<form class="navbar-form form-inline mr-2" method="POST" action="<?= URL ?>home/logout">
+		<form class="form-inline mr-2" method="POST" action="<?= URL ?>home/logout">
 			<button class="btn btn-primary navbar-btn mr-2 text-capitalize" type="submit" name="logout">Logout</button>
 		</form>
 	</nav>
@@ -55,28 +55,57 @@
 									<h4 class="underlined-title">Nuovo Utente</h4>
 
 									<!-- New User Form -->
-									<form method="POST" action="<?php echo URL; ?>products/saveProduct">
-										<input name="id" type="hidden" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : '' ?>">
+									<form method="POST" action="<?php echo URL; ?>users/saveUser">
+										<!-- 1th row -->
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group mb-3">
 													<label for="username" class="mb-n1">
-														<p class="h6">Username</p>
+														<p class="h6">Nome Utente</p>
 													</label>
-													<input class="form-control mt-1 <?= $_SESSION['usernameCSSValidityClass'] ?>" name="username" type="text" value="<?= $_SESSION['username'] ?>">
+													<input name="username" type="text" class="form-control mt-1 shadow-sm
+												<?= $_SESSION['usernameCSSValidityClass'] ?>" value="<?= $_SESSION['username'] ?>">
 													<div class="invalid-feedback very-small">
-														Inserire un username
+														Inserire un nome utente
 													</div>
 												</div>
 											</div>
 											<div class="col-md-7">
 												<div class="form-group mb-3">
-													<label class="mb-n1" for="email">
+													<label for="email" class="mb-n1">
 														<p class="h6">Email</p>
 													</label>
-													<input class="form-control mt-1 <?= $_SESSION['emailCSSValidityClass'] ?>" type="mail" name="email" value="<?= $_SESSION['email'] ?>">
+													<input name="email" type="mail" class="form-control mt-1 shadow-sm
+												<?= $_SESSION['emailCSSValidityClass'] ?>" value="<?= $_SESSION['email'] ?>">
 													<div class="invalid-feedback very-small">
 														Inserire un email
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- 2th row -->
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group mb-3">
+													<label for="password" class="mb-n1">
+														<p class="h6">Password</p>
+													</label>
+													<input name="password" type="password" class="form-control mt-1 shadow-sm
+												<?= $_SESSION['passwordCSSValidityClass'] ?>" value="<?= $_SESSION['password'] ?>">
+													<div class="invalid-feedback very-small">
+														Inserire una password
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group mb-3">
+													<label for="confirmedPassword" class="mb-n1">
+														<p class="h6">Conferma Password</p>
+													</label>
+													<input name="confirmedPassword" type="password" class="form-control mt-1 shadow-sm
+												<?= $_SESSION['confirmedPasswordCSSValidityClass'] ?>" value="<?= $_SESSION['confirmedPassword'] ?>">
+													<div class="invalid-feedback very-small">
+														Inserire la stessa password
 													</div>
 												</div>
 											</div>
@@ -93,7 +122,7 @@
 						<!-- List of users -->
 						<form method="POST" action="<?php echo URL; ?>users/updateUsers">
 							<button class="btn btn-primary btn-wide mr-1" type="submit" name="saveUsers"><i class="far fa-save fa-lg mr-2"></i>Salva Tutto</button>
-							<button class="btn btn-primary btn-wide" type="submit" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
+							<button class="btn btn-primary btn-wide" type="button" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
 							<div class="table-responsive">
 								<table class="table table-striped mt-md-3 mt-1 ty-align" class="col-12">
 									<thead class="thead-midnight-blue">
@@ -105,7 +134,7 @@
 											<th class="text-right" scope="col"></th>
 										</tr>
 									</thead>
-									<?php if (!empty($data['users'])) : ?>
+									<?php if ($data['users']->count() > 0) : ?>
 										<tbody>
 											<?php foreach ($data['users'] as $user) : ?>
 												<tr>
@@ -136,7 +165,11 @@
 											<?php endforeach; ?>
 										</tbody>
 									<?php else : ?>
-										<p>Non ci sono utenti da abilitare</p>
+										<tbody>
+											<td colspan="4">
+												<p class="h6">Non ci sono utenti da abilitare</p>
+											</td>
+										</tbody>
 									<?php endif; ?>
 								</table>
 							</div>

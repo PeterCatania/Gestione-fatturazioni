@@ -80,16 +80,14 @@ class UserModel
 	 * @param int $id The id of the user 
 	 * @param string $username The username of the user
 	 * @param string $email The email of the user
-	 * @param bool $enabled The value that tell if a user is enabled, of the user
 	 * @return void
 	 */
-	public function updateUser($id, $username, $email, $enabled)
+	public function updateUser($id, $username, $email)
 	{
 		$users = new UserQuery();
 		$user = $users->findPK($id);
 		$user->setUsername($username);
 		$user->setEmail($email);
-		$user->setEnabled($enabled);
 		$user->save();
 	}
 
