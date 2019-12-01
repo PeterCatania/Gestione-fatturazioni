@@ -28,7 +28,7 @@ define('URL', 'http://localhost/Gestione-fatturazioni/src/invoices/');
 /**
  * Define the ROTT of the site
  */
-define('ROOT', '/invoices/app/');
+define('ROOT', '/Gestione-fatturazioni/src/invoices/app/');
 
 /**
  * CSS Files URL
@@ -55,7 +55,7 @@ define('VENDOR_URL', ROOT . 'assets/vendor/');
  * jQuery URL
  *
  * Needed for Boostrap and oder JS files
- * Depends on VENDER_URL
+ * Depends on VENDOR_URL
  * @link https://jquery.com
  */
 define('JQUERY_URL', VENDOR_URL . 'jquery/jquery-3.4.1.min.js');
@@ -64,7 +64,7 @@ define('JQUERY_URL', VENDOR_URL . 'jquery/jquery-3.4.1.min.js');
  * Popper URL
  *
  * Needed for Boostrap
- * Depends on VENDER_URL
+ * Depends on VENDOR_URL
  * @link https://popper.js.org
  */
 define('POPPER_URL', VENDOR_URL . 'popper/popper.min.js');
@@ -73,7 +73,7 @@ define('POPPER_URL', VENDOR_URL . 'popper/popper.min.js');
  * Font Awesome files URL
  *
  * Provide the icons of the site
- * Depends on VENDER_URL
+ * Depends on VENDOR_URL
  * @link https://fontawesome.com
  */
 define('FONTAWESOME_URL', VENDOR_URL . 'fontawesome/5.11.2/');
@@ -86,6 +86,16 @@ define('FONTAWESOME_URL', VENDOR_URL . 'fontawesome/5.11.2/');
  * @link https://getbootstrap.com
  */
 define('BOOTSTRAP_URL', VENDOR_URL . 'bootstrap/4.3.1/');
+
+/**
+ * Flat UI files URL
+ *
+ * Framework for Front-End
+ * Depends on VENDOR_URL
+ * @link https://getbootstrap.com
+ */
+define('FLATUI_URL', VENDOR_URL . 'flatui/');
+define('FLATUI_GLYPS', FLATUI_URL . 'app/fonts/glyphicons/');
 
 /**
  * Define the constants of the Database

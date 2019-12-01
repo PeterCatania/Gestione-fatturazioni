@@ -8,12 +8,13 @@
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" type="text/css" href="<?= BOOTSTRAP_URL ?>css/bootstrap.min.css">
-	<!-- Font Awesome JS  -->
+	<!-- Font Awesome CSS  -->
 	<link rel="stylesheet" type="text/css" href="<?= FONTAWESOME_URL ?>css/all.css">
-	<!-- Navbar CSS -->
-	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>navbar.css">
+	<!-- Flat UI CSS  -->
+	<link rel="stylesheet" type="text/css" href="<?= FLATUI_URL ?>dist/css/flat-ui.css">
 	<!-- Main CSS -->
 	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
+	<link rel="stylesheet" type="text/svg+xml" href="<?= FLATUI_GLYPS ?>flat-ui-pro-icons-regular.svg">
 
 	<!-- Favicon -->
 	<link rel="icon" href="<?= ROOT ?>assets/img/favicon.png" />
@@ -21,93 +22,125 @@
 	<title>Utenti</title>
 </head>
 
-<body class="bg-light">
+<body class="bg-cloud">
 	<!-- Navigation bar -->
-	<nav class="navbar navbar-icon-top navbar-expand navbar-dark bg-dark fixed-top-sm">
-		<a class="navbar-brand" href="#">Utenti</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-
-				<li class="nav-item">
-					<a class="nav-link" href="<?= URL ?>invoices/index">
-						<i class="fas fa-file-invoice"></i>
-						Fatture
-						<span class="badge badge-warning"></span>
-					</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="<?= URL ?>products/index">
-						<i class="fas fa-cubes"></i>
-						Prodotti
-						<span class="badge badge-danger"></span>
-					</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="<?= URL ?>clients/index">
-						<i class="far fa-address-card"></i>
-						Clienti
-						<span class="badge badge-warning"></span>
-					</a>
-				</li>
+	<nav class="navbar navbar-inverse navbar-expand-md fixed-top-sm custom-navbar" role="navigation">
+		<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
+		<div class="collapse navbar-collapse" id="navbar-collapse-01">
+			<ul class="nav navbar-nav mr-auto">
+				<li><a href="<?= URL ?>invoices/index">Fatture</a></li>
+				<li class="active"><a href="#">Utenti</a></li>
+				<li><a href="<?= URL ?>clients/index">Clienti</a></li>
+				<li><a href="<?= URL ?>products/index">Prodotti</a></li>
 			</ul>
-			<!-- Button Logout -->
-			<form class="form-inline my-2 my-lg-0">
-				<a href="<?= URL ?>home/logout" class="btn btn-outline-secondary my-2 my-sm-0 text-light border">logout</a>
-			</form>
-		</div>
+		</div><!-- /.navbar-collapse -->
+		<!-- Logout Button -->
+		<form class="navbar-form form-inline mr-2" method="POST" action="<?= URL ?>home/logout">
+			<button class="btn btn-primary navbar-btn mr-2 text-capitalize" type="submit" name="logout">Logout</button>
+		</form>
 	</nav>
 
 	<!-- Invoices Card -->
 	<div class"container">
-		<div class="row d-flex justify-content-center mt-sm-6">
+		<div class="row d-flex justify-content-center mt-sm-6 ">
 			<div class="col-md-11 col-xl-10">
-				<div class="card card-primary">
-					<div class="card-body">
+				<div class="card card-primary border-0">
+					<div class="card-body px-4">
 						<!-- Login Form Title-->
 						<h2 class="card-title">Utenti</h2>
-						<hr class="bg-dark mt-n1">
 
-						<?php if (!empty($data['users'])) : ?>
-							<!-- List of users -->
-							<form method="POST" action="<?php echo URL; ?>users/enable">
-								<div class="table-responsive">
-									<table class="table table-striped mt-md-4 mt-2" class="col-12">
-										<thead class="thead-dark">
-											<tr>
-												<th scope="col">Nome Utente</th>
-												<th scope="col">Email</th>
-												<td scope="col" class="bg-white border-white text-center">
-													<button class="btn btn-primary" type="submit" name="enable">Salva</button>
-												</td>
-											</tr>
-										</thead>
+						<div class="container mb-5 mt-5">
+							<div class="row justify-content-md-center">
+								<div class="col-md-11 section-form px-4 pb-4">
+									<h4 class="underlined-title">Nuovo Utente</h4>
+
+									<!-- New User Form -->
+									<form method="POST" action="<?php echo URL; ?>products/saveProduct">
+										<input name="id" type="hidden" value="<?= isset($_SESSION['id']) ? $_SESSION['id'] : '' ?>">
+										<div class="row">
+											<div class="col-md-5">
+												<div class="form-group mb-3">
+													<label for="username" class="mb-n1">
+														<p class="h6">Username</p>
+													</label>
+													<input class="form-control mt-1 <?= $_SESSION['usernameCSSValidityClass'] ?>" name="username" type="text" value="<?= $_SESSION['username'] ?>">
+													<div class="invalid-feedback very-small">
+														Inserire un username
+													</div>
+												</div>
+											</div>
+											<div class="col-md-7">
+												<div class="form-group mb-3">
+													<label class="mb-n1" for="email">
+														<p class="h6">Email</p>
+													</label>
+													<input class="form-control mt-1 <?= $_SESSION['emailCSSValidityClass'] ?>" type="mail" name="email" value="<?= $_SESSION['email'] ?>">
+													<div class="invalid-feedback very-small">
+														Inserire un email
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Submit -->
+										<button class="btn btn-primary btn-wide" type="submit" name="saveUser">Aggiungi</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<h3 class="mb-3 underlined-title">Lista Utenti</h3>
+
+						<!-- List of users -->
+						<form method="POST" action="<?php echo URL; ?>users/updateUsers">
+							<button class="btn btn-primary btn-wide mr-1" type="submit" name="saveUsers"><i class="far fa-save fa-lg mr-2"></i>Salva Tutto</button>
+							<button class="btn btn-primary btn-wide" type="submit" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
+							<div class="table-responsive">
+								<table class="table table-striped mt-md-3 mt-1 ty-align" class="col-12">
+									<thead class="thead-midnight-blue">
+										<tr>
+											<th class="d-none">Id</th>
+											<th scope="col">Nome Utente</th>
+											<th scope="col">Email</th>
+											<th class="text-center pl-4" scope="col">Abilitato</th>
+											<th class="text-right" scope="col"></th>
+										</tr>
+									</thead>
+									<?php if (!empty($data['users'])) : ?>
 										<tbody>
 											<?php foreach ($data['users'] as $user) : ?>
 												<tr>
-													<td><?= $user->getUsername() ?></td>
-													<td><?= $user->getEmail() ?></td>
-													<td class="bg-white border-white pl-3">
-														<div class="custom-control custom-checkbox">
-															<input type="checkbox" class="custom-control-input" id="enabled<?= $user->getId() ?>" name="usersIdToEnable[]" value="<?= $user->getId() ?>" <?= $user->getEnabled() ? 'checked' : '' ?>>
-															<label class="custom-control-label" for="enabled<?= $user->getId() ?>">Abilita</label>
+													<td class="d-none"><input class="<?= "user-" . $user->getId() . "-field" ?>" name="ids[]" value="<?= $user->getId() ?>" disabled></td>
+													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="usernames[]" value="<?= $user->getUsername() ?>" disabled></td>
+													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="emails[]" value="<?= $user->getEmail() ?>" disabled></td>
+													<td>
+														<div class="row justify-content-center">
+															<label class="checkbox p-0" for="enabled<?= $user->getId() ?>">
+																<input type="checkbox" name="usersIdToEnable[]" id="enabled<?= $user->getId() ?>" data-toggle="checkbox" value="<?= $user->getId() ?>" <?= $user->getEnabled() ? 'checked' : '' ?>>
+															</label>
+														</div>
+													</td>
+													<td class="text-right pl-0">
+														<div class="btn-group">
+															<button class="btn-icon icon-save mr-2" type="submit" name="updateUser" value="<?= $user->getId() ?>">
+																<i class="far fa-save fa-lg btn-icon-src"></i>
+															</button>
+															<button class="btn-icon icon-modify mr-2" type="button" name="modifyUser" value="<?= $user->getId() ?>">
+																<i class=" far fa-edit fa-lg btn-icon-src"></i>
+															</button>
+															<button class="btn-icon icon-delete" type="submit" name="deleteUser" value="<?= $user->getId() ?>">
+																<i class="far fa-trash-alt fa-lg btn-icon-src"></i>
+															</button>
 														</div>
 													</td>
 												</tr>
 											<?php endforeach; ?>
 										</tbody>
-									</table>
-								</div>
-							</form>
-						<?php else : ?>
-							<p>Non ci sono utenti da abilitare</p>
-						<?php endif; ?>
-
+									<?php else : ?>
+										<p>Non ci sono utenti da abilitare</p>
+									<?php endif; ?>
+								</table>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -127,12 +160,16 @@
 	<script src="<?php echo JQUERY_URL; ?>"></script>
 	<!-- Popper -->
 	<script src="<?php echo POPPER_URL; ?>"></script>
-	<!-- Login JS -->
-	<script src="<?php echo JS_URL; ?>login.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="<?php print BOOTSTRAP_URL; ?>js/bootstrap.min.js"></script>
 	<!-- Font Awesome JS  -->
 	<script src="<?php echo FONTAWESOME_URL; ?>js/all.js"></script>
+	<!-- Flat UI JS  -->
+	<script src="<?php echo FLATUI_URL; ?>docs/assets/js/application.js"></script>
+	<script src="<?php echo FLATUI_URL; ?>docs/assets/js/prettify.js"></script>
+	<script src="<?php echo FLATUI_URL; ?>app/scripts/flat-ui.js"></script>
+	<!-- Main JS -->
+	<script src="<?php echo JS_URL; ?>main.js"></script>
 </body>
 
 </html>

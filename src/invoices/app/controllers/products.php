@@ -43,14 +43,16 @@ class Products extends Controller
 		// prevents that products accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
-		// The description and the price fields values, in the form for save a new product,
-		// Their values will be printed in their corrispective fields
+		/**
+		 * The product fields values from the form,
+		 * Their values will be printed in their corrispective fields before save
+		 */
 		$_SESSION['description'] = '';
 		$_SESSION['price'] = '';
 
 		/**
 		 * Contains names of CSS classes.
-		 * This classes indicate if the registration inputs are valid or invalid.
+		 * This classes indicate if the product fields are valid or invalid.
 		 * If the input is valid contains: "is-valid"
 		 * If the input is not valid contains: "is-invalid"
 		 */

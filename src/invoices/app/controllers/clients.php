@@ -43,9 +43,10 @@ class Clients extends Controller
 		// prevents that clients accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
-		// The clientName, clientSurname, street, houseNo, city, nap, telephone, email, companyName fields values, 
-		// in the form for save a new client,
-		// Their values will be printed in their corrispective fields
+		/**
+		 * The client fields values from the form,
+		 * Their values will be printed in their corrispective fields before save
+		 */
 		$_SESSION['clientName'] = '';
 		$_SESSION['clientSurname'] = '';
 		$_SESSION['street'] = '';
@@ -58,7 +59,7 @@ class Clients extends Controller
 
 		/**
 		 * Contains names of CSS classes.
-		 * This classes indicate if the registration inputs are valid or invalid.
+		 * This classes indicate if the client fields are valid or invalid.
 		 * If the input is valid contains: "is-valid"
 		 * If the input is not valid contains: "is-invalid"
 		 */

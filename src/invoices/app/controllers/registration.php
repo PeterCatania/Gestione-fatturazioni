@@ -21,8 +21,10 @@ class Registration extends Controller
 	{
 		session_start(); // important!
 
-		// The username and the email of the registration form,
-		// Their values will be printed in their corrispective fields
+		/**
+		 * The user registration fields values from the form,
+		 * Their values will be printed in their corrispective fields before save
+		 */
 		$_SESSION['username'] = '';
 		$_SESSION['email'] = '';
 		$_SESSION['password'] = '';
@@ -30,7 +32,7 @@ class Registration extends Controller
 
 		/**
 		 * Contains names of CSS classes.
-		 * This classes indicate if the registration inputs are valid or invalid.
+		 * This classes indicate if the user registration fields are valid or invalid.
 		 * If the input is valid contains: "is-valid"
 		 * If the input is not valid contains: "is-invalid"
 		 */
@@ -63,7 +65,7 @@ class Registration extends Controller
 			$password = hash('sha256', $validator->generalValidation($_POST['password']));
 			$confirmedPassword = hash('sha256', $validator->generalValidation($_POST['confirmedPassword']));
 
-			// the getted field from the registration form are inserted in the Session
+			// the getted field values from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;
 			$_SESSION['email'] = $email;
 			$_SESSION['password'] = $_POST['password'];

@@ -1,7 +1,10 @@
+/* HTML Elements ----------------------------------------------------------------------- */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-variant: normal;
+  width: 100vw;
+  height: 100vh;
 }
 
 h1,
@@ -13,7 +16,6 @@ h6,
 h7 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
-  color: #fff;
 }
 
 p,
@@ -22,13 +24,112 @@ span {
   font-weight: 400;
 }
 
-.text-center {
-  text-align: center;
-}
-
 hr {
   border: 0;
   height: 1px;
+}
+
+/* Buttons ---------------------------------------------------------------------------- */
+
+button {
+  border-radius: 0;
+  border: 0;
+  padding: 0;
+}
+
+.btn-icon {
+  background-color: inherit;
+  border: 2px solid;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-icon-src {
+  margin: 7px 7px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.icon-save {
+  color: #2ecc71;
+}
+
+.icon-modify {
+  color: #3498db;
+}
+
+.icon-delete {
+  color: #c0392b;
+}
+
+.fa-lg {
+  font-size: 24px;
+}
+
+.btn-primary-icon {
+  background-color: #3498db;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px groove black;
+}
+
+.btn-primary-icon:hover {
+  color: white;
+}
+
+.btn-primary-icon-src {
+  margin: 6px 8px;
+}
+
+/* Table ---------------------------------------------------------------------------- */
+
+.input-table {
+  min-width: 100px;
+  font-size: 0.9rem;
+}
+
+/*.table-striped tbody tr:nth-of-type(even) .input-table {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.table-striped tbody tr:nth-of-type(odd) .input-table {
+  background-color: white;
+}*/
+
+.input-table:focus {
+  border: 2px solid rgba(0, 61, 122, 0.7);
+}
+
+.input-table:disabled {
+  border: 0;
+  background-color: transparent;
+  color: #2c3e50;
+}
+
+.modify-table-row .input-table {
+  background-color: blue;
+}
+
+.ty-align td,
+.ty-align th {
+  vertical-align: middle;
+}
+
+.thead-midnight-blue {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+/* Mixed ---------------------------------------------------------------------------- */
+
+.custom-control-label:after,
+.custom-control-label:before {
+  width: 21px;
+  height: 21px;
+}
+
+.bg-transparent {
+  background-color: transparent;
 }
 
 .no-underline {
@@ -39,13 +140,34 @@ hr {
   font-size: 0.7rem;
 }
 
-.card-title {
-  font-size: 2rem;
-}
-
 .input-text {
   font-size: 1rem;
 }
+
+.custom-navbar {
+  border-radius: 0;
+}
+
+.bg-cloud {
+  background-color: #ecf0f1;
+}
+
+.section-form {
+  background-color: #eff0f2;
+  border-radius: 10px;
+}
+
+.mt-6 {
+  margin-top: 6rem;
+}
+
+.underlined-title {
+  border-bottom: 2px solid #2c3e50;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive section ---------------------------------------------------------------------------- */
 
 @media (min-width: 576px) {
   .mt-sm-6 {
@@ -54,10 +176,6 @@ hr {
 
   .very-small {
     font-size: 0.8rem;
-  }
-
-  .card-title {
-    font-size: 2rem;
   }
 
   .fixed-top-sm {
@@ -86,10 +204,6 @@ hr {
     font-size: 0.8rem;
   }
 
-  .card-title {
-    font-size: 2.2rem;
-  }
-
   .fixed-top-md {
     position: fixed;
     top: 0;
@@ -116,10 +230,6 @@ hr {
     font-size: 0.9rem;
   }
 
-  .card-title {
-    font-size: 2.5rem;
-  }
-
   .fixed-top-lg {
     position: fixed;
     top: 0;
@@ -144,10 +254,6 @@ hr {
 
   .very-small {
     font-size: 0.9rem;
-  }
-
-  .card-title {
-    font-size: 2.5rem;
   }
 
   .fixed-top-xl {
