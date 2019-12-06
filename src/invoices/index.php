@@ -7,6 +7,7 @@
 
 // Import the config file
 require 'app/config/config.php';
+require 'app/config/configComposer.php';
 
 // Import the application main classes
 require_once 'app/core/App.php';

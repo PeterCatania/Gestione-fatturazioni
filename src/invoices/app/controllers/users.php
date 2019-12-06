@@ -64,6 +64,9 @@ class Users extends Controller
 		$_SESSION['confirmedPasswordCSSValidityClass'] = '';
 
 		$this->showUsers();
+
+		// Import the required js file
+		$this->js("usersScript");
 	}
 
 	/**
@@ -157,62 +160,48 @@ class Users extends Controller
 				$emails = $_POST['emails'];
 
 				for ($i = 0; $i < count($ids); $i++) {
-					$userModel->updateUser($ids[$i], $usernames[$i], $emails[$i]);
+					$userModel->updateUserWithoutEnabled($ids[$i], $usernames[$i], $emails[$i]);
 				}
 			}
-
-			// show all the users saved in the database
-			$this->showUsers();
-		} elseif (isset($_POST['updateUser'])) {
-			$userIdToSave = $_POST['updateUser'];
-
-			//get the array that contain the ids of the users to enable
-			$usersIdToEnable = isset($_POST['usersIdToEnable']) ? $_POST['usersIdToEnable'] : null;
-
-			// instance a new object of the model class "UsersModel"
-			$this->model('UserModel');
-			$userModel = new UserModel();
-			$users = $userModel->getUsers();
-
-			//enable only the corrisponding user
-			foreach ($users as $user) {
-				$userId = $user->getId();
-
-				if ($userId = $userIdToSave) {
-					if (!empty($usersIdToEnable) && in_array($userId, $usersIdToEnable)) {
-						$userModel->enableUserById($userId, true);
-					} else {
-						$userModel->enableUserById($userId, false);
-					}
-				}
-			}
-
-			// save data only of the corrisponding user
-			if (isset($_POST['ids'])) {
-				$ids = $_POST['ids'];
-				$usernames = $_POST['usernames'];
-				$emails = $_POST['emails'];
-
-				for ($i = 0; $i < count($ids); $i++) {
-					if ($ids[$i] == $userIdToSave) {
-						$userModel->updateUser($ids[$i], $usernames[$i], $emails[$i]);
-					}
-				}
-			}
-
-			// show all the users saved in the database
-			$this->showUsers();
-		} elseif (isset($_POST['deleteUser'])) {
-			// the id of the user
-			$userId = $_POST['deleteUser'];
-
-			// delete the user with the corrisponding id
-			$this->model('UserModel');
-			$userModel = new UserModel();
-			$userModel->deleteUserById($userId);
 
 			// show all the users saved in the database
 			$this->showUsers();
 		}
+	}
+
+	/**
+	 * Update a user, 
+	 * with the informations contained in the upcoming POST request.
+	 * 
+	 * @return void
+	 */
+	public function updateUser()
+	{
+		// the json containing the informations of the new user
+		$user = json_decode($_POST['user'], true);
+
+		$this->model('UserModel');
+		$userModel = new UserModel();
+		$userModel->updateUser($user['ids[]'], $user['usernames[]'], $user['emails[]'], $user['enabled']);
+
+		echo "true";
+	}
+
+	/**
+	 * Delete a user, 
+	 * from the user id contained in the upcoming POST request.
+	 *
+	 * @return void
+	 */
+	public function deleteUser()
+	{
+		// the user id to update
+		$userId = $_POST['id'];
+
+		$this->model('UserModel');
+		$userModel = new UserModel();
+		$userModel->deleteUserById($userId);
+
+		echo "true";
 	}
 }

@@ -32,6 +32,16 @@ class Controller
 	}
 
 	/**
+	 * Import a js script file.
+	 *
+	 * @param string $js The js file to import
+	 */
+	public function js($file)
+	{
+		require_once 'app/assets/js/' . $file . '.php';
+	}
+
+	/**
 	 * Redirect to a page that is related with the given controller, and the method.
 	 */
 	public function redirectToPage(

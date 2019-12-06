@@ -12,6 +12,8 @@
 	<link rel="stylesheet" type="text/css" href="<?= FONTAWESOME_URL ?>css/all.css">
 	<!-- Flat UI CSS  -->
 	<link rel="stylesheet" type="text/css" href="<?= FLATUI_URL ?>dist/css/flat-ui.css">
+	<!-- JQuery Confirm CSS -->
+	<link rel="stylesheet" type="text/css" href="<?= JQUERY_CONFIRM_URL ?>jquery-confirm.min.css">
 	<!-- Main CSS -->
 	<link rel="stylesheet" type="text/css" href="<?= CSS_URL ?>main.css">
 	<link rel="stylesheet" type="text/svg+xml" href="<?= FLATUI_GLYPS ?>flat-ui-pro-icons-regular.svg">
@@ -63,7 +65,7 @@
 													<label for="username" class="mb-n1">
 														<p class="h6">Nome Utente</p>
 													</label>
-													<input name="username" type="text" class="form-control mt-1 shadow-sm
+													<input name="username" type="text" class="form-control mt-1
 												<?= $_SESSION['usernameCSSValidityClass'] ?>" value="<?= $_SESSION['username'] ?>">
 													<div class="invalid-feedback very-small">
 														Inserire un nome utente
@@ -75,7 +77,7 @@
 													<label for="email" class="mb-n1">
 														<p class="h6">Email</p>
 													</label>
-													<input name="email" type="mail" class="form-control mt-1 shadow-sm
+													<input name="email" type="mail" class="form-control mt-1 
 												<?= $_SESSION['emailCSSValidityClass'] ?>" value="<?= $_SESSION['email'] ?>">
 													<div class="invalid-feedback very-small">
 														Inserire un email
@@ -90,7 +92,7 @@
 													<label for="password" class="mb-n1">
 														<p class="h6">Password</p>
 													</label>
-													<input name="password" type="password" class="form-control mt-1 shadow-sm
+													<input name="password" type="password" class="form-control mt-1 
 												<?= $_SESSION['passwordCSSValidityClass'] ?>" value="<?= $_SESSION['password'] ?>">
 													<div class="invalid-feedback very-small">
 														Inserire una password
@@ -102,7 +104,7 @@
 													<label for="confirmedPassword" class="mb-n1">
 														<p class="h6">Conferma Password</p>
 													</label>
-													<input name="confirmedPassword" type="password" class="form-control mt-1 shadow-sm
+													<input name="confirmedPassword" type="password" class="form-control mt-1 
 												<?= $_SESSION['confirmedPasswordCSSValidityClass'] ?>" value="<?= $_SESSION['confirmedPassword'] ?>">
 													<div class="invalid-feedback very-small">
 														Inserire la stessa password
@@ -122,7 +124,7 @@
 						<!-- List of users -->
 						<form method="POST" action="<?php echo URL; ?>users/updateUsers">
 							<button class="btn btn-primary btn-wide mr-1" type="submit" name="saveUsers"><i class="far fa-save fa-lg mr-2"></i>Salva Tutto</button>
-							<button class="btn btn-primary btn-wide" type="button" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
+							<button id="btn-modify-all" class="btn btn-primary btn-wide" type="button" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
 							<div class="table-responsive">
 								<table class="table table-striped mt-md-3 mt-1 ty-align" class="col-12">
 									<thead class="thead-midnight-blue">
@@ -134,11 +136,11 @@
 											<th class="text-right" scope="col"></th>
 										</tr>
 									</thead>
-									<?php if ($data['users']->count() > 0) : ?>
-										<tbody>
+									<tbody id="usersTableBody">
+										<?php if ($data['users']->count() > 0) : ?>
 											<?php foreach ($data['users'] as $user) : ?>
 												<tr>
-													<td class="d-none"><input class="<?= "user-" . $user->getId() . "-field" ?>" name="ids[]" value="<?= $user->getId() ?>" disabled></td>
+													<td class="d-none"><input class="input-table <?= "user-" . $user->getId() . "-field" ?>" name="ids[]" value="<?= $user->getId() ?>" disabled></td>
 													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="usernames[]" value="<?= $user->getUsername() ?>" disabled></td>
 													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="emails[]" value="<?= $user->getEmail() ?>" disabled></td>
 													<td>
@@ -150,27 +152,25 @@
 													</td>
 													<td class="text-right pl-0">
 														<div class="btn-group">
-															<button class="btn-icon icon-save mr-2" type="submit" name="updateUser" value="<?= $user->getId() ?>">
+															<button class="btn-icon icon-save mr-2" type="button" value="<?= $user->getId() ?>">
 																<i class="far fa-save fa-lg btn-icon-src"></i>
 															</button>
-															<button class="btn-icon icon-modify mr-2" type="button" name="modifyUser" value="<?= $user->getId() ?>">
+															<button class="btn-icon icon-modify mr-2" type="button" value="<?= $user->getId() ?>">
 																<i class=" far fa-edit fa-lg btn-icon-src"></i>
 															</button>
-															<button class="btn-icon icon-delete" type="submit" name="deleteUser" value="<?= $user->getId() ?>">
+															<button class="btn-icon icon-delete" type="button" value="<?= $user->getId() ?>">
 																<i class="far fa-trash-alt fa-lg btn-icon-src"></i>
 															</button>
 														</div>
 													</td>
 												</tr>
 											<?php endforeach; ?>
-										</tbody>
-									<?php else : ?>
-										<tbody>
+										<?php else : ?>
 											<td colspan="4">
 												<p class="h6">Non ci sono utenti da abilitare</p>
 											</td>
-										</tbody>
-									<?php endif; ?>
+										<?php endif; ?>
+									</tbody>
 								</table>
 							</div>
 						</form>
@@ -201,6 +201,9 @@
 	<script src="<?php echo FLATUI_URL; ?>docs/assets/js/application.js"></script>
 	<script src="<?php echo FLATUI_URL; ?>docs/assets/js/prettify.js"></script>
 	<script src="<?php echo FLATUI_URL; ?>app/scripts/flat-ui.js"></script>
+	<!-- JQuery Confirm JS -->
+	<script src="<?php echo JQUERY_CONFIRM_URL; ?>jquery-confirm.min.js"></script>
+
 	<!-- Main JS -->
 	<script src="<?php echo JS_URL; ?>main.js"></script>
 </body>

@@ -9,21 +9,12 @@
 class UserModel
 {
 	/**
-	 * Connection with the database.
-	 */
-	private $connInvoices = null;
-
-	/**
 	 * Empty constructor.
 	 * 
 	 * @return void
 	 */
 	public function __construct()
-	{
-		// get the connection with the database
-		require_once 'Database.php';
-		$this->connInvoices = Database::getDBConnection();
-	}
+	{ }
 
 	/**
 	 * Get the users from the database, that are not enabled.
@@ -32,7 +23,6 @@ class UserModel
 	 */
 	public function getUsers()
 	{
-
 		$users =  new UserQuery();
 		$users->orderByEnabled();
 		$users->orderByUsername();
@@ -82,7 +72,25 @@ class UserModel
 	 * @param string $email The email of the user
 	 * @return void
 	 */
-	public function updateUser($id, $username, $email)
+	public function updateUser($id, $username, $email, $enabled)
+	{
+		$users = new UserQuery();
+		$user = $users->findPK($id);
+		$user->setUsername($username);
+		$user->setEmail($email);
+		$user->setEnabled($enabled);
+		$user->save();
+	}
+
+	/**
+	 * Update a user saved in the database.
+	 *
+	 * @param int $id The id of the user 
+	 * @param string $username The username of the user
+	 * @param string $email The email of the user
+	 * @return void
+	 */
+	public function updateUserWithoutEnabled($id, $username, $email)
 	{
 		$users = new UserQuery();
 		$user = $users->findPK($id);

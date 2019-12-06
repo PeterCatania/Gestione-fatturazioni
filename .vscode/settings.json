@@ -6,5 +6,7 @@
   "eslint.run": "onSave",
   "eslint.options": {
     "configFile": "src/invoices/.eslintrc.json"
-  }
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false
 }

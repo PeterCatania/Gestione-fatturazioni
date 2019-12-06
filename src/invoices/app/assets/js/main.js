@@ -1,37 +1,6 @@
-/*$.fn.textWidth = function(text, font) {
-  if (!$.fn.textWidth.fakeEl)
-    $.fn.textWidth.fakeEl = $("<span>")
-      .hide()
-      .appendTo(document.body);
-
-  $.fn.textWidth.fakeEl
-    .text(text || this.val() || this.text() || this.attr("placeholder"))
-    .css("font", font || this.css("font"));
-
-  return $.fn.textWidth.fakeEl.width();
-};
-
-$(".width-dynamic")
-  .on("input", function() {
-    var inputWidth = $(this).textWidth() + 5;
-    $(this).css({
-      width: inputWidth
-    });
-  })
-  .trigger("input");
-
-function inputWidth(elem, minW, maxW) {
-  elem = $(this);
-  console.log(elem);
-}
-
-var targetElem = $(".width-dynamic");
-
-inputWidth(targetElem);*/
 
 $(document).ready(function() {
-  /* Botton Icon zoom ---------------------------------------------*/
-
+  // aimation when move is over the icon, the icon will be zoomed
   $(".btn-icon")
     .mouseenter(function() {
       $(this)
@@ -44,6 +13,7 @@ $(document).ready(function() {
         .css("transform", "scale(" + 1.0 + ")");
     });
 
+  // when click on icon, enable to modify the fields of the table row
   $(".icon-modify").click(function() {
     var userId = $(this).val();
     var userFields = $(".user-" + userId + "-field");
@@ -55,9 +25,8 @@ $(document).ready(function() {
     });
   });
 
-  /*$(".icon-save").click(function() {
-    var userId = $(this).val();
-    var userFields = ".user-" + userId + "-field";
-    $(userFields).prop("disabled", false);
-  });*/
+  // enable to modify all the fields of the table
+  $("#btn-modify-all").click(function(){
+    $("input .input-table").prop("disabled",false);
+  });
 });

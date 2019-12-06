@@ -14,19 +14,13 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-// setup the autoloading
-require_once 'vendor/autoload.php';
-
-// setup Propel
-require_once 'generated-conf/config.php';
-
 /**
  * Define the URL of the site
  */
 define('URL', 'http://localhost/Gestione-fatturazioni/src/invoices/');
 
 /**
- * Define the ROTT of the site
+ * Define the ROOT of the site
  */
 define('ROOT', '/Gestione-fatturazioni/src/invoices/app/');
 
@@ -92,10 +86,19 @@ define('BOOTSTRAP_URL', VENDOR_URL . 'bootstrap/4.3.1/');
  *
  * Framework for Front-End
  * Depends on VENDOR_URL
- * @link https://getbootstrap.com
+ * @link 
  */
 define('FLATUI_URL', VENDOR_URL . 'flatui/');
 define('FLATUI_GLYPS', FLATUI_URL . 'app/fonts/glyphicons/');
+
+/**
+ * Flat UI files URL
+ *
+ * Framework for Front-End
+ * Depends on VENDOR_URL
+ * @link 
+ */
+define('JQUERY_CONFIRM_URL', VENDOR_URL . 'jquery-confirm/3.3.4/dist/');
 
 /**
  * Define the constants of the Database
