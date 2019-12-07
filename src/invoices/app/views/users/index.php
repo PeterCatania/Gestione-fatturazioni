@@ -123,7 +123,7 @@
 
 						<!-- List of users -->
 						<form method="POST" action="<?php echo URL; ?>users/updateUsers">
-							<button class="btn btn-primary btn-wide mr-1" type="submit" name="saveUsers"><i class="far fa-save fa-lg mr-2"></i>Salva Tutto</button>
+							<button id="btn-save-all" class="btn btn-primary btn-wide mr-1" type="button" name="saveUsers"><i class="far fa-save fa-lg mr-2"></i>Salva Tutto</button>
 							<button id="btn-modify-all" class="btn btn-primary btn-wide" type="button" name="saveUsers"><i class="far fa-edit fa-lg mr-2"></i>Modifica Tutto</button>
 							<div class="table-responsive">
 								<table class="table table-striped mt-md-3 mt-1 ty-align" class="col-12">
@@ -139,14 +139,20 @@
 									<tbody id="usersTableBody">
 										<?php if ($data['users']->count() > 0) : ?>
 											<?php foreach ($data['users'] as $user) : ?>
-												<tr>
-													<td class="d-none"><input class="input-table <?= "user-" . $user->getId() . "-field" ?>" name="ids[]" value="<?= $user->getId() ?>" disabled></td>
-													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="usernames[]" value="<?= $user->getUsername() ?>" disabled></td>
-													<td><input class="input-table form-control input-sm <?= "user-" . $user->getId() . "-field" ?>" type="text" name="emails[]" value="<?= $user->getEmail() ?>" disabled></td>
+												<tr id="<?= "tr-user-" . $user->getId() ?>">
+													<td class="d-none">
+														<input id="id-user-<?= $user->getId() ?>" class="input-table" name="ids[]" value="<?= $user->getId() ?>" disabled>
+													</td>
+													<td>
+														<input id="username-user-<?= $user->getId() ?>" class="input-table form-control input-sm" type="text" name="usernames[]" value="<?= $user->getUsername() ?>" disabled>
+													</td>
+													<td>
+														<input id="email-user-<?= $user->getId() ?>" class="input-table form-control input-sm" type="text" name="emails[]" value="<?= $user->getEmail() ?>" disabled>
+													</td>
 													<td>
 														<div class="row justify-content-center">
-															<label class="checkbox p-0" for="enabled<?= $user->getId() ?>">
-																<input type="checkbox" name="usersIdToEnable[]" id="enabled<?= $user->getId() ?>" data-toggle="checkbox" value="<?= $user->getId() ?>" <?= $user->getEnabled() ? 'checked' : '' ?>>
+															<label class="checkbox p-0" for="enabled-user-<?= $user->getId() ?>">
+																<input id="enabled-user-<?= $user->getId() ?>" type="checkbox" name="usersIdToEnable[]" data-toggle="checkbox" value="<?= $user->getId() ?>" <?= $user->getEnabled() ? 'checked' : '' ?>>
 															</label>
 														</div>
 													</td>

@@ -30,22 +30,6 @@ class UserModel
 	}
 
 	/**
-	 * Modify the value that tell if a user is enable or not. 
-	 * Modify only the users with the id corrispond with the given.
-	 *
-	 * @param int $id The id of the user
-	 * @param bool $enabled The value that tell if a user is enabled or not
-	 * @return void
-	 */
-	public function enableUserById($id, $enabled = 1)
-	{
-		$users = new UserQuery();
-		$user = $users->findPK($id);
-		$user->setEnabled($enabled);
-		$user->save();
-	}
-
-	/**
 	 * Insert a new user in the database.
 	 *
 	 * @param string $username The username of the new user
@@ -79,23 +63,6 @@ class UserModel
 		$user->setUsername($username);
 		$user->setEmail($email);
 		$user->setEnabled($enabled);
-		$user->save();
-	}
-
-	/**
-	 * Update a user saved in the database.
-	 *
-	 * @param int $id The id of the user 
-	 * @param string $username The username of the user
-	 * @param string $email The email of the user
-	 * @return void
-	 */
-	public function updateUserWithoutEnabled($id, $username, $email)
-	{
-		$users = new UserQuery();
-		$user = $users->findPK($id);
-		$user->setUsername($username);
-		$user->setEmail($email);
 		$user->save();
 	}
 

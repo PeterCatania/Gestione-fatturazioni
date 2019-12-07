@@ -38,7 +38,7 @@ class Controller
 	 */
 	public function js($file)
 	{
-		require_once 'app/assets/js/' . $file . '.php';
+		require_once 'app/scripts/' . $file . '.php';
 	}
 
 	/**

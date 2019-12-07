@@ -16,6 +16,8 @@ class Users extends Controller
 
 	/**
 	 * Show all the not enabled users from the database.
+	 * 
+	 * @return void
 	 */
 	private function showUsers()
 	{
@@ -32,6 +34,8 @@ class Users extends Controller
 
 	/**
 	 * Method that comunicate with the default page.
+	 * 
+	 * @return void
 	 */
 	public function index()
 	{
@@ -71,6 +75,8 @@ class Users extends Controller
 
 	/**
 	 * Update users informations, of a single one or all at ones.
+	 * 
+	 * @return void
 	 */
 	public function saveUser()
 	{
@@ -82,7 +88,7 @@ class Users extends Controller
 			$validator = new Validator();
 
 			// get the validated data from the form that contains the informations about a new user
-			$username = $validator->validateName($_POST['username']);
+			$username = $validator->validateString($_POST['username']);
 			$email = $validator->validateEmail($_POST['email']);
 
 			// get the hash of the password and it's confirmation from the form that contains the informations about a new user
@@ -123,50 +129,25 @@ class Users extends Controller
 
 	/**
 	 * Update users informations, of a single one or all at ones.
+	 * 
+	 * @return void
 	 */
 	public function updateUsers()
 	{
-		session_start(); // important!
+		// the json containing the informations of the new user
+		$users = json_decode($_POST['users'], true);
 
-		// prevents that anyone that is not logged enter this page
-		$this->redirectToHomePageIfAnyoneIsLogged();
-
-		// prevents that users accounts can access this page, and execute this method 
-		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
-
-		if (isset($_POST['saveUsers'])) {
-			//get the array that contain the ids of the users to enable
-			$usersIdToEnable = isset($_POST['usersIdToEnable']) ? $_POST['usersIdToEnable'] : null;
-
-			// instance a new object of the model class "UsersModel"
-			$this->model('UserModel');
-			$userModel = new UserModel();
-			$users = $userModel->getUsers();
-
-			//enable all users by id
-			foreach ($users as $user) {
-				$id = $user->getId();
-
-				if (!empty($usersIdToEnable) && in_array($id, $usersIdToEnable)) {
-					$userModel->enableUserById($id, true);
-				} else {
-					$userModel->enableUserById($id, false);
-				}
-			}
-
-			if (isset($_POST['ids'])) {
-				$ids = $_POST['ids'];
-				$usernames = $_POST['usernames'];
-				$emails = $_POST['emails'];
-
-				for ($i = 0; $i < count($ids); $i++) {
-					$userModel->updateUserWithoutEnabled($ids[$i], $usernames[$i], $emails[$i]);
-				}
-			}
-
-			// show all the users saved in the database
-			$this->showUsers();
+		$this->model('UserModel');
+		$userModel = new UserModel();
+		foreach ($users as $user) {
+			// update the user data
+			$userModel->updateUser($user['id'], $user['username'], $user['email'], $user['enabled']);
 		}
+
+		// send the response to currelated AJAX function.
+		echo "true";
+
+		$this->redirectToPage('users');
 	}
 
 	/**
@@ -180,11 +161,15 @@ class Users extends Controller
 		// the json containing the informations of the new user
 		$user = json_decode($_POST['user'], true);
 
+		// update the user data
 		$this->model('UserModel');
 		$userModel = new UserModel();
-		$userModel->updateUser($user['ids[]'], $user['usernames[]'], $user['emails[]'], $user['enabled']);
+		$userModel->updateUser($user['id'], $user['username'], $user['email'], $user['enabled']);
 
+		// send the response to currelated AJAX function.
 		echo "true";
+
+		$this->redirectToPage('users');
 	}
 
 	/**
@@ -198,10 +183,14 @@ class Users extends Controller
 		// the user id to update
 		$userId = $_POST['id'];
 
+		// delete the user data
 		$this->model('UserModel');
 		$userModel = new UserModel();
 		$userModel->deleteUserById($userId);
 
+		// send the response to currelated AJAX function
 		echo "true";
+
+		$this->redirectToPage('users');
 	}
 }
