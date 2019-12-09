@@ -65,8 +65,9 @@ define('POPPER_URL', VENDOR_URL . 'popper/popper.min.js');
 
 /**
  * Font Awesome files URL
- *
  * Provide the icons of the site
+ * 
+ * Framework for Front-End
  * Depends on VENDOR_URL
  * @link https://fontawesome.com
  */
@@ -86,7 +87,7 @@ define('BOOTSTRAP_URL', VENDOR_URL . 'bootstrap/4.3.1/');
  *
  * Framework for Front-End
  * Depends on VENDOR_URL
- * @link 
+ * @link http://designmodo.github.io/Flat-UI/
  */
 define('FLATUI_URL', VENDOR_URL . 'flatui/');
 define('FLATUI_GLYPS', FLATUI_URL . 'app/fonts/glyphicons/');
@@ -94,11 +95,20 @@ define('FLATUI_GLYPS', FLATUI_URL . 'app/fonts/glyphicons/');
 /**
  * Flat UI files URL
  *
- * Framework for Front-End
+ * Framework for Front-End and Back-End
  * Depends on VENDOR_URL
- * @link 
+ * @link https://craftpip.github.io/jquery-confirm/
  */
 define('JQUERY_CONFIRM_URL', VENDOR_URL . 'jquery-confirm/3.3.4/dist/');
+
+/**
+ * Notifyjs URL
+ *
+ * Framework for Front-End and Back-End
+ * Depends on VENDOR_URL
+ * @link https://notifyjs.jpillora.com/
+ */
+define('NOTIFYJS_URL', VENDOR_URL . 'notifyjs/notify.min.js');
 
 /**
  * Define the constants of the Database

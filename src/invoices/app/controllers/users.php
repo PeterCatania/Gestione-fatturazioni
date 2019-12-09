@@ -1,5 +1,7 @@
 <?php
 
+use Propel\Runtime\Exception\PropelException;
+
 /**
  * @author Peter Catania
  * @version 12.11.2019
@@ -8,6 +10,7 @@
  */
 class Users extends Controller
 {
+
 	/**
 	 * Empty constructor.
 	 */
@@ -29,11 +32,13 @@ class Users extends Controller
 		$users = $userModel->getUsers();
 
 		// require the users default page
+        $this->header('Utenti','users');
 		$this->view('users/index', ['users' => $users]);
+		$this->footer();
 	}
 
 	/**
-	 * Method that comunicate with the default page.
+	 * Method that communicate with the default page.
 	 * 
 	 * @return void
 	 */
@@ -49,9 +54,9 @@ class Users extends Controller
 
 		/**
 		 * The user fields values from the form,
-		 * Their values will be printed in their corrispective fields before save
+		 * Their values will be printed in their corresponding fields before save
 		 */
-		$_SESSION['username'] = '';
+        $_SESSION['username'] = '';
 		$_SESSION['email'] = '';
 		$_SESSION['password'] = '';
 		$_SESSION['confirmedPassword'] = '';
@@ -69,29 +74,76 @@ class Users extends Controller
 
 		$this->showUsers();
 
-		// Import the required js file
-		$this->js("usersScript");
+        /**
+         * The name of the database table where the users data is memorized
+         */
+        $tableName = "user";
+
+        /**
+         * The fields name where are inserted the corresponding database fields values.
+         *
+         * If the field name is expressed with an object, the field is a checkbox mapped: Name => StatusToVerify
+         * If the field is a checkbox, the field value is TRUE if is checked and FALSE if not.
+         */
+        $fieldsName = '{"0":"id", "1":"username", "2":"email", "3": {"enabled": ":checked"}}';
+
+        /**
+         * The message to print after actions on row or table data.
+         */
+        $successRowUpdateMessage = "Utente salvato";
+        $successTableUpdateMessage  = "Utenti salvati";
+        $successRowEliminationMessage = "Utente eliminato";
+
+        /**
+         * URL of the controllers methods.
+         */
+        $rowUpdateMethod = "users/updateUser";
+        $tableUpdateMethod = "users/updateUsers";
+        $rowDeleteMethod = "users/deleteUser";
+
+        /**
+         * The confirm message showed when deleting a table row.
+         */
+        $rowDeleteConfirmMessage = "Vuoi davvero cancellare l'utente?";
+
+		// Import the required scripts
+		$this->js("mainScript");
+		$this->js(
+		    "listTableScript",
+            [
+                'tableName' => $tableName,
+                'fieldsName' => $fieldsName,
+                'successRowUpdateMessage' => $successRowUpdateMessage,
+                'successTableUpdateMessage' => $successTableUpdateMessage,
+                'successRowEliminationMessage' => $successRowEliminationMessage,
+                'rowUpdateMethod' => $rowUpdateMethod,
+                'tableUpdateMethod' => $tableUpdateMethod,
+                'rowDeleteMethod' => $rowDeleteMethod,
+                'rowDeleteConfirmMessage' => $rowDeleteConfirmMessage
+            ]
+        );
 	}
 
-	/**
-	 * Update users informations, of a single one or all at ones.
-	 * 
-	 * @return void
-	 */
+    /**
+     * Update users information, of a single one or all at ones.
+     *
+     * @return void
+     * @throws PropelException
+     */
 	public function saveUser()
 	{
 		session_start(); // important!
 
 		if (isset($_POST['saveUser'])) {
-			// import the Validator Model class, and inizialize a new istance
+			// import the Validator Model class, and initialize a new instance
 			$this->model('Validator');
 			$validator = new Validator();
 
-			// get the validated data from the form that contains the informations about a new user
+			// get the validated data from the form that contains the information about a new user
 			$username = $validator->validateString($_POST['username']);
 			$email = $validator->validateEmail($_POST['email']);
 
-			// get the hash of the password and it's confirmation from the form that contains the informations about a new user
+			// get the hash of the password and it's confirmation from the form that contains the information about a new user
 			$password = hash('sha256', $validator->generalValidation($_POST['password']));
 			$confirmedPassword = hash('sha256', $validator->generalValidation($_POST['confirmedPassword']));
 
@@ -105,10 +157,16 @@ class Users extends Controller
 			$allFieldAreValid = true;
 
 			// verify if the fields values are valid
-			$allFieldAreValid = $this->isFieldValueValid($username, 'username') ? $allFieldAreValid : false;
-			$allFieldAreValid = $this->isFieldValueValid($email, 'email') ? $allFieldAreValid : false;
-			$allFieldAreValid = $this->isPasswordValueValid($password, 'password') ? $allFieldAreValid : false;
-			$allFieldAreValid = $this->isPasswordValueValid($confirmedPassword, 'confirmedPassword') ? $allFieldAreValid : false;
+			$allFieldAreValid = $validator->isFieldValueValid($username, 'username') ? $allFieldAreValid : false;
+			$allFieldAreValid = $validator->isFieldValueValid($email, 'email') ? $allFieldAreValid : false;
+
+			// verify id the passwords are valid
+			$allFieldAreValid = $validator->arePasswordsValueValid(
+			    $password,
+                'password',
+                $confirmedPassword,
+                'confirmedPassword'
+            ) ? $allFieldAreValid : false;
 
 			if ($allFieldAreValid) {
 				// instance a new object of the model class "UserModel"
@@ -121,21 +179,21 @@ class Users extends Controller
 				// redirect to the default method of the users page
 				$this->redirectToPage('users');
 			}
-			// show the products, in the products default page.
-			$this->showUsers();
+            $this->showUsers();
 		}
 	}
 
 
-	/**
-	 * Update users informations, of a single one or all at ones.
-	 * 
-	 * @return void
-	 */
+    /**
+     * Update users information, of a single one or all at ones.
+     *
+     * @return void
+     * @throws PropelException
+     */
 	public function updateUsers()
 	{
-		// the json containing the informations of the new user
-		$users = json_decode($_POST['users'], true);
+		// the json containing the information of the new user
+		$users = json_decode($_POST['data'], true);
 
 		$this->model('UserModel');
 		$userModel = new UserModel();
@@ -144,40 +202,42 @@ class Users extends Controller
 			$userModel->updateUser($user['id'], $user['username'], $user['email'], $user['enabled']);
 		}
 
-		// send the response to currelated AJAX function.
+		// send the response to correlated AJAX function.
 		echo "true";
 
 		$this->redirectToPage('users');
 	}
 
-	/**
-	 * Update a user, 
-	 * with the informations contained in the upcoming POST request.
-	 * 
-	 * @return void
-	 */
+    /**
+     * Update a user,
+     * with the information contained in the upcoming POST request.
+     *
+     * @return void
+     * @throws PropelException
+     */
 	public function updateUser()
 	{
-		// the json containing the informations of the new user
-		$user = json_decode($_POST['user'], true);
+		// the json containing the information of the new user
+		$user = json_decode($_POST['data'], true);
 
 		// update the user data
 		$this->model('UserModel');
 		$userModel = new UserModel();
 		$userModel->updateUser($user['id'], $user['username'], $user['email'], $user['enabled']);
 
-		// send the response to currelated AJAX function.
+		// send the response to correlated AJAX function.
 		echo "true";
 
 		$this->redirectToPage('users');
 	}
 
-	/**
-	 * Delete a user, 
-	 * from the user id contained in the upcoming POST request.
-	 *
-	 * @return void
-	 */
+    /**
+     * Delete a user,
+     * from the user id contained in the upcoming POST request.
+     *
+     * @return void
+     * @throws PropelException
+     */
 	public function deleteUser()
 	{
 		// the user id to update
@@ -188,7 +248,7 @@ class Users extends Controller
 		$userModel = new UserModel();
 		$userModel->deleteUserById($userId);
 
-		// send the response to currelated AJAX function
+		// send the response to correlated AJAX function
 		echo "true";
 
 		$this->redirectToPage('users');
