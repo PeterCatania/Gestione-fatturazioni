@@ -10,18 +10,11 @@ use Propel\Runtime\Exception\PropelException;
  */
 class UserModel
 {
-	/**
-	 * Empty constructor.
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{ }
 
 	/**
 	 * Get the users from the database, that are not enabled.
 	 * 
-	 * @return User[] The users saved in the database
+	 * @return array User[] The users saved in the database
 	 */
 	public function getUsers()
 	{
@@ -38,8 +31,7 @@ class UserModel
      * @param string $password The password of the new user
      * @param string $email The email of the new user
      * @param bool $enabled The value that tell if a user is enabled, of the new user
-     * @return void
-     * @throws PropelException
+     * @return User The saved user
      */
 	public function saveUser($username, $password, $email, $enabled)
 	{
@@ -48,8 +40,13 @@ class UserModel
 		$user->setPassword($password);
 		$user->setEmail($email);
 		$user->setEnabled($enabled);
-		$user->save();
-	}
+        try {
+            $user->save();
+        } catch (PropelException $e) {
+        }
+
+        return $user;
+    }
 
     /**
      * Update a user saved in the database.
@@ -59,7 +56,6 @@ class UserModel
      * @param string $email The email of the user
      * @param bool $enabled The value that tell if a user is enabled, of the new user
      * @return void
-     * @throws PropelException
      */
 	public function updateUser($id, $username, $email, $enabled)
 	{
@@ -68,20 +64,27 @@ class UserModel
 		$user->setUsername($username);
 		$user->setEmail($email);
 		$user->setEnabled($enabled);
-		$user->save();
-	}
+        try {
+            $user->save();
+        } catch (PropelException $e) {
+            print_r($e);
+        }
+    }
 
     /**
      * Delete a user from the database, where the id correspond with the given.
      *
      * @param int $id The id of the user to delete
      * @return void
-     * @throws PropelException
      */
 	public function deleteUserById($id)
 	{
 		$users = new UserQuery();
 		$user = $users->findPK($id);
-		$user->delete();
-	}
+        try {
+            $user->delete();
+        } catch (PropelException $e) {
+            print_r($e);
+        }
+    }
 }

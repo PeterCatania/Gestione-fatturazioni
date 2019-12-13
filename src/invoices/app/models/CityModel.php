@@ -1,5 +1,8 @@
 <?php
 
+use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Propel;
+
 /**
  * @author Peter Catania
  * @version 26.11.2019
@@ -9,34 +12,17 @@
 class CityModel
 {
     /**
-     * Connection with the database.
-     */
-    private $connInvoices = null;
-
-    /**
-     * Empty constructor.
-     */
-    public function __construct()
-    {
-        // get the connection with the database
-        require_once 'Database.php';
-        $this->connInvoices = Database::getDBConnection();
-    }
-
-    /**
      * Save a new city in the database.
      * 
      * @param string $name The name of the new city 
      * @param int $nap The nap of the new city
-     * @return void
      */
     public function saveCity($name, $nap)
     {
+        $conn = Propel::getConnection();
         // prepare the query, to insert a new city in the database
-        $insertCity = "
-			insert ignore into city (id, name, nap) values (null, :name, :nap)
-		";
-        $stmt = $this->connInvoices->prepare($insertCity);
+        $insertCity = "INSERT ignore INTO city (id, name, nap) VALUES (null, :name, :nap)";
+        $stmt = $conn->prepare($insertCity);
 
         // insert in the query, the data of the new city
         $stmt->bindParam(':name', $name);
@@ -47,19 +33,14 @@ class CityModel
     }
 
     /**
-     * Get the last id from the table city.
+     * Get the city with the given NAP.
      *
-     * @return string The last id from the table city.
+     * @param int $nap The nap of the city
+     * @return City The city with the given NAP
      */
-    public function getCityLastId()
-    {
-        // prepare the query, to get the last id from the table city
-        $selectLastId = "select max(id) from city";
-        $stmt = $this->connInvoices->prepare($selectLastId);
-
-        // execute and get the last id 
-        $stmt->execute();
-        $lastId = ($stmt->fetch(PDO::FETCH_NUM))[0];
-        return $lastId;
+    public function getCity($nap){
+        $cities = new CityQuery;
+        $cities->find();
+        return $cities->findOneByNap($nap);
     }
 }

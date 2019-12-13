@@ -1,12 +1,12 @@
 <?php if (
     isset($title) &&
-    isset($pageName)
+    isset($controllerName)
 ): ?>
 <!DOCTYPE html>
 <html lang="it">
 
 <head>
-    <!-- Required meta tagsss -->
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -34,18 +34,32 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
             <ul class="nav navbar-nav mr-auto">
-                <li <?= $pageName ===  'invoices' ? 'class="active"' : '' ?>>
-                    <a href="<?= URL ?>invoices/index">Fatture</a>
-                </li>
-                <li <?= $pageName ===  'users' ? 'class="active"' : '' ?>>
-                    <a href="<?= URL ?>users/index">Utenti</a>
-                </li>
-                <li <?= $pageName ===  'clients' ? 'class="active"' : '' ?>>
-                    <a href="<?= URL ?>clients/index">Clienti</a>
-                </li>
-                <li <?= $pageName ===  'products' ? 'class="active"' : '' ?>>
-                    <a href="<?= URL ?>products/index">Prodotti</a>
-                </li>
+                <?php if(
+                    $controllerName ===  'Registration' ||
+                    $controllerName ===  'Home'
+                ) : ?>
+                    <li <?= $controllerName ===  'Home' ? 'class="active"' : '' ?>>
+                        <a href="<?= URL ?>home/index">Login</a>
+                    </li>
+                    <li <?= $controllerName ===  'Registration' ? 'class="active"' : '' ?>>
+                        <a href="<?= URL ?>registration/index">Registrazione</a>
+                    </li>
+                <?php else: ?>
+                    <li <?= $controllerName ===  'Invoices' ? 'class="active"' : '' ?>>
+                        <a href="<?= URL ?>invoices/index">Fatture</a>
+                    </li>
+                    <?php if(!isset($_SESSION[USER_SESSION_DATA])) : ?>
+                        <li <?= $controllerName ===  'Users' ? 'class="active"' : '' ?>>
+                            <a href="<?= URL ?>users/index">Utenti</a>
+                        </li>
+                        <li <?= $controllerName ===  'Clients' ? 'class="active"' : '' ?>>
+                            <a href="<?= URL ?>clients/index">Clienti</a>
+                        </li>
+                        <li <?= $controllerName ===  'Products' ? 'class="active"' : '' ?>>
+                            <a href="<?= URL ?>products/index">Prodotti</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
             </ul>
         </div><!-- /.navbar-collapse -->
         <!-- Logout Button -->

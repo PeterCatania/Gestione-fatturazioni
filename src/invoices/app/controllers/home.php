@@ -8,11 +8,14 @@
  */
 class Home extends Controller
 {
-	/**
-	 * Empty constructor.
-	 */
-	public function __construct()
-	{ }
+    /**
+     * Show the view of the controller.
+     */
+    function showView(){
+        $this->header('Login', $this->controllerName);
+        $this->view('home/index');
+        $this->footer();
+    }
 
 	/**
 	 * Method that comunicate with the default page.
@@ -22,7 +25,7 @@ class Home extends Controller
 		session_start();
 
 		// The username and the email of the registration form,
-		// They will bee printed in their corrispective fields
+		// They will bee printed in their corrispettive fields
 		$_SESSION['username'] = '';
 		$_SESSION['password'] = '';
 
@@ -36,35 +39,42 @@ class Home extends Controller
 		$_SESSION['usernameOrPasswordCSSValidityClass'] = '';
 
 		// require the default page
-		$this->view('home/index');
+        $this->showView();
 	}
 
+	public function disableUser(){
+        $this->header('Login', $this->controllerName);
+        $this->view('home/disableUser');
+        $this->footer();
+    }
+
 	/**
-	 * Effetuate the login, and redirect to the next view.
+	 * Effectuate the login, and redirect to the next view.
 	 */
 	public function login()
 	{
 		session_start(); // !important
 
-		// Effetuate the login, if is submit a POST request
+		// Effectuate the login, if is submit a POST request
 		if (isset($_POST['login'])) {
-			// Import the Validator Model class, and inizialize a new istance.
-			$this->model('Validator');
-			$validator = new Validator();
+			// Import the Validator Model class, and initialize a new instance.
+			$validator = $this->model('Validator');
 
 			// get the validated username, from login form
 			$username = $validator->validateString($_POST['username']);
 
 			// get the hash of the password, from login form
-			$password = hash('sha256', $_POST['password']);
+            $password = hash(
+                'sha256',
+                $validator->generalValidation($_POST['password'])
+            );
 
-			// the getted field from the registration form are inserted in the Session
+			// the get field from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;
 			$_SESSION['password'] = $_POST['password'];
 
-			// Import the LoginModel Model class, and inizialize a new istance.
-			$this->model('LoginModel');
-			$loginModel = new LoginModel();
+			// Import the LoginModel Model class, and initialize a new instance.
+			$loginModel = $this->model('LoginModel');
 
 			// get the user with the same credentials from the login
 			$user = $loginModel->getUserByUsernameAndPassword(
@@ -83,38 +93,42 @@ class Home extends Controller
 				// check if the user is enabled or not
 				if ($user['enabled'] == 0) {
 					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-					$this->view('home/disableUser');
+					print_r('aa'.$user);
+                    //$this->redirectToPage('home','disableUser');
 				} else {
 					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-					$this->view('invoices/index');
+                    //$this->redirectToPage('invoices');
+                    print_r('ee'.$user);
 				}
 			} else {
 				// get the administrator with the same credentials from the login
-				$administator = $loginModel->getAdministratorByUsernameAndPassword(
+				$administrator = $loginModel->getAdministratorByUsernameAndPassword(
 					$username,
 					$password
 				);
 
 				// if the query have find the administrator with the login credentials
-				if ($administator) {
+				if ($administrator) {
 					// get the first array, in this case is the administrator
-					$administator = $administator[0];
+					$administrator = $administrator[0];
 
 					// save the administrator data in the session
-					$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administator;
+					$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administrator;
 
 					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-					$this->view('invoices/index');
+					$this->redirectToPage('invoices');
 				} else {
 					$_SESSION['usernameOrPasswordCSSValidityClass'] = INVALID;
-					$this->view('home/index');
+                    //$this->redirectToPage('home');
+                    print_r($user);
+                    print_r($administrator);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Effetuate the logout
+	 * Effectuate the logout
 	 */
 	public function logout()
 	{
@@ -124,6 +138,6 @@ class Home extends Controller
 		$_SESSION = array();
 
 		// redirect to the default page
-		header("Location: " . URL . "home/index");
+        $this->redirectToPage('home');
 	}
 }

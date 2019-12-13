@@ -23,10 +23,10 @@
          * If the field name is expressed with an object, the field is a checkbox mapped: Name => StatusToVerify
          * If the field is a checkbox, the field value is TRUE if is checked and FALSE if not.
          */
-        const FIELDS_NAME = JSON.parse('<?= $data['fieldsName'] ?>');
+        const FIELDS_NAME = JSON.parse(`<?= $data['fieldsName'] ?>`);
 
         /**
-         * The message to print after actions on row or table data.
+         * The message to print after actions on row or table data.`
          */
         const SUCCESS_ROW_UPDATE_MESSAGE = "<?= $data['successRowUpdateMessage'] ?>";
         const SUCCESS_TABLE_UPDATE_MESSAGE = "<?= $data['successTableUpdateMessage'] ?>";
@@ -54,6 +54,8 @@
                 TABLE_NAME,
                 SUCCESS_TABLE_UPDATE_MESSAGE
             );
+            //Hide the table inputs and show the corrispettive span
+            hideTableInputsAndShowSpan();
         });
 
         // save the user in the same row
@@ -64,6 +66,7 @@
                 TABLE_NAME,
                 SUCCESS_ROW_UPDATE_MESSAGE
             );
+            hideTableInputsAndShowSpanOfRow($("#tr-" + TABLE_NAME + "-" + this.value));
         });
 
         // save the user in the same row
@@ -97,11 +100,6 @@
             });
         });
 
-        // hide the white cover when the page is loaded
-        $(window).on('load', function() {
-            $('#cover').hide();
-        });
-
         // animation when move is over the icon, the icon will be zoomed
         $('.btn-icon')
             .mouseenter(function() {
@@ -121,7 +119,10 @@
                 $(this).prop('disabled', function(i, v) {
                     return !v;
                 });
+                // set default value
                 $(this).val($(this)[0].defaultValue);
+
+                toggleTableInputsAndSpan(this);
             });
         });
 
@@ -132,17 +133,85 @@
                     $(this).prop('disabled',true);
                     $(this).val($(this)[0].defaultValue);
                 });
+                //Hide the table inputs and show the corrispettive span
+                hideTableInputsAndShowSpan()
             }else{
                 $('.input-table').each(function() {
                     $(this).prop('disabled', function(i, v) {
                         return !v;
                     });
                     $(this).val($(this)[0].defaultValue);
+                    toggleTableInputsAndSpan(this);
                 });
             }
         });
 
         /* General Functions --------------------------------------------------------------------- */
+
+        /**
+         * Toggle the function, hide table inputs and show table spans.
+         */
+        function toggleTableInputsAndSpan(input){
+            // get the input span
+            let span = $('#' + input.id + '-span');
+
+            // toggle input if the span exists
+            if(span.length === 1){
+                if ($(input).css('display') === 'none') {
+                    // show the input
+                    $(input).removeClass('d-none');
+                    // hide the input
+                    $(span).hide();
+                } else {
+                    // hide the input
+                    $(input).addClass('d-none');
+                    // show the input
+                    $(span).show();
+                }
+            }
+        }
+
+
+        /**
+         * Hide the table inputs and show the corrispettive span.
+         */
+        function hideTableInputsAndShowSpan(){
+            $('.input-table').each(function () {
+                // get the input span
+                let span = $('#' + this.id + '-span');
+
+                // do if the span exists
+                if(span.length === 1){
+                    // hide this input
+                    $(this).addClass('d-none');
+                    //insert text in the span
+                    $(span).html($(this).val());
+                    // show this span
+                    $(span).show();
+                }
+            });
+        }
+
+        /**
+         * Hide the table inputs and show the corrispettive span,
+         * of the same give row.
+         */
+        function hideTableInputsAndShowSpanOfRow(row){
+            $('#' + row[0].id + ' .input-table').each(function () {
+                // get the input span
+                let span = $('#' + this.id + '-span');
+
+                // do if the span exists
+                if(span.length === 1){
+                    // hide this input
+                    $(this).addClass('d-none');
+                    //insert text in the span
+                    $(span).html($(this).val());
+                    // show this span
+                    $(span).show();
+                }
+            });
+        }
 
         /**
          * Set the default values of the table row fields.
@@ -211,6 +280,7 @@
 
             for (const key in fieldsName) {
                 if (fieldsName.hasOwnProperty(key)) {
+
                     const fieldName = fieldsName[key];
 
                     if (typeof fieldName === 'object' && fieldName !== null) {
@@ -225,15 +295,14 @@
                             }
                         }
                     } else {
-                        obj[fieldName] = $("#" + fieldName + "-" + tableName + "-" + id).val();
+                        const inputField = $("#" + fieldName + "-" + tableName + "-" + id);
+                        obj[fieldName] = $(inputField).val();
                     }
                 }
             }
 
             return obj;
         }
-
-
 
         /**
          * Create a object containing the table row objects with the data of the fields.
@@ -284,7 +353,10 @@
                 success: function(response) {
                     if (response) {
                         // disable the table fields
-                        $(".input-table").prop("disabled", true);
+                        $(".input-table").each(function () {
+                            $(this).prop("disabled", true);
+                        });
+
                         // set the default values af the table fields
                         setTableFieldsDefaultValue(tableFields, tableName);
 
@@ -361,6 +433,7 @@
                 // action after request succeeded
                 success: function(response) {
                     if (response) {
+                        console.log(response);
                         $("#btn-modify-all").notify(succeedMessage, {
                             style: 'success',
                             autoHideDelay: 3000,

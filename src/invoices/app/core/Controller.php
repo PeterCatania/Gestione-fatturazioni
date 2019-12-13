@@ -8,6 +8,19 @@
  */
 class Controller
 {
+    /**
+     * @var string The controller name of this controller class.
+     */
+    protected $controllerName;
+
+    /**
+     * Controller empty constructor.
+     */
+    public function __construct()
+    {
+        $this->controllerName = get_class($this);
+    }
+
 	/**
 	 * Import and return an instance of a Model.
 	 *
@@ -57,11 +70,11 @@ class Controller
      * Import the header, from header directory.
      *
      * @param string $title The title of the page
-     * @param string $pageName The page name where the header is inserted
+     * @param string $controllerName The page name where the header is inserted
      * @param string $header The header to import, default is "header"
      * @return void
      */
-    public function header($title, $pageName, $header = 'header')
+    public function header($title, $controllerName, $header = 'header')
     {
         require_once 'app/views/header/' . $header . '.php';
     }

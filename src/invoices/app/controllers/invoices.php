@@ -8,11 +8,28 @@
  */
 class Invoices extends Controller
 {
-	/**
-	 * Empty constructor.
-	 */
-	public function __construct()
-	{ }
+    /**
+     * Show all the invoices from the database.
+     *
+     * @return void
+     */
+    private function showInvoices()
+    {
+        // instance a new object of the model class "UsersModel"
+        //$invoiceModel = $this->model("InvoiceModel");
+
+        // the array that contains the Users saved in the database.
+        //$users = $invoiceModel->getUsers();
+
+        // require the users default page
+        $this->header('Fatture', $this->controllerName);
+        $this->view('invoices/index');
+        $this->footer();
+
+        // Import the required scripts
+        $this->js("mainScript");
+
+    }
 
 	/**
 	 * Method that comunicate with the default page.
@@ -24,7 +41,7 @@ class Invoices extends Controller
 		// prevents that anyone that is not logged enter this page
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
-		// require the default page
-		$this->view('invoices/index');
+		// show the invoices
+        $this->showInvoices();
 	}
 }
