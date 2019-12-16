@@ -16,7 +16,10 @@
                                 <label for="username-input" class="mb-n1 h6">
                                     Username
                                 </label>
-                                <input id="username-input" type="text" name="username" value="<?= $_SESSION['username'] ?>" class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>" placeholder="Username">
+                                <input id="username-input" type="text" name="username" value="<?= $_SESSION['username'] ?>" class="form-control<?= " " . $_SESSION['usernameCSSValidityClass'] ?>" placeholder="Username">
+                                <div class="invalid-feedback very-small">
+                                    Inserire username senza spazi e caratteri speciali
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -27,9 +30,9 @@
                                 <label for="password-input" class="mb-n1 h6">
                                     Password
                                 </label>
-                                <input id="password-input" type="password" name="password" value="<?= $_SESSION['password'] ?>" class="form-control<?= " " . $_SESSION['usernameOrPasswordCSSValidityClass'] ?>" placeholder="Password">
+                                <input id="password-input" type="password" name="password" value="<?= $_SESSION['password'] ?>" class="form-control <?= $_SESSION['passwordCSSValidityClass'] ?> <?= $_SESSION['usernameOrPasswordCSSValidityClass'] ?>" placeholder="Password">
                                 <div class="invalid-feedback very-small">
-                                    Nome utente o password non corretti.
+                                    <?= $_SESSION['usernameOrPasswordCSSValidityClass'] ? 'La password o username non sono corretti' : 'Inserire una password valida'  ?>
                                 </div>
                             </div>
                         </div>

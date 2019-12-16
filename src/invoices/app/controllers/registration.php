@@ -11,7 +11,7 @@ class Registration extends Controller
     /**
      * Show the view of the controller.
      */
-    function showView(){
+    private function showView(){
         $this->header('Registrazione', $this->controllerName);
         $this->view('registration/index');
         $this->footer();
@@ -60,24 +60,24 @@ class Registration extends Controller
 			$validator = $this->model('Validator');
 
 			// get the validated data from the form that contains the information about a new user
-			$username = $validator->validateName($_POST['username']);
+			$username = $validator->validateString($_POST['username']);
 			$email = $validator->validateEmail($_POST['email']);
 
 			// get the hash of the password and it's confirmation from the form that contains the information about a new user
 			$password = hash(
 			    'sha256',
-                $validator->generalValidation($_POST['password'])
+                $_POST['password']
             );
 			$confirmedPassword = hash(
 			    'sha256',
-                $validator->generalValidation($_POST['confirmedPassword'])
+                $_POST['confirmedPassword']
             );
 
 			// the get field values from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;
 			$_SESSION['email'] = $email;
-			$_SESSION['password'] = $_POST['password'];
-			$_SESSION['confirmedPassword'] = $_POST['confirmedPassword'];
+			$_SESSION['password'] = $validator->generalValidation($_POST['password']);
+			$_SESSION['confirmedPassword'] = $validator->generalValidation($_POST['confirmedPassword']);
 
 			// tell if all the fields are valid
 			$allFieldAreValid = true;
@@ -96,20 +96,19 @@ class Registration extends Controller
                 'confirmedPassword'
             ) ? $allFieldAreValid : false;
 
-			if (!$allFieldAreValid) {
-				// return to the default page for registration
-                $this->showView();
+			if ($allFieldAreValid) {
+                // import the Validator Model class, and initialize a new instance
+                $registrationModel = $this->model('RegistrationModel');
+
+                // insert the user data in the database
+                $registrationModel->insertUser($username, $password, $email);
+
+                // reset the session
+                $_SESSION = array();
+
+                $this->redirectToPage('home');
 			} else {
-				// import the Validator Model class, and initialize a new instance
-				$registrationModel = $this->model('RegistrationModel');
-
-				// insert the user data in the database
-				$registrationModel->insertUser($username, $password, $email);
-
-				// reset the session
-				$_SESSION = array();
-
-                $this->redirectToPage('login');
+                $this->showView();
 			}
 		}
 	}

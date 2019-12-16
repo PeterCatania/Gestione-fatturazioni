@@ -21,6 +21,17 @@ class ProductModel
         return $product->find();
 	}
 
+    /**
+     * Get the product with the given id.
+     *
+     * @param int $id The id of the product
+     * @return Product The product with the given id, or null if not exists
+     */
+    public function getOneById($id){
+        $products = new ProductQuery();
+        return $products->findOneById($id);
+    }
+
 	/**
 	 * Insert a new product in the database.
 	 *
@@ -48,7 +59,7 @@ class ProductModel
      * @param int $id The id of the product
      * @param string $description The description of the product
      * @param string $price The price of the product
-     * @return void
+     * @return Product The updated product
      */
     public function updateProduct($id, $description, $price)
     {
@@ -61,6 +72,7 @@ class ProductModel
         } catch (PropelException $e) {
             print_r($e);
         }
+        return $product;
     }
 
     /**

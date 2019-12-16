@@ -41,7 +41,12 @@ class Products extends Controller
      */
     private $rowDeleteConfirmMessage = "Vuoi davvero cancellare il prodotto?";
 
-	/**
+    /**
+     * Tell if the saving with the modal is in progress.
+     */
+    private $isSaveModalInProcess = false;
+
+    /**
 	 * Show the products saved in the database.
 	 */
 	private function showProducts()
@@ -70,7 +75,8 @@ class Products extends Controller
                 'rowUpdateMethod' => $this->rowUpdateMethod,
                 'tableUpdateMethod' => $this->tableUpdateMethod,
                 'rowDeleteMethod' => $this->rowDeleteMethod,
-                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage
+                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage,
+                'isSaveModalInProcess' => $this->isSaveModalInProcess
             ]
         );
 	}
@@ -122,6 +128,8 @@ class Products extends Controller
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
 		if (isset($_POST['saveProduct'])) {
+		    // tell the save is in progress
+            $this->isSaveModalInProcess = true;
 
 			// import the Validator Model class, and initialize a new instance
 			$validator = $this->model('Validator');
@@ -151,12 +159,20 @@ class Products extends Controller
 				// insert the new product in the database
 				$productsModel->saveProduct($description, $price);
 
+				// tell the save is not in progress
+                $this->isSaveModalInProcess = false;
+
 				// redirect to the default method of the controller
                 $this->redirectToPage($this->controllerName);
 			}
 			// show the products, in the products default page.
 			$this->showProducts();
-		}
+		} else if (isset($_POST['cancelSaveProduct'])){
+            // tell the save is not in progress
+            $this->isSaveModalInProcess = false;
+            // redirect to the default method of the controller
+            $this->redirectToPage($this->controllerName);
+        }
 	}
 
     /**

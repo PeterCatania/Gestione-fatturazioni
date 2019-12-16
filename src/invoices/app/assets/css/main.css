@@ -162,24 +162,9 @@ button {
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
 }
-
-#txt,
-#hide {
-    font: inherit;
-    margin: 0;
-    padding: 0;
+.mt-page {
+    margin-top: 7rem;
 }
-#txt {
-    border: solid 1px black;
-    color: #888;
-    min-width: 10px;
-    font-size: 14px;
-}
-#hide {
-    display: none;
-    white-space: pre;
-}
-
 .custom-checkbox {
     font-size: 1.9rem;
 }

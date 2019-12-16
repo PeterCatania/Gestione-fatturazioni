@@ -11,18 +11,18 @@ use Propel\Runtime\Exception\PropelException;
 class UserModel
 {
 
-	/**
-	 * Get the users from the database, that are not enabled.
-	 * 
-	 * @return array User[] The users saved in the database
-	 */
-	public function getUsers()
-	{
-		$users =  new UserQuery();
-		$users->orderByEnabled();
-		$users->orderByUsername();
-		return $users->find();
-	}
+    /**
+     * Get the users from the database, that are not enabled.
+     * 
+     * @return array User[] The users saved in the database
+     */
+    public function getUsers()
+    {
+        $users =  new UserQuery();
+        $users->orderByEnabled();
+        $users->orderByUsername();
+        return $users->find();
+    }
 
     /**
      * Insert a new user in the database.
@@ -33,16 +33,17 @@ class UserModel
      * @param bool $enabled The value that tell if a user is enabled, of the new user
      * @return User The saved user
      */
-	public function saveUser($username, $password, $email, $enabled)
-	{
-		$user = new User();
-		$user->setUsername($username);
-		$user->setPassword($password);
-		$user->setEmail($email);
-		$user->setEnabled($enabled);
+    public function saveUser($username, $password, $email, $enabled)
+    {
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPassword($password);
+        $user->setEmail($email);
+        $user->setEnabled($enabled);
         try {
             $user->save();
         } catch (PropelException $e) {
+
         }
 
         return $user;
@@ -57,13 +58,13 @@ class UserModel
      * @param bool $enabled The value that tell if a user is enabled, of the new user
      * @return void
      */
-	public function updateUser($id, $username, $email, $enabled)
-	{
-		$users = new UserQuery();
-		$user = $users->findPK($id);
-		$user->setUsername($username);
-		$user->setEmail($email);
-		$user->setEnabled($enabled);
+    public function updateUser($id, $username, $email, $enabled)
+    {
+        $users = new UserQuery();
+        $user = $users->findPK($id);
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setEnabled($enabled);
         try {
             $user->save();
         } catch (PropelException $e) {
@@ -77,14 +78,28 @@ class UserModel
      * @param int $id The id of the user to delete
      * @return void
      */
-	public function deleteUserById($id)
-	{
-		$users = new UserQuery();
-		$user = $users->findPK($id);
+    public function deleteUserById($id)
+    {
+        $users = new UserQuery();
+        $user = $users->findPK($id);
         try {
             $user->delete();
         } catch (PropelException $e) {
             print_r($e);
         }
+    }
+
+    /**
+     * Get all users from the database.
+     *
+     * @param string $username The user username
+     * @param string $password The user password
+     * @return User The user with the given username and password
+     */
+    public function getUserByUsernamePassword($username, $password)
+    {
+        $users = new UserQuery();
+        $users->filterByUsername($username);
+        return $users->findOneByPassword($password);
     }
 }

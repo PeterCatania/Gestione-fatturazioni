@@ -41,6 +41,11 @@ class Users extends Controller
     private $rowDeleteConfirmMessage = "Vuoi davvero cancellare l'utente?";
 
     /**
+     * Tell if the saving with the modal is in progress.
+     */
+    private $isSaveModalInProcess = false;
+
+    /**
 	 * Show all the not enabled users from the database.
 	 * 
 	 * @return void
@@ -71,7 +76,8 @@ class Users extends Controller
                 'rowUpdateMethod' => $this->rowUpdateMethod,
                 'tableUpdateMethod' => $this->tableUpdateMethod,
                 'rowDeleteMethod' => $this->rowDeleteMethod,
-                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage
+                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage,
+                'isSaveModalInProcess' => $this->isSaveModalInProcess
             ]
         );
 	}
@@ -124,6 +130,9 @@ class Users extends Controller
 		session_start(); // important!
 
 		if (isset($_POST['saveUser'])) {
+            // tell the save is in progress
+            $this->isSaveModalInProcess = true;
+
 			// import the Validator Model class, and initialize a new instance
 			$validator = $this->model('Validator');
 
@@ -134,18 +143,18 @@ class Users extends Controller
 			// get the hash of the password and it's confirmation from the form that contains the information about a new user
 			$password = hash(
 			    'sha256',
-                $validator->generalValidation($_POST['password'])
+                $_POST['password']
             );
 			$confirmedPassword = hash(
 			    'sha256',
-                $validator->generalValidation($_POST['confirmedPassword'])
+                $_POST['confirmedPassword']
             );
 
 			// the get field values from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;
 			$_SESSION['email'] = $email;
-			$_SESSION['password'] = $_POST['password'];
-			$_SESSION['confirmedPassword'] = $_POST['confirmedPassword'];
+			$_SESSION['password'] = $validator->generalValidation($_POST['password']);
+			$_SESSION['confirmedPassword'] = $validator->generalValidation($_POST['confirmedPassword']);
 
 			// tell if all the fields are valid
 			$allFieldAreValid = true;
@@ -171,11 +180,19 @@ class Users extends Controller
 				// insert the new user in the database
 				$userModel->saveUser($username, $password, $email, 0);
 
+                // tell the save is not in progress
+                $this->isSaveModalInProcess = false;
+
 				// redirect to the default method of the users page
 				$this->redirectToPage('users');
 			}
             $this->showUsers();
-		}
+		} else if (isset($_POST['cancelSaveUser'])){
+            // tell the save is not in progress
+            $this->isSaveModalInProcess = false;
+            // redirect to the default method of the controller
+            $this->redirectToPage($this->controllerName);
+        }
 	}
 
 

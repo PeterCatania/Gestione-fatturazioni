@@ -57,29 +57,6 @@ class Validator
     }
 
     /**
-     * Check if the data contains html special chars,
-     *
-     * @param mixed $data The data to check for html special chars
-     * @return bool True if contains html special chars otherwise false
-     */
-    function containsHtmlSpecialChars($data){
-        $dataWithoutHtmlSpecialChars = $this->removeHtmlSpecialChars($data);
-
-        if($data !== $dataWithoutHtmlSpecialChars){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param mixed $data The data to validate
-     * @return string|string[] The data without html special chars
-     */
-    function removeHtmlSpecialChars($data){
-        return preg_replace("/&#?[a-z0-9]{2,8};/i","",$data);
-    }
-
-    /**
      * Validate data of any kind.
      *
      * @param mixed $data The data to validate
@@ -208,10 +185,13 @@ class Validator
         $data = str_replace("-", "", $data);
 
         // construct the structure of the telephone number
-        $data = substr_replace($data, substr($data, 0, 3) . ' ', 0, 3);
-        $data = substr_replace($data, substr($data, 4, 2) . ' ', 4, 2);
-        $data = substr_replace($data, substr($data, 7, 3) . ' ', 7, 3);
-        $data = substr_replace($data, substr($data, 11, 2) . ' ', 11, 2);
+        if(strlen($data) == 12){
+            $data = substr_replace($data, substr($data, 0, 3) . ' ', 0, 3);
+            $data = substr_replace($data, substr($data, 4, 2) . ' ', 4, 2);
+            $data = substr_replace($data, substr($data, 7, 3) . ' ', 7, 3);
+            $data = substr_replace($data, substr($data, 11, 2) . ' ', 11, 2);
+        }
+
         return $data;
     }
 
@@ -236,13 +216,13 @@ class Validator
     }
 
     /**
- * Verify the validity of the field value, from the price field
- * if the value is valid true or false if not.
- *
- * @param mixed $fieldValue the field value, from the price field
- * @param string $fieldName the field name, from the price field
- * @return bool the validity of the field value
- */
+     * Verify the validity of the field value, from the price field
+     * if the value is valid true or false if not.
+     *
+     * @param mixed $fieldValue the field value, from the price field
+     * @param string $fieldName the field name, from the price field
+     * @return bool the validity of the field value
+     */
     public function isPriceFieldValid($fieldValue, $fieldName)
     {
         $fieldValue = intval($fieldValue);
@@ -288,7 +268,7 @@ class Validator
     public function isFieldValueValidWithoutSpecialChars($fieldValue, $fieldName)
     {
         // verify if the field value, from the form is empty
-        if (empty($fieldValue) || $this->containsHtmlSpecialChars($fieldValue)) {
+        if (empty($fieldValue) || strip_tags($fieldValue) !== $fieldValue) {
             $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
             return false;
         }
@@ -308,13 +288,43 @@ class Validator
     public function isNameFieldValid($fieldValue, $fieldName)
     {
         // verify if the field value, from the form is empty
-        if (empty($fieldValue) || $this->containsHtmlSpecialChars($fieldValue) || !$this->isNameValid($fieldValue)) {
+        if (empty($fieldValue) || !$this->isNameValid($fieldValue)) {
             $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
             return false;
         }
 
         $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
         return true;
+    }
+
+    /**
+     * Verify the validity of the password field value, from a form.
+     *
+     * @param string $passwordHash The password field hash, from a form
+     * @param string $passwordValue The password field value, from a form
+     * @param string $passwordName The password field name, from a form
+     * @return bool the validity of the password field value
+     */
+    public function isPasswordsValueValid(
+        $passwordHash,
+        $passwordValue,
+        $passwordName
+    ) {
+        $passwordIsValid = false;
+
+        // verify if the password field value, from the form is empty
+        if (
+            empty($passwordHash) ||
+            $passwordHash === self::EMPTY_PASSWORD_HASH ||
+            strip_tags($passwordValue) !== $passwordValue
+        ) {
+            $_SESSION[$passwordName . 'CSSValidityClass'] = INVALID;
+        } else {
+            $_SESSION[$passwordName . 'CSSValidityClass'] = VALID;
+            $passwordIsValid = true;
+        }
+
+        return $passwordIsValid;
     }
 
     /**
@@ -326,7 +336,7 @@ class Validator
      * @param string $confirmedPasswordHash The confirmed password field hash, from a form
      * @param string $confirmedPasswordValue The confirmed password field value, from a form
      * @param string $confirmedPasswordName The confirmed password field name, from a form
-     * @return bool the validity of the password field value
+     * @return bool the validity of the password fields value
      */
     public function arePasswordsValueValid(
         $passwordHash,
@@ -339,14 +349,11 @@ class Validator
         $passwordIsValid = false;
         $confirmedPasswordIsValid = false;
 
-        $passwordValue  = $this->generalValidation($passwordValue);
-        $confirmedPasswordValue  = $this->generalValidation($confirmedPasswordValue);
-
         // verify if the password field value, from the form is empty
         if (
             empty($passwordHash) ||
             $passwordHash === self::EMPTY_PASSWORD_HASH ||
-            $this->containsHtmlSpecialChars($passwordValue)
+            strip_tags($passwordValue) !== $passwordValue
         ) {
             $_SESSION[$passwordName . 'CSSValidityClass'] = INVALID;
         } else {
@@ -354,11 +361,13 @@ class Validator
             $passwordIsValid = true;
         }
 
+        $p = strip_tags($passwordValue) !== $passwordValue;
+
         // verify if the confirmed password field value, from the form is empty
         if (
             empty($confirmedPasswordHash) ||
             $confirmedPasswordHash === self::EMPTY_PASSWORD_HASH ||
-            $this->containsHtmlSpecialChars($confirmedPasswordValue)
+            strip_tags($confirmedPasswordValue) !== $confirmedPasswordValue
         ) {
             $_SESSION[$confirmedPasswordName . 'CSSValidityClass'] = INVALID;
         } else {

@@ -8,7 +8,7 @@
 /**
  * Error reporting
  *
- * Usefull for see every little problems during development,
+ * Use full for see every little problems during development,
  * in production is advised to show only the more serious ones.
  */
 error_reporting(E_ALL);
@@ -48,7 +48,7 @@ define('VENDOR_URL', ROOT . 'assets/vendor/');
 /**
  * jQuery URL
  *
- * Needed for Boostrap and oder JS files
+ * Needed for Bootstrap and oder JS files
  * Depends on VENDOR_URL
  * @link https://jquery.com
  */
@@ -57,7 +57,7 @@ define('JQUERY_URL', VENDOR_URL . 'jquery/jquery-3.4.1.min.js');
 /**
  * Popper URL
  *
- * Needed for Boostrap
+ * Needed for Bootstrap
  * Depends on VENDOR_URL
  * @link https://popper.js.org
  */
@@ -133,4 +133,4 @@ define('INVALID', 'is-invalid');
 // the session variable name, that contains the login data of a User
 define('USER_SESSION_DATA', 'user');
 // the session variable name, that contains the login data of the Administrator
-define('ADMINISTRATOR_SESSION_DATA', 'is-invalid');
+define('ADMINISTRATOR_SESSION_DATA', 'administrator');

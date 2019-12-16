@@ -44,6 +44,23 @@
          */
         const ROW_DELETE_CONFIRM_MESSAGE = "<?= $data['rowDeleteConfirmMessage'] ?>";
 
+        /**
+         * The last button af the buttons on the top of the list.
+         */
+        const lastTopButtonId = "btn-modify-all";
+
+        /* Manage the modal save --------------------------------------------------*/
+
+        let isModalSaveOpen ="<?= $data['isSaveModalInProcess'] ?>";
+
+        if(isModalSaveOpen){
+            $("#b-save-modal-" + TABLE_NAME).trigger('click');
+        }
+
+        $('#b-cancel-save-' + TABLE_NAME + '-icon').click(function () {
+            $('#b-cancel-save-' + TABLE_NAME).trigger('click');
+        });
+
         /* On clink Events of the icon buttons --------------------------------------------------*/
 
         // save all the users
@@ -273,10 +290,11 @@
          * @param id The id of the table row
          * @param fieldsName The fields name where are inserted the corresponding database fields values
          * @param tableName The table name of the database where is saved the data
-         * @return The table row object with the data of the fields with the given id
+         * @return object The table row object with the data of the fields with the given id
          */
         function createTableRowObjectFromId(id, fieldsName, tableName) {
             let obj = {};
+            let rowIsInvalid = false;
 
             for (const key in fieldsName) {
                 if (fieldsName.hasOwnProperty(key)) {
@@ -295,8 +313,8 @@
                             }
                         }
                     } else {
-                        const inputField = $("#" + fieldName + "-" + tableName + "-" + id);
-                        obj[fieldName] = $(inputField).val();
+                        const inputFieldValue = $("#" + fieldName + "-" + tableName + "-" + id).val();
+                        obj[fieldName] = escapeHtml(inputFieldValue);
                     }
                 }
             }
@@ -361,7 +379,7 @@
                         setTableFieldsDefaultValue(tableFields, tableName);
 
                         // notify the succeeded save
-                        $("#btn-modify-all").notify(succeedMessage, {
+                        $("#" + lastTopButtonId).notify(succeedMessage, {
                             style: 'success',
                             autoHideDelay: 3000,
                             arrowShow: false,
@@ -402,7 +420,7 @@
                         // set the default values of row field
                         setTableRowDefaultValue(rowFields, tableName);
 
-                        $("#btn-modify-all").notify(succeedMessage, {
+                        $("#" + lastTopButtonId).notify(succeedMessage, {
                             style: 'success',
                             autoHideDelay: 3000,
                             arrowShow: false,
@@ -434,7 +452,7 @@
                 success: function(response) {
                     if (response) {
                         console.log(response);
-                        $("#btn-modify-all").notify(succeedMessage, {
+                        $("#" + lastTopButtonId).notify(succeedMessage, {
                             style: 'success',
                             autoHideDelay: 3000,
                             arrowShow: false,

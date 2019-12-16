@@ -13,9 +13,10 @@ class CityModel
 {
     /**
      * Save a new city in the database.
-     * 
-     * @param string $name The name of the new city 
+     *
+     * @param string $name The name of the new city
      * @param int $nap The nap of the new city
+     * @return int The id of the saved city
      */
     public function saveCity($name, $nap)
     {
@@ -30,15 +31,19 @@ class CityModel
 
         // execute the query
         $stmt->execute();
+
+        // return the id of the saved city
+        return $conn->lastInsertId();
     }
 
     /**
      * Get the city with the given NAP.
      *
      * @param int $nap The nap of the city
-     * @return City The city with the given NAP
+     * @return City The city with the given NAP, or null if doesn't exists
      */
-    public function getCity($nap){
+    public function getCity($nap)
+    {
         $cities = new CityQuery;
         $cities->find();
         return $cities->findOneByNap($nap);

@@ -52,6 +52,11 @@ class Clients extends Controller
     private $rowDeleteConfirmMessage = "Vuoi davvero cancellare questo cliente?";
 
     /**
+    * Tell if the saving with the modal is in progress.
+    */
+    private $isSaveModalInProcess = false;
+
+    /**
      * Show the clients saved in the database.
      */
     private function showClients()
@@ -81,7 +86,8 @@ class Clients extends Controller
                 'rowUpdateMethod' => $this->rowUpdateMethod,
                 'tableUpdateMethod' => $this->tableUpdateMethod,
                 'rowDeleteMethod' => $this->rowDeleteMethod,
-                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage
+                'rowDeleteConfirmMessage' => $this->rowDeleteConfirmMessage,
+                'isSaveModalInProcess' => $this->isSaveModalInProcess
             ]
         );
     }
@@ -112,6 +118,9 @@ class Clients extends Controller
         $_SESSION['telephone'] = '';
         $_SESSION['email'] = '';
         $_SESSION['companyName'] = '';
+
+        // the company name checkbox value if checked
+        $_SESSION['cbCompanyName'] = '';
 
         /**
          * Contains names of CSS classes.
@@ -147,6 +156,8 @@ class Clients extends Controller
         $this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
         if (isset($_POST['saveClient'])) {
+            // tell the save is in progress
+            $this->isSaveModalInProcess = true;
 
             // import the Validator Model class, and initialize a new instance
             $validator = $this->model('Validator');
@@ -158,7 +169,9 @@ class Clients extends Controller
             $houseNo = $validator->validateString($_POST['houseNo']);
             $city = $validator->validateCapitalizedWords($_POST['city']);
             $nap = $validator->validateInt($_POST['nap']);
-            $telephone = $validator->validateTelephoneNumber($_POST['telephone']);
+            $telephone = $validator->validateTelephoneNumber(
+                $_POST['telephone']
+            );
             $email = $validator->validateEmail($_POST['email']);
             $companyName = null;
             if (isset($_POST['companyName'])) {
@@ -175,6 +188,10 @@ class Clients extends Controller
             $_SESSION['telephone'] = $telephone;
             $_SESSION['email'] = $email;
             $_SESSION['companyName'] = $companyName;
+
+            // the company name checkbox value if checked
+            $_SESSION['cbCompanyName'] =
+                isset($_POST['cbCompanyName']) ? $_POST['cbCompanyName'] : '';
 
             // tell if all the fields are valid
             $allFieldAreValid = true;
@@ -209,7 +226,7 @@ class Clients extends Controller
                 $telephone,
                 'telephone'
             ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
+            $allFieldAreValid = $validator->isEmailFieldValid(
                 $email,
                 'email'
             ) ? $allFieldAreValid : false;
@@ -237,13 +254,19 @@ class Clients extends Controller
                     isset($_POST['companyName']) ? $companyName : null
                 );
 
+                // tell the save is not in progress
+                $this->isSaveModalInProcess = false;
+
                 // redirect to the default method of the clients page
                 $this->redirectToPage('clients');
-
-                print_r($clientSurname);
             }
             // show the clients, in the clients default page.
             $this->showClients();
+        } else if (isset($_POST['cancelSaveClient'])){
+            // tell the save is not in progress
+            $this->isSaveModalInProcess = false;
+            // redirect to the default method of the controller
+            $this->redirectToPage($this->controllerName);
         }
     }
 

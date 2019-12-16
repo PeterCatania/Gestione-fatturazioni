@@ -8,13 +8,25 @@
  */
 class Home extends Controller
 {
+	/**
+	 * Show the view of the controller.
+	 */
+	private function showView()
+	{
+		$this->header('Login', $this->controllerName);
+		$this->view('home/index');
+		$this->footer();
+	}
+
     /**
-     * Show the view of the controller.
+     * Unset the session variables required for the default page of the controller.
      */
-    function showView(){
-        $this->header('Login', $this->controllerName);
-        $this->view('home/index');
-        $this->footer();
+	private function unsetDefaultPageSessionVariables(){
+        unset($_SESSION['username']);
+        unset($_SESSION['password']);
+        unset($_SESSION['usernameCSSValidityClass']);
+        unset($_SESSION['passwordCSSValidityClass']);
+        unset($_SESSION['usernameOrPasswordCSSValidityClass']);
     }
 
 	/**
@@ -36,17 +48,13 @@ class Home extends Controller
 		 * If the input is not valid contains: "is-invalid"
 		 * This variable indicate if the username or the password are valid or not.
 		 */
+		$_SESSION['usernameCSSValidityClass'] = '';
+		$_SESSION['passwordCSSValidityClass'] = '';
 		$_SESSION['usernameOrPasswordCSSValidityClass'] = '';
 
 		// require the default page
-        $this->showView();
+		$this->showView();
 	}
-
-	public function disableUser(){
-        $this->header('Login', $this->controllerName);
-        $this->view('home/disableUser');
-        $this->footer();
-    }
 
 	/**
 	 * Effectuate the login, and redirect to the next view.
@@ -64,67 +72,100 @@ class Home extends Controller
 			$username = $validator->validateString($_POST['username']);
 
 			// get the hash of the password, from login form
-            $password = hash(
-                'sha256',
-                $validator->generalValidation($_POST['password'])
-            );
+			$password = hash(
+				'sha256',
+				$_POST['password']
+			);
 
 			// the get field from the registration form are inserted in the Session
 			$_SESSION['username'] = $username;
-			$_SESSION['password'] = $_POST['password'];
+			$_SESSION['password'] = $validator->generalValidation($_POST['password']);
 
-			// Import the LoginModel Model class, and initialize a new instance.
-			$loginModel = $this->model('LoginModel');
+			// tell if all the fields are valid
+			$allFieldAreValid = true;
 
-			// get the user with the same credentials from the login
-			$user = $loginModel->getUserByUsernameAndPassword(
-				$username,
-				$password
-			);
+			// verify if the fields values are valid
+			$allFieldAreValid = $validator->isNameFieldValid($username, 'username') ? $allFieldAreValid : false;
 
-			// if the query have find the user with the login credentials.
-			if ($user) {
-				// get the first array, in this case is our user
-				$user = $user[0];
+			// verify if the passwords are valid
+			$allFieldAreValid = $validator->isPasswordsValueValid(
+				$password,
+				$_POST['password'],
+				'password'
+			) ? $allFieldAreValid : false;
 
-				// save the user login data in the session
-				$_SESSION[USER_SESSION_DATA] = $user;
+			if ($allFieldAreValid) {
 
-				// check if the user is enabled or not
-				if ($user['enabled'] == 0) {
-					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-					print_r('aa'.$user);
-                    //$this->redirectToPage('home','disableUser');
-				} else {
-					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-                    //$this->redirectToPage('invoices');
-                    print_r('ee'.$user);
-				}
-			} else {
-				// get the administrator with the same credentials from the login
-				$administrator = $loginModel->getAdministratorByUsernameAndPassword(
+				// Import models
+				$userModel = $this->model('UserModel');
+				$administratorModel = $this->model('AdministratorModel');
+
+				// get the user with the same credentials from the login
+				$user = $userModel->getUserByUsernamePassword(
 					$username,
 					$password
 				);
 
-				// if the query have find the administrator with the login credentials
-				if ($administrator) {
-					// get the first array, in this case is the administrator
-					$administrator = $administrator[0];
+				// if the query have find the user with the login credentials.
+				if ($user) {
 
-					// save the administrator data in the session
-					$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administrator;
+					// save the user login data in the session
+					$_SESSION[USER_SESSION_DATA] = $user;
 
-					unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-					$this->redirectToPage('invoices');
+					// check if the user is enabled or not
+					if ($user->getEnabled()) {
+                        $this->unsetDefaultPageSessionVariables();
+						$this->redirectToPage('invoices');
+					} else {
+						unset($_SESSION['usernameOrPasswordCSSValidityClass']);
+                        $this->unsetDefaultPageSessionVariables();
+						$this->redirectToPage('home', 'disableUser');
+					}
 				} else {
-					$_SESSION['usernameOrPasswordCSSValidityClass'] = INVALID;
-                    //$this->redirectToPage('home');
-                    print_r($user);
-                    print_r($administrator);
+					// get the administrator with the same credentials from the login
+					$administrator = $administratorModel->getAdministratorByUsernamePassword(
+						$username,
+						$password
+					);
+
+					// if the query have find the administrator with the login credentials
+					if ($administrator) {
+
+						// save the administrator data in the session
+						$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administrator;
+
+						unset($_SESSION['usernameOrPasswordCSSValidityClass']);
+                        $this->unsetDefaultPageSessionVariables();
+						$this->redirectToPage('invoices');
+					} else {
+						$_SESSION['usernameOrPasswordCSSValidityClass'] = INVALID;
+						$this->showView();
+					}
 				}
+			} else {
+				$this->showView();
 			}
 		}
+	}
+
+	/**
+	 * Show the message of user disabled.
+	 */
+	public function disableUser()
+	{
+        session_start(); // !important
+
+        // prevents that anyone that is not logged enter this page
+        $this->redirectToHomePageIfAnyoneIsLogged();
+
+		$administratorModel = $this->model('AdministratorModel');
+
+		$this->header('Login', $this->controllerName);
+		$this->view(
+			'home/disableUser',
+			['administrator' => $administratorModel->getAdministratorById(1)]
+		);
+		$this->footer();
 	}
 
 	/**
@@ -138,6 +179,6 @@ class Home extends Controller
 		$_SESSION = array();
 
 		// redirect to the default page
-        $this->redirectToPage('home');
+		$this->redirectToPage('home');
 	}
 }
