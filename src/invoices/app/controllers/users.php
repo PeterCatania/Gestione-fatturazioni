@@ -46,6 +46,26 @@ class Users extends Controller
     private $isSaveModalInProcess = false;
 
     /**
+     * The user fields values from the form,
+     * Their values will be printed in their corresponding fields before save
+     */
+    private $username = '';
+    private $email = '';
+    private $password = '';
+    private $confirmedPassword = '';
+
+    /**
+     * Contains names of CSS classes.
+     * This classes indicate if the user fields are valid or invalid.
+     * If the input is valid contains: "is-valid"
+     * If the input is not valid contains: "is-invalid"
+     */
+    private $usernameCSSValidityClass = '';
+    private $emailCSSValidityClass = '';
+    private $passwordCSSValidityClass = '';
+    private $confirmedPasswordCSSValidityClass = '';
+
+    /**
 	 * Show all the not enabled users from the database.
 	 * 
 	 * @return void
@@ -60,7 +80,20 @@ class Users extends Controller
 
 		// require the users default page
         $this->header('Utenti', $this->controllerName);
-		$this->view('users/index', ['users' => $users]);
+		$this->view(
+		    'users/index',
+            [
+                'users' => $users,
+                'username' => $this->username,
+                'email' => $this->email,
+                'password' => $this->password,
+                'confirmedPassword' => $this->confirmedPassword,
+                'usernameCSSValidityClass' => $this->usernameCSSValidityClass,
+                'emailCSSValidityClass' => $this->emailCSSValidityClass,
+                'passwordCSSValidityClass' => $this->passwordCSSValidityClass,
+                'confirmedPasswordCSSValidityClass' => $this->confirmedPasswordCSSValidityClass
+            ]
+        );
 		$this->footer();
 
         // Import the required scripts
@@ -97,31 +130,11 @@ class Users extends Controller
 		// prevents that users accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
-		/**
-		 * The user fields values from the form,
-		 * Their values will be printed in their corresponding fields before save
-		 */
-        $_SESSION['username'] = '';
-		$_SESSION['email'] = '';
-		$_SESSION['password'] = '';
-		$_SESSION['confirmedPassword'] = '';
-
-		/**
-		 * Contains names of CSS classes.
-		 * This classes indicate if the user fields are valid or invalid.
-		 * If the input is valid contains: "is-valid"
-		 * If the input is not valid contains: "is-invalid"
-		 */
-		$_SESSION['usernameCSSValidityClass'] = '';
-		$_SESSION['emailCSSValidityClass'] = '';
-		$_SESSION['passwordCSSValidityClass'] = '';
-		$_SESSION['confirmedPasswordCSSValidityClass'] = '';
-
 		$this->showUsers();
 	}
 
     /**
-     * Update users information, of a single one or all at ones.
+     * Save a new user.
      *
      * @return void
      */
@@ -137,48 +150,46 @@ class Users extends Controller
 			$validator = $this->model('Validator');
 
 			// get the validated data from the form that contains the information about a new user
-			$username = $validator->validateString($_POST['username']);
-			$email = $validator->validateEmail($_POST['email']);
+			$this->username = $validator->validateString($_POST['username']);
+			$this->email = $validator->validateEmail($_POST['email']);
 
 			// get the hash of the password and it's confirmation from the form that contains the information about a new user
-			$password = hash(
-			    'sha256',
-                $_POST['password']
-            );
-			$confirmedPassword = hash(
+			$this->password = hash( 'sha256', $_POST['password']);
+			$this->confirmedPassword = hash(
 			    'sha256',
                 $_POST['confirmedPassword']
             );
 
-			// the get field values from the registration form are inserted in the Session
-			$_SESSION['username'] = $username;
-			$_SESSION['email'] = $email;
-			$_SESSION['password'] = $validator->generalValidation($_POST['password']);
-			$_SESSION['confirmedPassword'] = $validator->generalValidation($_POST['confirmedPassword']);
-
-			// tell if all the fields are valid
-			$allFieldAreValid = true;
-
 			// verify if the fields values are valid
-			$allFieldAreValid = $validator->isNameFieldValid($username, 'username') ? $allFieldAreValid : false;
-			$allFieldAreValid = $validator->isEmailFieldValid($email, 'email') ? $allFieldAreValid : false;
+			$this->usernameCSSValidityClass = $validator->isNameFieldValid(
+			    $this->username
+            );
+			$this->emailCSSValidityClass = $validator->isEmailFieldValid(
+			    $this->email
+            );
 
 			// verify if the passwords are valid
-			$allFieldAreValid = $validator->arePasswordsValueValid(
-			    $password,
-                $_POST['password'],
-                'password',
-                $confirmedPassword,
-                $_POST['confirmedPassword'],
-                'confirmedPassword'
-            ) ? $allFieldAreValid : false;
+			$this->passwordCSSValidityClass = $validator->isPasswordFieldValid(
+			    $this->password,
+                $_POST['password']
+            );
+            $this->confirmedPasswordCSSValidityClass = $validator->isConfirmedPasswordFieldValid(
+                $this->password,
+                $this->confirmedPassword,
+                $_POST['confirmedPassword']
+            );
 
-			if ($allFieldAreValid) {
+			if ($validator->areAllFieldsValid()) {
 				// instance a new object of the model class "UserModel"
 				$userModel = $this->model("UserModel");
 
 				// insert the new user in the database
-				$userModel->saveUser($username, $password, $email, 0);
+				$userModel->saveUser(
+				    $this->username,
+                    $this->password,
+                    $this->email,
+                    0
+                );
 
                 // tell the save is not in progress
                 $this->isSaveModalInProcess = false;

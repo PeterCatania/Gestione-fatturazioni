@@ -47,6 +47,22 @@ class Products extends Controller
     private $isSaveModalInProcess = false;
 
     /**
+     * The product fields values from the form,
+     * Their values will be printed in their corrispettive fields before save
+     */
+    private $description = '';
+    private $price = '';
+
+    /**
+     * Contains names of CSS classes.
+     * This classes indicate if the product fields are valid or invalid.
+     * If the input is valid contains: "is-valid"
+     * If the input is not valid contains: "is-invalid"
+     */
+    private $descriptionCSSValidityClass = '';
+    private $priceCSSValidityClass = '';
+
+    /**
 	 * Show the products saved in the database.
 	 */
 	private function showProducts()
@@ -59,7 +75,16 @@ class Products extends Controller
 
 		// require the products default page
         $this->header('Prodotti', $this->controllerName);
-		$this->view('products/index', ['products' => $products]);
+		$this->view(
+		    'products/index',
+            [
+                'products' => $products,
+                'description' => $this->description,
+                'price' => $this->price,
+                'descriptionCSSValidityClass' => $this->descriptionCSSValidityClass,
+                'priceCSSValidityClass' => $this->priceCSSValidityClass
+            ]
+        );
         $this->footer();
 
         // Import the required scripts
@@ -94,22 +119,6 @@ class Products extends Controller
 		// prevents that products accounts can access this page, and execute this method 
 		$this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
-		/**
-		 * The product fields values from the form,
-		 * Their values will be printed in their corrispettive fields before save
-		 */
-		$_SESSION['description'] = '';
-		$_SESSION['price'] = '';
-
-		/**
-		 * Contains names of CSS classes.
-		 * This classes indicate if the product fields are valid or invalid.
-		 * If the input is valid contains: "is-valid"
-		 * If the input is not valid contains: "is-invalid"
-		 */
-		$_SESSION['descriptionCSSValidityClass'] = '';
-		$_SESSION['priceCSSValidityClass'] = '';
-
 		// show the products, in the products default page.
 		$this->showProducts();
 	}
@@ -138,26 +147,23 @@ class Products extends Controller
 			 * get the validated description and price,
 			 * from the new product form fields
 			 */
-			$description = $validator->validateName($_POST['description']);
-			$price = $validator->validatePrice($_POST['price']);
-
-			// get the validated data from the form that contains the information about a new product
-			$_SESSION['description'] = $description;
-			$_SESSION['price'] = $price;
-
-			// tell if all the fields are valid
-			$allFieldAreValid = true;
+			$this->description = $validator->validateName($_POST['description']);
+			$this->price = $validator->validatePrice($_POST['price']);
 
 			// verify if the fields values are valid
-			$allFieldAreValid = $validator->isFieldValueValid($description, 'description') ? $allFieldAreValid : false;
-			$allFieldAreValid = $validator->isPriceFieldValid($price, 'price') ? $allFieldAreValid : false;
+			$this->descriptionCSSValidityClass = $validator->isFieldValidWithoutTags(
+			    $this->description
+            );
+			$this->priceCSSValidityClass = $validator->isPriceFieldValid(
+			    $this->price)
+            ;
 
-			if ($allFieldAreValid) {
+			if ($validator->areAllFieldsValid()) {
 				// instance a new object of the model class "ProductsModel"
 				$productsModel = $this->model("ProductModel");
 
 				// insert the new product in the database
-				$productsModel->saveProduct($description, $price);
+				$productsModel->saveProduct($this->description, $this->price);
 
 				// tell the save is not in progress
                 $this->isSaveModalInProcess = false;
@@ -190,7 +196,11 @@ class Products extends Controller
 
         // update the products data
         foreach ($products as $product) {
-            $productModel->updateProduct($product['id'], $product['description'], $product['price']);
+            $productModel->updateProduct(
+                $product['id'],
+                $product['description'],
+                $product['price']
+            );
         }
 
         // send the response to correlated AJAX function.
@@ -213,7 +223,11 @@ class Products extends Controller
 
         // update the product data
         $productModel = $this->model('ProductModel');
-        $productModel->updateProduct($product['id'], $product['description'], $product['price']);
+        $productModel->updateProduct(
+            $product['id'],
+            $product['description'],
+            $product['price']
+        );
 
         // send the response to correlated AJAX function.
         echo "true";

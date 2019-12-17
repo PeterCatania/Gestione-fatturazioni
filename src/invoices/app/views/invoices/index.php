@@ -17,33 +17,300 @@
                             </div>
 
                             <div class="modal-body">
-                                <form method="POST" action="<?php echo URL; ?>invoices/saveInvoice">
+                                <div class="row">
+                                    <div class="col-5 mb-4">
+                                        <h3>Fattura</h3>
+                                    </div>
+                                </div>
+                                <form method="POST" action="<?php echo URL; ?>invoices/saveInvoice" autocomplete="on">
+                                    <!-- Company Information -->
+                                    <!-- Company Id -->
+                                    <input name="clientId" type="number" class="d-none" value="<?= $data['clientId'] ?>">
+                                    <!-- Row 1-->
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-5">
                                             <div class="form-group mb-3">
-                                                <label for="description-input" class="mb-n1 h6">
-                                                    Descrizione
-                                                </label>
-                                                <input id="description-input" name="description" type="text" class="form-control mt-1
-                                                    <?= $_SESSION['descriptionCSSValidityClass'] ?>" value="<?= $_SESSION['description'] ?>">
+                                                <input id="companyName-input" name="companyName" type="text" placeholder="Nome azienda" class="form-control mt-1
+                                                    <?= $data['companyNameCSSValidityClass'] ?>" value="<?= $data['companyName'] ?>">
                                                 <div class="invalid-feedback very-small">
-                                                    Inserire una descrizione
+                                                    Inserire un nome valido
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-3 ml-auto mx-3 text-center underlined-title">
+                                            <span><?= date("d/m/Y") ?></span>
+                                        </div>
+                                    </div>
+                                    <!-- Row 2-->
+                                    <div class="row">
+                                        <div class="col-3">
                                             <div class="form-group mb-3">
-                                                <label for="price-input" class="mb-n1 h6">
-                                                    Prezzo
-                                                </label>
-                                                <input id="price-input" name="price" type="number" step="0.01" class="form-control mt-1
-                                                        <?= $_SESSION['priceCSSValidityClass'] ?>" value="<?= $_SESSION['price'] ?>">
+                                                <input id="companyStreet-input" name="companyStreet" type="text" placeholder="Via" class="form-control mt-1
+                                                    <?= $data['companyStreetCSSValidityClass'] ?>" value="<?= $data['companyStreet'] ?>">
                                                 <div class="invalid-feedback very-small">
-                                                    Inserire un prezzo che non sia 0
+                                                    Inserire una via valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group mb-3">
+                                                <input id="companyHouseNo-input" name="companyHouseNo" type="text" placeholder="CAP" class="form-control mt-1
+                                                    <?= $data['companyHouseNoCSSValidityClass'] ?>" value="<?= $data['companyHouseNo'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un CAP valido
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 ml-auto mx-3 text-center underlined-title">
+                                            <span><?= $data['invoiceNextId'] ?></span>
+                                        </div>
+                                    </div>
+                                    <!-- Row 3-->
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group mb-3">
+                                                <input id="companyCity-input" name="companyCity" type="text" placeholder="Città" class="form-control mt-1
+                                                    <?= $data['companyCityCSSValidityClass'] ?>" value="<?= $data['companyCity'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire una città valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group mb-3">
+                                                <input id="companyNap-input" name="companyNap" type="text" placeholder="NAP" class="form-control mt-1
+                                                    <?= $data['companyNapCSSValidityClass'] ?>" value="<?= $data['companyNap'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire NAP valido
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Row 4-->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input id="companyTelephone-input" name="companyTelephone" type="text" placeholder="Telefono" class="form-control mt-1
+                                                    <?= $data['companyTelephoneCSSValidityClass'] ?>" value="<?= $data['companyTelephone'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un numero di telefono valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 5-->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input id="companyEmail-input" name="companyEmail" type="text" placeholder="Email" class="form-control mt-1
+                                                    <?= $data['companyEmailCSSValidityClass'] ?>" value="<?= $data['companyEmail'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire una email valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 6-->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input id="companySite-input" name="companySite" type="text" placeholder="Sito Web" class="form-control mt-1
+                                                    <?= $data['companySiteCSSValidityClass'] ?>" value="<?= $data['companySite'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un sito web valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 7-->
+                                    <div class="row mt-3">
+                                        <!-- Typology Id -->
+                                        <input name="typologyId" type="number" class="d-none" value="<?= $data['typologyId'] ?>">
+
+                                        <div class="col-2">
+                                            <label for="typologyName-input" class="mt-2 h6">
+                                                Tipologia
+                                            </label>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input id="typologyName-input" name="typologyName" type="text" placeholder="Tipologia" class="form-control mt-1
+                                                    <?= $data['typologyNameCSSValidityClass'] ?>" value="<?= $data['typologyName'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un sito web valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Informazioni clienti -->
+                                    <h5 class="mt-4 underlined-title">Cliente</h5>
+
+                                    <!-- Client Id -->
+                                    <input name="clientId" type="number" class="d-none" value="<?= $data['clientId'] ?>">
+                                    <!-- Row 1-->
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <input id="clientName-input" name="clientName" type="text" placeholder="Nome" class="form-control mt-1
+                                                    <?= $data['clientNameCSSValidityClass'] ?>" value="<?= $data['clientName'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un nome valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <input id="clientSurname-input" name="clientSurname" type="text" placeholder="Cognome" class="form-control mt-1
+                                                    <?= $data['clientSurnameCSSValidityClass'] ?>" value="<?= $data['clientSurname'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un cognome valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <input id="clientCompanyName-input" name="clientCompanyName" type="text" placeholder="Nome Azienda" class="form-control mt-1
+                                                    <?= $data['clientCompanyNameCSSValidityClass'] ?>" value="<?= $data['clientCompanyName'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un nome valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 2-->
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group mb-3">
+                                                <input id="clientStreet-input" name="clientStreet" type="text" placeholder="Via" class="form-control mt-1
+                                                    <?= $data['clientStreetCSSValidityClass'] ?>" value="<?= $data['clientStreet'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire una via valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group mb-3">
+                                                <input id="clientHouseNo-input" name="clientHouseNo" type="text" placeholder="CAP" class="form-control mt-1
+                                                    <?= $data['clientHouseNoCSSValidityClass'] ?>" value="<?= $data['clientHouseNo'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un CAP valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 3-->
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group mb-3">
+                                                <input id="clientCity-input" name="clientCity" type="text" placeholder="Città" class="form-control mt-1
+                                                    <?= $data['clientCityCSSValidityClass'] ?>" value="<?= $data['clientCity'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire una città valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group mb-3">
+                                                <input id="clientNap-input" name="clientNap" type="text" placeholder="NAP" class="form-control mt-1
+                                                    <?= $data['clientNapCSSValidityClass'] ?>" value="<?= $data['clientNap'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire NAP valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 4-->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input "clientTelephone-input" name="clientTelephone" type="text" placeholder="Telefono" class="form-control mt-1
+                                                    <?= $data['clientTelephoneCSSValidityClass'] ?>" value="<?= $data['clientTelephone'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire un numero di telefono valido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 5-->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group mb-3">
+                                                <input id="clientEmail-input" name="clientEmail" type="text" placeholder="Email" class="form-control mt-1
+                                                    <?= $data['clientEmailCSSValidityClass'] ?>" value="<?= $data['clientEmail'] ?>">
+                                                <div class="invalid-feedback very-small">
+                                                    Inserire una email valida
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Products Information -->
+                                    <h5 class="mt-4 underlined-title">Prodotti</h5>
+
+                                    <div class="row mb-2">
+                                        <div class="col-4">
+                                            <span>Descrizione</span>
+                                        </div>
+                                        <div class="col-2">
+                                            <span>Data V.tà</span>
+                                        </div>
+                                        <div class="col-2">
+                                            <span>Q.tà</span>
+                                        </div>
+                                        <div class="col-2">
+                                            <span>Prezzo uni.</span>
+                                        </div>
+                                        <div class="col-2">
+                                            <span>Importo</span>
+                                        </div>
+                                    </div>
+
+                                    <?php foreach (array_keys($data['productsDescription']) as $key) : ?>
+                                        <!-- product Id -->
+                                        <input name="productsId[]" type="number" class="d-none" value="<?= $data['productsId'][$key] ?>">
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group mb-3">
+                                                    <input name="productsDescription[]" type="text" placeholder="descrizione" class="form-control mt-1" value="<?= $data['productsDescription'][$key] ?>">
+                                                    <div class="invalid-feedback very-small">
+                                                        Inserire una descrizione valida
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group mb-3">
+                                                    <input name="productsSellDate[]" type="text" placeholder="Data V.tà" class="form-control mt-1" value="<?= $data['productsSellDate'][$key] ?>">
+                                                    <div class="invalid-feedback very-small">
+                                                        Inserire una data valida
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group mb-3">
+                                                    <input name="productsQuantity[]" type="text" placeholder="Q.tà" class="form-control mt-1" value="<?= $data['productsQuantity'][$key] ?>">
+                                                    <div class="invalid-feedback very-small">
+                                                        Inserire un numero intero
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group mb-3">
+                                                    <input name="productsPrice[]" type="text" placeholder="Prezzo uni." class="form-control mt-1" value="<?= $data['productsPrice'][$key] ?>">
+                                                    <div class="invalid-feedback very-small">
+                                                        Inserire un prezzo valido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 mt-2">
+                                                <span id="invoice-product-import-<?= $data['productsId'][$key] ?>">100 </span>
+                                                <span> CHF</span>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+
                                     <!-- Submit -->
                                     <div class="modal-footer">
                                         <button id="b-cancel-save-invoice" class="btn btn-secondary" type="submit" name="cancelSaveInvoice">Annulla</button>

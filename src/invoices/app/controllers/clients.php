@@ -57,6 +57,39 @@ class Clients extends Controller
     private $isSaveModalInProcess = false;
 
     /**
+     * The client fields values from the form,
+     * Their values will be printed in their corrispettive fields before save
+     */
+    private $clientName = '';
+    private $clientSurname = '';
+    private $street = '';
+    private $houseNo = '';
+    private $nap = '';
+    private $city = '';
+    private $telephone = '';
+    private $email = '';
+    private $companyName = '';
+
+    // the company name checkbox value if checked
+    private $cbCompanyName = '';
+
+    /**
+     * Contains names of CSS classes.
+     * This classes indicate if the client fields are valid or invalid.
+     * If the input is valid contains: "is-valid"
+     * If the input is not valid contains: "is-invalid"
+     */
+    private $clientNameCSSValidityClass = '';
+    private $clientSurnameCSSValidityClass = '';
+    private $streetCSSValidityClass = '';
+    private $houseNoCSSValidityClass = '';
+    private $cityCSSValidityClass = '';
+    private $napCSSValidityClass = '';
+    private $telephoneCSSValidityClass = '';
+    private $emailCSSValidityClass = '';
+    private $companyNameCSSValidityClass = '';
+
+    /**
      * Show the clients saved in the database.
      */
     private function showClients()
@@ -69,7 +102,31 @@ class Clients extends Controller
 
         // require the clients default page
         $this->header('Utenti', $this->controllerName);
-        $this->view('clients/index', ['clients' => $clients]);
+        $this->view(
+            'clients/index',
+            [
+                'clients' => $clients,
+                'clientName' => $this->clientName,
+                'clientSurname' => $this->clientSurname,
+                'street' => $this->street,
+                'houseNo' => $this->houseNo,
+                'nap' => $this->nap,
+                'city' => $this->city,
+                'telephone' => $this->telephone,
+                'email' => $this->email,
+                'companyName' => $this->companyName,
+                'cbCompanyName' => $this->cbCompanyName,
+                'clientNameCSSValidityClass' => $this->clientNameCSSValidityClass,
+                'clientSurnameCSSValidityClass' => $this->clientSurnameCSSValidityClass,
+                'streetCSSValidityClass' => $this->streetCSSValidityClass,
+                'houseNoCSSValidityClass' => $this->houseNoCSSValidityClass,
+                'cityCSSValidityClass' => $this->cityCSSValidityClass,
+                'napCSSValidityClass' => $this->napCSSValidityClass,
+                'telephoneCSSValidityClass' => $this->telephoneCSSValidityClass,
+                'emailCSSValidityClass' => $this->emailCSSValidityClass,
+                'companyNameCSSValidityClass' => $this->companyNameCSSValidityClass
+            ]
+        );
         $this->footer();
 
         // Import the required scripts
@@ -105,39 +162,6 @@ class Clients extends Controller
         // prevents that clients accounts can access this page, and execute this method 
         $this->redirectToUserDefaultPermittedPageIfUserIsLogged();
 
-        /**
-         * The client fields values from the form,
-         * Their values will be printed in their corrispettive fields before save
-         */
-        $_SESSION['clientName'] = '';
-        $_SESSION['clientSurname'] = '';
-        $_SESSION['street'] = '';
-        $_SESSION['houseNo'] = '';
-        $_SESSION['nap'] = '';
-        $_SESSION['city'] = '';
-        $_SESSION['telephone'] = '';
-        $_SESSION['email'] = '';
-        $_SESSION['companyName'] = '';
-
-        // the company name checkbox value if checked
-        $_SESSION['cbCompanyName'] = '';
-
-        /**
-         * Contains names of CSS classes.
-         * This classes indicate if the client fields are valid or invalid.
-         * If the input is valid contains: "is-valid"
-         * If the input is not valid contains: "is-invalid"
-         */
-        $_SESSION['clientNameCSSValidityClass'] = '';
-        $_SESSION['clientSurnameCSSValidityClass'] = '';
-        $_SESSION['streetCSSValidityClass'] = '';
-        $_SESSION['houseNoCSSValidityClass'] = '';
-        $_SESSION['cityCSSValidityClass'] = '';
-        $_SESSION['napCSSValidityClass'] = '';
-        $_SESSION['telephoneCSSValidityClass'] = '';
-        $_SESSION['emailCSSValidityClass'] = '';
-        $_SESSION['companyNameCSSValidityClass'] = '';
-
         // show the clients, in the clients default page.
         $this->showClients();
     }
@@ -163,95 +187,71 @@ class Clients extends Controller
             $validator = $this->model('Validator');
 
             // get the validated data from the form that contains the information about a new client
-            $clientName = $validator->validateName($_POST['clientName']);
-            $clientSurname = $validator->validateName($_POST['clientSurname']);
-            $street = $validator->validateCapitalizedWords($_POST['street']);
-            $houseNo = $validator->validateString($_POST['houseNo']);
-            $city = $validator->validateCapitalizedWords($_POST['city']);
-            $nap = $validator->validateInt($_POST['nap']);
-            $telephone = $validator->validateTelephoneNumber(
+            $this->clientName = $validator->validateName($_POST['clientName']);
+            $this->clientSurname = $validator->validateName($_POST['clientSurname']);
+            $this->street = $validator->validateName($_POST['street']);
+            $this->houseNo = $validator->validateString($_POST['houseNo']);
+            $this->city = $validator->validateCapitalizedWords($_POST['city']);
+            $this->nap = $validator->validateInt($_POST['nap']);
+            $this->telephone = $validator->validateTelephoneNumber(
                 $_POST['telephone']
             );
-            $email = $validator->validateEmail($_POST['email']);
-            $companyName = null;
+            $this->email = $validator->validateEmail($_POST['email']);
+            $this->companyName = null;
             if (isset($_POST['companyName'])) {
-                $companyName = $validator->validateName($_POST['companyName']);
+                $this->companyName = $validator->validateName($_POST['companyName']);
             }
-
-            // The get fields values from the registration form are inserted in the Session.
-            $_SESSION['clientName'] = $clientName;
-            $_SESSION['clientSurname'] = $clientSurname;
-            $_SESSION['street'] = $street;
-            $_SESSION['houseNo'] = $street;
-            $_SESSION['city'] = $city;
-            $_SESSION['nap'] = $nap;
-            $_SESSION['telephone'] = $telephone;
-            $_SESSION['email'] = $email;
-            $_SESSION['companyName'] = $companyName;
 
             // the company name checkbox value if checked
-            $_SESSION['cbCompanyName'] =
+            $this->cbCompanyName =
                 isset($_POST['cbCompanyName']) ? $_POST['cbCompanyName'] : '';
 
-            // tell if all the fields are valid
-            $allFieldAreValid = true;
-
             // verify if the fields values are valid
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $clientName,
-                'clientName'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $clientSurname,
-                'clientSurname'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $street,
-                'street'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $houseNo,
-                'houseNo'
-            ) ?
-                $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $city,
-                'city'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $nap,
-                'nap'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid(
-                $telephone,
-                'telephone'
-            ) ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isEmailFieldValid(
-                $email,
-                'email'
-            ) ? $allFieldAreValid : false;
+            $this->clientNameCSSValidityClass = $validator->isNameFieldValid(
+                $this->clientName,
+            );
+            $this->clientSurnameCSSValidityClass = $validator->isNameFieldValid(
+                $this->clientSurname,
+            );
+            $this->streetCSSValidityClass = $validator->isNameFieldValid(
+                $this->street,
+            );
+            $this->houseNoCSSValidityClass = $validator->isFieldValidWithoutTags(
+                $this->houseNo,
+            ) ;
+            $this->cityCSSValidityClass = $validator->isNameFieldValid(
+                $this->city,
+            );
+            $this->napCSSValidityClass = $validator->isFieldValid(
+                $this->nap,
+            );
+            $this->telephoneCSSValidityClass = $validator->isFieldValidWithoutTags(
+                $this->telephone,
+            );
+            $this->emailCSSValidityClass = $validator->isEmailFieldValid(
+                $this->email,
+            );
             if (isset($_POST['companyName'])) {
-                $allFieldAreValid = $validator->isFieldValueValid(
-                    $companyName,
-                    'companyName'
-                ) ? $allFieldAreValid : false;
+                $this->companyNameCSSValidityClass = $validator->isNameFieldValid(
+                    $this->companyName,
+                );
             }
 
-            if ($allFieldAreValid) {
+            if ($validator->areAllFieldsValid()) {
                 // instance a new object of the model class "ClientsModel"
                 $clientsModel = $this->model("ClientModel");
 
                 // insert the new client in the database
                 $clientsModel->saveClient(
-                    $clientName,
-                    $clientSurname,
-                    $street,
-                    $houseNo,
-                    $city,
-                    $nap,
-                    $telephone,
-                    $email,
-                    isset($_POST['companyName']) ? $companyName : null
+                    $this->clientName,
+                    $this->clientSurname,
+                    $this->street,
+                    $this->houseNo,
+                    $this->city,
+                    $this->nap,
+                    $this->telephone,
+                    $this->email,
+                    isset($_POST['companyName']) ? $this->companyName : null
                 );
 
                 // tell the save is not in progress

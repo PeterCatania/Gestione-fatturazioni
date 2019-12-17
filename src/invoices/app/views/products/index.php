@@ -25,7 +25,7 @@
                                                         Descrizione
                                                     </label>
                                                     <input id="description-input" name="description" type="text" class="form-control mt-1
-                                                    <?= $_SESSION['descriptionCSSValidityClass'] ?>" value="<?= $_SESSION['description'] ?>">
+                                                    <?= $data['descriptionCSSValidityClass'] ?>" value="<?= $data['description'] ?>">
                                                     <div class="invalid-feedback very-small">
                                                         Inserire una descrizione
                                                     </div>
@@ -37,7 +37,7 @@
                                                         Prezzo
                                                     </label>
                                                     <input id="price-input" name="price" type="number" step="0.01" class="form-control mt-1
-                                                        <?= $_SESSION['priceCSSValidityClass'] ?>" value="<?= $_SESSION['price'] ?>">
+                                                        <?= $data['priceCSSValidityClass'] ?>" value="<?= $data['price'] ?>">
                                                     <div class="invalid-feedback very-small">
                                                         Inserire un prezzo che non sia 0
                                                     </div>

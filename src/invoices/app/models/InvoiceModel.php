@@ -1,6 +1,7 @@
 <?php
 
 use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Propel;
 
 class InvoiceModel
 {
@@ -8,7 +9,8 @@ class InvoiceModel
     /**
      * Get the invoices saved in the database.
      */
-    public function getInvoices(){
+    public function getInvoices()
+    {
         $invoices = new InvoiceQuery();
         return $invoices->find();
     }
@@ -19,9 +21,27 @@ class InvoiceModel
      * @param int $id The id of the invoice
      * @return Invoice The invoice with the given id, or null if don't exists
      */
-    public function getOneById($id){
+    public function getOneById($id)
+    {
         $invoices = new InvoiceQuery();
         return $invoices->findOneById($id);
+    }
+
+    /**
+     * Get the last id fo invoices.
+     *
+     * @retunr int The next id.
+     */
+    public function getNextId()
+    {
+        $conn = Propel::getConnection();
+        //get the information about the table invoice
+        $getLastId = "SHOW TABLE STATUS LIKE 'invoice'";
+        $stmt = $conn->prepare($getLastId);
+
+        // the query statement is executed and returned
+        $stmt->execute();
+        return ($stmt->fetch(PDO::FETCH_ASSOC))['Auto_increment'];
     }
 
     /**
@@ -29,22 +49,20 @@ class InvoiceModel
      *
      * @param Client $client The client associated with the invoice
      * @param Typology $typology The typology associated with the invoice
-     * @param string $paymentDate The invoice payment date
      * @return Invoice The saved invoice
      */
-    private function saveEmptyInvoice($client, $typology, $paymentDate){
+    private function saveEmptyInvoice($client, $typology)
+    {
         $invoice = new Invoice();
         $invoice->setPrintNo(0);
         $invoice->setCreationDate(date('Y-m-d'));
         $invoice->setStatus('saved');
-        $invoice->setPaymentDate($paymentDate);
         $invoice->setCallback(0);
         try {
             $invoice->setClient($client);
             $invoice->setTypology($typology);
             $invoice->save();
-        } catch (PropelException $e) {
-        }
+        } catch (PropelException $e) { }
         return $invoice;
     }
 
@@ -89,7 +107,7 @@ class InvoiceModel
         $typologyId,
         $typologyName,
         $paymentDate
-    ){
+    ) {
         // import models
         require_once 'TypologyModel.php';
         $typologyModel = new TypologyModel();
@@ -102,7 +120,7 @@ class InvoiceModel
         $insertedRelationshipModel = new InsertedRelationshipModel();
 
         // do if the typology exists
-        if($typologyId && $typologyModel->getOneById($typologyId)){
+        if ($typologyId && $typologyModel->getOneById($typologyId)) {
             // update typology
             $typology = $typologyModel->updateTypology(
                 $typologyId,
@@ -114,7 +132,7 @@ class InvoiceModel
         }
 
         // do if the client exists
-        if($clientId && $clientModel->getOneById($clientId)){
+        if ($clientId && $clientModel->getOneById($clientId)) {
             // update the associated client
             $client = $clientModel->updateClient(
                 $clientId,
@@ -144,17 +162,17 @@ class InvoiceModel
         }
 
         // save the a new empty invoice with the associated client ad typology
-        $invoice = $this->saveEmptyInvoice($client, $typology, $paymentDate);
+        $invoice = $this->saveEmptyInvoice($client, $typology);
 
-        foreach (array_keys($productsDescription) as $i){
-            if($productsId[$i] && $productModel->getOneById($i)){
+        foreach (array_keys($productsDescription) as $i) {
+            if ($productsId[$i] && $productModel->getOneById($i)) {
                 // update the product
                 $product = $productModel->updateProduct(
                     $productsId[$i],
                     $productsDescription[$i],
                     $productsPrice[$i]
                 );
-            } else{
+            } else {
                 $product = $productModel->saveProduct(
                     $productsDescription[$i],
                     $productsPrice[$i]
@@ -214,7 +232,7 @@ class InvoiceModel
         $typologyId,
         $typologyName,
         $paymentDate
-    ){
+    ) {
         // import models
         require_once 'TypologyModel.php';
         $typologyModel = new TypologyModel();
@@ -226,7 +244,7 @@ class InvoiceModel
         $insertedRelationshipModel = new InsertedRelationshipModel();
 
         // do if the typology exists
-        if($typologyId && $typologyModel->getOneById($typologyId)){
+        if ($typologyId && $typologyModel->getOneById($typologyId)) {
             // update typology
             $typology = $typologyModel->updateTypology(
                 $typologyId,
@@ -238,7 +256,7 @@ class InvoiceModel
         }
 
         // do if the client exists
-        if($clientId && $clientModel->getOneById($clientId)){
+        if ($clientId && $clientModel->getOneById($clientId)) {
             // update the associated client
             $client = $clientModel->updateClient(
                 $clientId,
@@ -269,22 +287,22 @@ class InvoiceModel
 
         // get the invoice with the given id
         $invoice = $this->getOneById($id);
-        if($paymentDate){
+        if ($paymentDate) {
             $invoice->setPaymentDate($paymentDate);
             $invoice->setStatus('paid');
         }
         $invoice->setTypologyId($typology->getId());
         $invoice->setClientId($client->getId());
 
-        foreach (array_keys($productsDescription) as $i){
-            if($productsId[$i] && $productModel->getOneById($i)){
+        foreach (array_keys($productsDescription) as $i) {
+            if ($productsId[$i] && $productModel->getOneById($i)) {
                 // update the product
                 $product = $productModel->updateProduct(
                     $productsId[$i],
                     $productsDescription[$i],
                     $productsPrice[$i]
                 );
-            } else{
+            } else {
                 $product = $productModel->saveProduct(
                     $productsDescription[$i],
                     $productsPrice[$i]
@@ -293,10 +311,11 @@ class InvoiceModel
 
             // get the inserted relationship between product and invoice
             $inserted = $insertedRelationshipModel->getOneByInvoiceIdProductId(
-                $id,$productsId[$i]
+                $id,
+                $productsId[$i]
             );
 
-            if($inserted){
+            if ($inserted) {
                 // update the  inserted relationship between product and invoice
                 $insertedRelationshipModel->updateInsertedRelationship(
                     $product,
@@ -304,7 +323,7 @@ class InvoiceModel
                     $productsSellDate[$i],
                     $productsQuantity[$i]
                 );
-            }else{
+            } else {
                 // save the  inserted relationship between product and invoice
                 $insertedRelationshipModel->saveInsertedRelationship(
                     $product,
@@ -328,7 +347,8 @@ class InvoiceModel
      * @param int $id The id of the invoice to delete.
      * @return void
      */
-    public function deleteInvoiceById($id){
+    public function deleteInvoiceById($id)
+    {
         $invoice = $this->getOneById($id);
         try {
             foreach ($invoice->getInserteds() as $inserted) {

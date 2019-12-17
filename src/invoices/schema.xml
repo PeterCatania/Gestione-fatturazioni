@@ -62,7 +62,7 @@
   <table name="invoice" phpName="Invoice">
     <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="print_no" type="INTEGER" required="true"/>
-    <column name="payment_date" type="DATE" required="true"/>
+    <column name="payment_date" type="DATE" required="false"/>
     <column name="creation_date" type="DATE" required="true"/>
     <column name="status" type="VARCHAR" size="7" required="true"/>
     <column name="callback" type="TINYINT" required="true"/>

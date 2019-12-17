@@ -25,7 +25,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <div class="custom-control custom-checkbox ml-4 mt-4">
-                                                    <input id="cbCompany" type="checkbox" class="custom-control-input" name="cbCompanyName" value="checked" <?= $_SESSION['cbCompanyName'] ?>>
+                                                    <input id="cbCompany" type="checkbox" class="custom-control-input" name="cbCompanyName" value="checked" <?= $data['cbCompanyName'] ?>>
                                                     <label for="cbCompany" class="custom-control-label"><b style="margin-left:5px;">Cliente Aziendale</b></label>
                                                 </div>
                                             </div>
@@ -36,7 +36,7 @@
                                                     Nome Azienda
                                                 </label>
                                                 <input id="companyName-input" name="companyName" type="text" class="form-control mt-1
-                                                <?= $_SESSION['companyNameCSSValidityClass'] ?>" value="<?= $_SESSION['companyName'] ?>" <?= $_SESSION['cbCompanyName'] ? : 'disabled'?>>
+                                                <?= $data['companyNameCSSValidityClass'] ?>" value="<?= $data['companyName'] ?>" <?= $data['cbCompanyName'] ? : 'disabled'?>>
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il nome dell'azienda, o disabilitare il campo se non necessario
                                                 </div>
@@ -51,7 +51,7 @@
                                                     Nome Cliente
                                                 </label>
                                                 <input id="clientName-input" name="clientName" type="text" class="form-control mt-1
-                                            <?= $_SESSION['clientNameCSSValidityClass'] ?>" value="<?= $_SESSION['clientName'] ?>">
+                                            <?= $data['clientNameCSSValidityClass'] ?>" value="<?= $data['clientName'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il nome del cliente
                                                 </div>
@@ -63,7 +63,7 @@
                                                     Cognome Cliente
                                                 </label>
                                                 <input id="clientSurname-input" name="clientSurname" type="text" class="form-control mt-1
-                                                <?= $_SESSION['clientSurnameCSSValidityClass'] ?>" value="<?= $_SESSION['clientSurname'] ?>">
+                                                <?= $data['clientSurnameCSSValidityClass'] ?>" value="<?= $data['clientSurname'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il cognome del cliente
                                                 </div>
@@ -78,7 +78,7 @@
                                                     Via
                                                 </label>
                                                 <input id="street-input" name="street" type="text" class="form-control mt-1
-                                            <?= $_SESSION['streetCSSValidityClass'] ?>" value="<?= $_SESSION['street'] ?>">
+                                            <?= $data['streetCSSValidityClass'] ?>" value="<?= $data['street'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire la via dell'indirizzo del cliente
                                                 </div>
@@ -90,7 +90,7 @@
                                                     Numero Civico
                                                 </label>
                                                 <input id="houseNo-input" name="houseNo" type="text" class="form-control mt-1
-                                                <?= $_SESSION['houseNoCSSValidityClass'] ?>" value="<?= $_SESSION['houseNo'] ?>">
+                                                <?= $data['houseNoCSSValidityClass'] ?>" value="<?= $data['houseNo'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il numero civico dell'indirizzo del cliente
                                                 </div>
@@ -105,7 +105,7 @@
                                                     Città
                                                 </label>
                                                 <input id="city-input" name="city" type="text" class="form-control mt-1
-                                                <?= $_SESSION['cityCSSValidityClass'] ?>" value="<?= $_SESSION['city'] ?>">
+                                                <?= $data['cityCSSValidityClass'] ?>" value="<?= $data['city'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire la citta dell'indirizzo del cliente
                                                 </div>
@@ -117,7 +117,7 @@
                                                     NAP
                                                 </label>
                                                 <input id="nap-input" name="nap" type="text" class="form-control mt-1
-                                            <?= $_SESSION['napCSSValidityClass'] ?>" value="<?= $_SESSION['nap'] ?>">
+                                            <?= $data['napCSSValidityClass'] ?>" value="<?= $data['nap'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il nap dell'indirizzo del cliente
                                                 </div>
@@ -132,7 +132,7 @@
                                                     Telefono
                                                 </label>
                                                 <input id="telephone-input" name="telephone" type="tel" class="form-control mt-1
-                                            <?= $_SESSION['telephoneCSSValidityClass'] ?>" value="<?= $_SESSION['telephone'] ?>">
+                                            <?= $data['telephoneCSSValidityClass'] ?>" value="<?= $data['telephone'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire il telefono del cliente
                                                 </div>
@@ -144,7 +144,7 @@
                                                     Email
                                                 </label>
                                                 <input id="email-input" name="email" type="email" class="form-control mt-1
-                                                <?= $_SESSION['emailCSSValidityClass'] ?>" value="<?= $_SESSION['email'] ?>">
+                                                <?= $data['emailCSSValidityClass'] ?>" value="<?= $data['email'] ?>">
                                                 <div class="invalid-feedback very-small">
                                                     Inserire l'email del cliente
                                                 </div>

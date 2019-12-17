@@ -8,8 +8,26 @@
  */
 class Validator
 {
-    // the hash sha256 of an empty password
+    /**
+     * the hash sha256 of an empty password
+     */
     private const EMPTY_PASSWORD_HASH = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+
+    /**
+     * @var bool Tell if all the fields are valid.
+     */
+    private $allFieldsAreValid = true;
+
+    /**
+     * Tell if all the fields are valid.
+     *
+     * @return bool
+     */
+    public function areAllFieldsValid(){
+        return $this->allFieldsAreValid;
+    }
+
+    /* Data Validity -------------------------------------------------------*/
 
     /**
      *  Return true if the given email is valid.
@@ -50,9 +68,9 @@ class Validator
         $pattern =
             '/^[a-zA-Z' .
             $accentedChars .
-            ']+[a-zA-Z0-9' .
+            ']+[a-zA-Z0-9_.' .
             $accentedChars .
-            ']+$/';
+            '-]+$/';
         return preg_match($pattern, $name);
     }
 
@@ -195,46 +213,42 @@ class Validator
         return $data;
     }
 
+    /* Fields Validity -------------------------------------------------------*/
+
     /**
-     * Verify the validity of the field value, from a form.
+     * Verify the validity of the field, from a form.
      * if the value is valid true or false if not.
      *
      * @param mixed $fieldValue the field value, from a form
-     * @param string $fieldName the field name, from a form
-     * @return bool the validity of the field value
+     * @return string the validity of the field
      */
-    public function isFieldValueValid($fieldValue, $fieldName)
+    public function isFieldValid($fieldValue)
     {
         // verify if the field value, from the form is empty
         if (empty($fieldValue)) {
-            $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
-            return false;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
-        return true;
+        return VALID;
     }
 
     /**
-     * Verify the validity of the field value, from the price field
+     * Verify the validity of the field , from the price field
      * if the value is valid true or false if not.
      *
      * @param mixed $fieldValue the field value, from the price field
-     * @param string $fieldName the field name, from the price field
-     * @return bool the validity of the field value
+     * @return string the validity of the field
      */
-    public function isPriceFieldValid($fieldValue, $fieldName)
+    public function isPriceFieldValid($fieldValue)
     {
         $fieldValue = intval($fieldValue);
 
         // verify if the field value, from the form is empty
         if (empty($fieldValue) || $fieldValue == 0) {
-            $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
-            return false;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
-        return true;
+        return VALID;
     }
 
     /**
@@ -242,147 +256,100 @@ class Validator
      * if the value is valid true or false if not.
      *
      * @param mixed $fieldValue the field value, from the email field
-     * @param string $fieldName the field name, from the email field
-     * @return bool the validity of the field value
+     * @return string the validity of the field value
      */
-    public function isEmailFieldValid($fieldValue, $fieldName)
+    public function isEmailFieldValid($fieldValue)
     {
         // verify if the field value, from the form is empty
         if (empty($fieldValue) || !$this->isEmailValid($fieldValue)) {
-            $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
-            return false;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
-        return true;
+        return VALID;
     }
 
     /**
-     * Verify the validity of the field value, from the email field
+     * Verify the validity of the field, from the email field
      * if the value is valid true or false if not.
      *
      * @param mixed $fieldValue the field value, from the email field
-     * @param string $fieldName the field name, from the email field
-     * @return bool the validity of the field value
+     * @return string the validity of the field
      */
-    public function isFieldValueValidWithoutSpecialChars($fieldValue, $fieldName)
+    public function isFieldValidWithoutTags($fieldValue)
     {
         // verify if the field value, from the form is empty
         if (empty($fieldValue) || strip_tags($fieldValue) !== $fieldValue) {
-            $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
-            return false;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
-        return true;
+        return VALID;
     }
 
     /**
-     * Verify the validity of the field value, from the email field
+     * Verify the validity of the field, from the email field
      * if the value is valid true or false if not.
      *
      * @param mixed $fieldValue the field value, from the email field
-     * @param string $fieldName the field name, from the email field
-     * @return bool the validity of the field value
+     * @return string the validity of the field
      */
-    public function isNameFieldValid($fieldValue, $fieldName)
+    public function isNameFieldValid($fieldValue)
     {
         // verify if the field value, from the form is empty
         if (empty($fieldValue) || !$this->isNameValid($fieldValue)) {
-            $_SESSION[$fieldName . 'CSSValidityClass'] = INVALID;
-            return false;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        $_SESSION[$fieldName . 'CSSValidityClass'] = VALID;
-        return true;
+        return VALID;
     }
 
     /**
-     * Verify the validity of the password field value, from a form.
+     * Verify the validity of the password field, from a form.
      *
      * @param string $passwordHash The password field hash, from a form
      * @param string $passwordValue The password field value, from a form
-     * @param string $passwordName The password field name, from a form
-     * @return bool the validity of the password field value
+     * @return string the validity of the password field
      */
-    public function isPasswordsValueValid(
+    public function isPasswordFieldValid(
         $passwordHash,
-        $passwordValue,
-        $passwordName
+        $passwordValue
     ) {
-        $passwordIsValid = false;
-
         // verify if the password field value, from the form is empty
         if (
             empty($passwordHash) ||
             $passwordHash === self::EMPTY_PASSWORD_HASH ||
             strip_tags($passwordValue) !== $passwordValue
         ) {
-            $_SESSION[$passwordName . 'CSSValidityClass'] = INVALID;
-        } else {
-            $_SESSION[$passwordName . 'CSSValidityClass'] = VALID;
-            $passwordIsValid = true;
+            $this->allFieldsAreValid = false;
+            return INVALID;
         }
-
-        return $passwordIsValid;
+        return VALID;
     }
 
     /**
      * Verify the validity of the password fields value, from a form.
      *
      * @param string $passwordHash The password field hash, from a form
-     * @param string $passwordValue The password field value, from a form
-     * @param string $passwordName The password field name, from a form
      * @param string $confirmedPasswordHash The confirmed password field hash, from a form
      * @param string $confirmedPasswordValue The confirmed password field value, from a form
-     * @param string $confirmedPasswordName The confirmed password field name, from a form
      * @return bool the validity of the password fields value
      */
-    public function arePasswordsValueValid(
+    public function isConfirmedPasswordFieldValid(
         $passwordHash,
-        $passwordValue,
-        $passwordName,
         $confirmedPasswordHash,
-        $confirmedPasswordValue,
-        $confirmedPasswordName
+        $confirmedPasswordValue
     ) {
-        $passwordIsValid = false;
-        $confirmedPasswordIsValid = false;
+        // verify if the password is valid
+        $confirmedPasswordValidity = $this->isPasswordFieldValid(
+            $confirmedPasswordHash,
+            $confirmedPasswordValue
+        );
 
-        // verify if the password field value, from the form is empty
-        if (
-            empty($passwordHash) ||
-            $passwordHash === self::EMPTY_PASSWORD_HASH ||
-            strip_tags($passwordValue) !== $passwordValue
-        ) {
-            $_SESSION[$passwordName . 'CSSValidityClass'] = INVALID;
-        } else {
-            $_SESSION[$passwordName . 'CSSValidityClass'] = VALID;
-            $passwordIsValid = true;
+        // verify if correspond with the anther one
+        if ($confirmedPasswordHash !== $passwordHash) {
+            $this->allFieldsAreValid = false;
+            $confirmedPasswordValidity = INVALID;
         }
 
-        $p = strip_tags($passwordValue) !== $passwordValue;
-
-        // verify if the confirmed password field value, from the form is empty
-        if (
-            empty($confirmedPasswordHash) ||
-            $confirmedPasswordHash === self::EMPTY_PASSWORD_HASH ||
-            strip_tags($confirmedPasswordValue) !== $confirmedPasswordValue
-        ) {
-            $_SESSION[$confirmedPasswordName . 'CSSValidityClass'] = INVALID;
-        } else {
-            $_SESSION[$confirmedPasswordName . 'CSSValidityClass'] = VALID;
-            $confirmedPasswordIsValid = true;
-        }
-
-        // verify if the passwords corresponds
-        if ($passwordIsValid && $confirmedPasswordIsValid) {
-            if ($confirmedPasswordHash !== $passwordHash) {
-                $_SESSION[$confirmedPasswordName . 'CSSValidityClass'] = INVALID;
-                $confirmedPasswordIsValid = false;
-            }
-        }
-
-        return $passwordIsValid && $confirmedPasswordIsValid;
+        return $confirmedPasswordValidity;
     }
 }

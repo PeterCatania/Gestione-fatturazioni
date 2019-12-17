@@ -16,7 +16,7 @@
                                     Username
                                 </label>
                                 <input id="username-input" name="username" type="text" class="form-control mt-1 shadow-sm
-												<?= $_SESSION['usernameCSSValidityClass'] ?>" value="<?= $_SESSION['username'] ?>">
+												<?= $data['usernameCSSValidityClass'] ?>" value="<?= $data['username'] ?>">
                                 <div class="invalid-feedback very-small">
                                     Inserire username senza spazi e caratteri speciali
                                 </div>
@@ -28,7 +28,7 @@
                                     Email
                                 </label>
                                 <input id="email-input" name="email" type="email" class="form-control mt-1 shadow-sm
-												<?= $_SESSION['emailCSSValidityClass'] ?>" value="<?= $_SESSION['email'] ?>">
+												<?= $data['emailCSSValidityClass'] ?>" value="<?= $data['email'] ?>">
                                 <div class="invalid-feedback very-small">
                                     Inserire una email valida
                                 </div>
@@ -43,7 +43,7 @@
                                     Password
                                 </label>
                                 <input id="password-input" name="password" type="password" class="form-control mt-1 shadow-sm
-												<?= $_SESSION['passwordCSSValidityClass'] ?>" value="<?= $_SESSION['password'] ?>">
+												<?= $data['passwordCSSValidityClass'] ?>" value="<?= $data['password'] ?>">
                                 <div class="invalid-feedback very-small">
                                     Inserire una password valida
                                 </div>
@@ -55,7 +55,7 @@
                                     Conferma Password
                                 </label>
                                 <input id="confirmedPassword-input" name="confirmedPassword" type="password" class="form-control mt-1 shadow-sm
-												<?= $_SESSION['confirmedPasswordCSSValidityClass'] ?>" value="<?= $_SESSION['confirmedPassword'] ?>">
+												<?= $data['confirmedPasswordCSSValidityClass'] ?>" value="<?= $data['confirmedPassword'] ?>">
                                 <div class="invalid-feedback very-small">
                                     Inserire la stessa password
                                 </div>

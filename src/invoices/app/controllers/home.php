@@ -8,26 +8,40 @@
  */
 class Home extends Controller
 {
+    // The username and the email of the registration form,
+    // They will bee printed in their corrispettive fields
+    private $username = '';
+    private $password = '';
+
+    /**
+     * Contains names of CSS classes.
+     * This classes indicate if the registration inputs are valid or invalid.
+     * If the input is valid contains: "is-valid"
+     * If the input is not valid contains: "is-invalid"
+     * This variable indicate if the username or the password are valid or not.
+     */
+    private $usernameCSSValidityClass = '';
+    private $passwordCSSValidityClass = '';
+    private $usernameOrPasswordCSSValidityClass = '';
+
 	/**
 	 * Show the view of the controller.
 	 */
 	private function showView()
 	{
 		$this->header('Login', $this->controllerName);
-		$this->view('home/index');
+		$this->view(
+		    'home/index',
+            [
+                'username' => $this->username,
+                'password' => $this->password,
+                'usernameCSSValidityClass' => $this->usernameCSSValidityClass,
+                'passwordCSSValidityClass' => $this->passwordCSSValidityClass,
+                'usernameOrPasswordCSSValidityClass' => $this->usernameOrPasswordCSSValidityClass
+            ]
+        );
 		$this->footer();
 	}
-
-    /**
-     * Unset the session variables required for the default page of the controller.
-     */
-	private function unsetDefaultPageSessionVariables(){
-        unset($_SESSION['username']);
-        unset($_SESSION['password']);
-        unset($_SESSION['usernameCSSValidityClass']);
-        unset($_SESSION['passwordCSSValidityClass']);
-        unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-    }
 
 	/**
 	 * Method that comunicate with the default page.
@@ -36,21 +50,7 @@ class Home extends Controller
 	{
 		session_start();
 
-		// The username and the email of the registration form,
-		// They will bee printed in their corrispettive fields
-		$_SESSION['username'] = '';
-		$_SESSION['password'] = '';
 
-		/**
-		 * Contains names of CSS classes.
-		 * This classes indicate if the registration inputs are valid or invalid.
-		 * If the input is valid contains: "is-valid"
-		 * If the input is not valid contains: "is-invalid"
-		 * This variable indicate if the username or the password are valid or not.
-		 */
-		$_SESSION['usernameCSSValidityClass'] = '';
-		$_SESSION['passwordCSSValidityClass'] = '';
-		$_SESSION['usernameOrPasswordCSSValidityClass'] = '';
 
 		// require the default page
 		$this->showView();
@@ -69,32 +69,24 @@ class Home extends Controller
 			$validator = $this->model('Validator');
 
 			// get the validated username, from login form
-			$username = $validator->validateString($_POST['username']);
-
+			$this->username = $validator->validateString($_POST['username']);
 			// get the hash of the password, from login form
-			$password = hash(
+			$this->password = hash(
 				'sha256',
 				$_POST['password']
 			);
 
-			// the get field from the registration form are inserted in the Session
-			$_SESSION['username'] = $username;
-			$_SESSION['password'] = $validator->generalValidation($_POST['password']);
-
-			// tell if all the fields are valid
-			$allFieldAreValid = true;
-
 			// verify if the fields values are valid
-			$allFieldAreValid = $validator->isNameFieldValid($username, 'username') ? $allFieldAreValid : false;
-
+			$this->usernameCSSValidityClass = $validator->isNameFieldValid(
+			    $this->username
+            );
 			// verify if the passwords are valid
-			$allFieldAreValid = $validator->isPasswordsValueValid(
-				$password,
-				$_POST['password'],
-				'password'
-			) ? $allFieldAreValid : false;
+            $this->passwordCSSValidityClass = $validator->isPasswordFieldValid(
+                $this->password,
+                $_POST['password']
+            );
 
-			if ($allFieldAreValid) {
+			if ($validator->areAllFieldsValid()) {
 
 				// Import models
 				$userModel = $this->model('UserModel');
@@ -102,8 +94,8 @@ class Home extends Controller
 
 				// get the user with the same credentials from the login
 				$user = $userModel->getUserByUsernamePassword(
-					$username,
-					$password
+					$this->username,
+					$this->password
 				);
 
 				// if the query have find the user with the login credentials.
@@ -114,18 +106,15 @@ class Home extends Controller
 
 					// check if the user is enabled or not
 					if ($user->getEnabled()) {
-                        $this->unsetDefaultPageSessionVariables();
 						$this->redirectToPage('invoices');
 					} else {
-						unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-                        $this->unsetDefaultPageSessionVariables();
 						$this->redirectToPage('home', 'disableUser');
 					}
 				} else {
 					// get the administrator with the same credentials from the login
 					$administrator = $administratorModel->getAdministratorByUsernamePassword(
-						$username,
-						$password
+						$this->username,
+						$this->password
 					);
 
 					// if the query have find the administrator with the login credentials
@@ -134,11 +123,9 @@ class Home extends Controller
 						// save the administrator data in the session
 						$_SESSION[ADMINISTRATOR_SESSION_DATA] = $administrator;
 
-						unset($_SESSION['usernameOrPasswordCSSValidityClass']);
-                        $this->unsetDefaultPageSessionVariables();
 						$this->redirectToPage('invoices');
 					} else {
-						$_SESSION['usernameOrPasswordCSSValidityClass'] = INVALID;
+						$this->usernameOrPasswordCSSValidityClass = INVALID;
 						$this->showView();
 					}
 				}

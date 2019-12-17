@@ -51,6 +51,73 @@ class Invoices extends Controller
     private $isSaveModalInProcess = false;
 
     /**
+     * The invoice fields values from the form,
+     * Their values will be printed in their corrispettive fields before save
+     */
+    private $companyName = '';
+    private $companyStreet = '';
+    private $companyHouseNo = '';
+    private $companyCity = '';
+    private $companyNap = '';
+    private $companyTelephone = '';
+    private $companyEmail = '';
+    private $companySite = '';
+    private $productsId = [''];
+    private $productsDescription = [''];
+    private $productsPrice = [''];
+    private $productsSellDate = [''];
+    private $productsQuantity = [''];
+    private $clientId = '';
+    private $clientName = '';
+    private $clientSurname = '';
+    private $clientCompanyName = '';
+    private $clientStreet = '';
+    private $clientHouseNo = '';
+    private $clientEmail = '';
+    private $clientTelephone = '';
+    private $clientCity = '';
+    private $clientNap = '';
+    private $typologyId = '';
+    private $typologyName = '';
+    private $paymentDate = '';
+
+
+    /**
+     * Contains names of CSS classes.
+     * This classes indicate if the invoice fields are valid or invalid.
+     * If the input is valid contains: "is-valid"
+     * If the input is not valid contains: "is-invalid"
+     */
+    private $companyNameCSSValidityClass = '';
+    private $companyStreetCSSValidityClass = '';
+    private $companyHouseNoCSSValidityClass = '';
+    private $companyCityCSSValidityClass = '';
+    private $companyNapCSSValidityClass = '';
+    private $companyTelephoneCSSValidityClass = '';
+    private $companyEmailCSSValidityClass = '';
+    private $companySiteCSSValidityClass = '';
+    private $productsIdCSSValidityClass = '';
+    private $productsDescriptionCSSValidityClass = '';
+    private $productsPriceCSSValidityClass = '';
+    private $productsSellDateCSSValidityClass = '';
+    private $productsQuantityCSSValidityClass = '';
+    private $clientIdCSSValidityClass = '';
+    private $clientNameCSSValidityClass = '';
+    private $clientSurnameCSSValidityClass = '';
+    private $clientCompanyNameCSSValidityClass = '';
+    private $clientStreetCSSValidityClass = '';
+    private $clientHouseNoCSSValidityClass = '';
+    private $clientEmailCSSValidityClass = '';
+    private $clientTelephoneCSSValidityClass = '';
+    private $clientCityCSSValidityClass = '';
+    private $clientNapCSSValidityClass = '';
+    private $typologyIdCSSValidityClass = '';
+    private $typologyNameCSSValidityClass = '';
+    private $paymentDateCSSValidityClass = '';
+
+
+
+    /**
      * Show all the invoices from the database.
      *
      * @return void
@@ -62,10 +129,69 @@ class Invoices extends Controller
 
         // the array that contains the Invoice saved in the database.
         $invoices = $invoiceModel->getInvoices();
+        $invoiceNextId = $invoiceModel->getNextId();
 
         // require the users default page
         $this->header('Fatture', $this->controllerName);
-        $this->view('invoices/index',['invoices' => $invoices]);
+        $this->view(
+            'invoices/index',
+            [
+                'invoices' => $invoices,
+                'invoiceNextId' => $invoiceNextId,
+                'companyName' => $this->companyName,
+                'companyStreet' => $this->companyStreet,
+                'companyHouseNo' => $this->companyHouseNo,
+                'companyCity' => $this->companyCity,
+                'companyNap' => $this->companyNap,
+                'companyTelephone' => $this->companyTelephone,
+                'companyEmail' => $this->companyEmail,
+                'companySite' => $this->companySite,
+                'productsId' => $this->productsId,
+                'productsDescription' => $this->productsDescription,
+                'productsPrice' => $this->productsPrice,
+                'productsSellDate' => $this->productsSellDate,
+                'productsQuantity' => $this->productsQuantity,
+                'clientId' => $this->clientId,
+                'clientName' => $this->clientName,
+                'clientSurname' => $this->clientSurname,
+                'clientCompanyName' => $this->clientCompanyName,
+                'clientStreet' => $this->clientStreet,
+                'clientHouseNo' => $this->clientHouseNo,
+                'clientEmail' => $this->clientEmail,
+                'clientTelephone' => $this->clientTelephone,
+                'clientCity' => $this->clientCity,
+                'clientNap' => $this->clientNap,
+                'typologyId' => $this->typologyId,
+                'typologyName' => $this->typologyName,
+                'paymentDate' => $this->paymentDate,
+                'companyNameCSSValidityClass' => $this->companyNameCSSValidityClass,
+                'companyStreetCSSValidityClass' => $this->companyStreetCSSValidityClass,
+                'companyHouseNoCSSValidityClass' => $this->companyHouseNoCSSValidityClass,
+                'companyCityCSSValidityClass' => $this->companyCityCSSValidityClass,
+                'companyNapCSSValidityClass' => $this->companyNapCSSValidityClass,
+                'companyTelephoneCSSValidityClass' => $this->companyTelephoneCSSValidityClass,
+                'companyEmailCSSValidityClass' => $this->companyEmailCSSValidityClass,
+                'companySiteCSSValidityClass' => $this->companySiteCSSValidityClass,
+                'productsIdCSSValidityClass' => $this->productsIdCSSValidityClass,
+                'productsDescriptionCSSValidityClass' => $this->productsDescriptionCSSValidityClass,
+                'productsPriceCSSValidityClass' => $this->productsPriceCSSValidityClass,
+                'productsSellDateCSSValidityClass' => $this->productsSellDateCSSValidityClass,
+                'productsQuantityCSSValidityClass' => $this->productsQuantityCSSValidityClass,
+                'clientIdCSSValidityClass' => $this->clientIdCSSValidityClass,
+                'clientNameCSSValidityClass' => $this->clientNameCSSValidityClass,
+                'clientSurnameCSSValidityClass' => $this->clientSurnameCSSValidityClass,
+                'clientCompanyNameCSSValidityClass' => $this->clientCompanyNameCSSValidityClass,
+                'clientStreetCSSValidityClass' => $this->clientStreetCSSValidityClass,
+                'clientHouseNoCSSValidityClass' => $this->clientHouseNoCSSValidityClass,
+                'clientEmailCSSValidityClass' => $this->clientEmailCSSValidityClass,
+                'clientTelephoneCSSValidityClass' => $this->clientTelephoneCSSValidityClass,
+                'clientCityCSSValidityClass' => $this->clientCityCSSValidityClass,
+                'clientNapCSSValidityClass' => $this->clientNapCSSValidityClass,
+                'typologyIdCSSValidityClass' => $this->typologyIdCSSValidityClass,
+                'typologyNameCSSValidityClass' => $this->typologyNameCSSValidityClass,
+                'paymentDateCSSValidityClass' => $this->paymentDateCSSValidityClass
+            ]
+        );
         $this->footer();
 
         // Import the required scripts
@@ -97,57 +223,6 @@ class Invoices extends Controller
 		// prevents that anyone that is not logged enter this page
 		$this->redirectToHomePageIfAnyoneIsLogged();
 
-        /**
-         * The invoice fields values from the form,
-         * Their values will be printed in their corrispettive fields before save
-         */
-        $_SESSION['productsId'] = '';
-        $_SESSION['productsDescription'] = '';
-        $_SESSION['productsPrice'] = '';
-        $_SESSION['productsSellDate'] = '';
-        $_SESSION['productsQuantity'] = '';
-        $_SESSION['clientId'] = '';
-        $_SESSION['clientName'] = '';
-        $_SESSION['clientSurname'] = '';
-        $_SESSION['companyName'] = '';
-        $_SESSION['clientStreet'] = '';
-        $_SESSION['clientHouseNo'] = '';
-        $_SESSION['clientEmail'] = '';
-        $_SESSION['clientTelephone'] = '';
-        $_SESSION['clientCity'] = '';
-        $_SESSION['clientNap'] = '';
-        $_SESSION['typologyId'] = '';
-        $_SESSION['typologyName'] = '';
-        $_SESSION['paymentDate'] = '';
-
-
-        /**
-         * Contains names of CSS classes.
-         * This classes indicate if the invoice fields are valid or invalid.
-         * If the input is valid contains: "is-valid"
-         * If the input is not valid contains: "is-invalid"
-         */
-        $_SESSION['descriptionCSSValidityClass'] = '';
-        $_SESSION['priceCSSValidityClass'] = '';
-        $_SESSION['productsId'] = '';
-        $_SESSION['productsDescription'] = '';
-        $_SESSION['productsPrice'] = '';
-        $_SESSION['productsSellDate'] = '';
-        $_SESSION['productsQuantity'] = '';
-        $_SESSION['clientId'] = '';
-        $_SESSION['clientName'] = '';
-        $_SESSION['clientSurname'] = '';
-        $_SESSION['companyName'] = '';
-        $_SESSION['clientStreet'] = '';
-        $_SESSION['clientHouseNo'] = '';
-        $_SESSION['clientEmail'] = '';
-        $_SESSION['clientTelephone'] = '';
-        $_SESSION['clientCity'] = '';
-        $_SESSION['clientNap'] = '';
-        $_SESSION['typologyId'] = '';
-        $_SESSION['typologyName'] = '';
-        $_SESSION['paymentDate'] = '';
-
 		// show the invoices
         $this->showInvoices();
 	}
@@ -176,85 +251,78 @@ class Invoices extends Controller
              * get the validated description and price,
              * from the new invoice form fields
              */
-            $productsId = $_POST['productsId'];
-            $productsDescription = $_POST['productsDescription'];
-            $productsPrice = $_POST['productsPrice'];
-            $productsSellDate = $_POST['productsSellDate'];
-            $productsQuantity = $_POST['productsQuantity'];
-            $clientId = $validator->validateInt($_POST['clientId']);
-            $clientName = $validator->validateName($_POST['clientName']);
-            $clientSurname = $validator->validateName($_POST['clientSurname']);
-            $companyName = $validator->validateName($_POST['companyName']);
-            $clientStreet = $validator->validateName($_POST['clientStreet']);
-            $clientHouseNo = $validator->validateString($_POST['clientHouseNo']);
-            $clientEmail = $validator->validateEmail($_POST['clientEmail']);
-            $clientTelephone = $validator->validateTelephoneNumber($_POST['clientTelephone']);
-            $clientCity = $validator->validateName($_POST['clientCity']);
-            $clientNap = $validator->validateInt($_POST['clientNap']);
-            $typologyId = $validator->validateInt($_POST['typologyId']);
-            $typologyName = $validator->validateName($_POST['typologyName']);
-            $paymentDate = $validator->validateString($_POST['paymentDate']);
-
-            // get the validated data from the form that contains the information about a new invoice
-            $_SESSION['productsId'] = $productsId;
-            $_SESSION['productsDescription'] = $productsDescription;
-            $_SESSION['productsPrice'] = $productsPrice;
-            $_SESSION['productsSellDate'] = $productsSellDate;
-            $_SESSION['productsQuantity'] = $productsQuantity;
-            $_SESSION['clientId'] = $clientId;
-            $_SESSION['clientName'] = $clientName;
-            $_SESSION['clientSurname'] = $clientSurname;
-            $_SESSION['companyName'] = $companyName;
-            $_SESSION['clientStreet'] = $clientStreet;
-            $_SESSION['clientHouseNo'] = $clientHouseNo;
-            $_SESSION['clientEmail'] = $clientEmail;
-            $_SESSION['clientTelephone'] = $clientTelephone;
-            $_SESSION['clientCity'] = $clientCity;
-            $_SESSION['clientNap'] = $clientNap;
-            $_SESSION['typologyId'] = $typologyId;
-            $_SESSION['typologyName'] = $typologyName;
-            $_SESSION['paymentDate'] = $paymentDate;
-
-            // tell if all the fields are valid
-            $allFieldAreValid = true;
+            $this->companyName = $validator->validateName($_POST['companyName']);
+            $this->companyStreet = $validator->validateName($_POST['companyStreet']);
+            $this->companyHouseNo = $validator->validateString($_POST['companyHouseNo']);
+            $this->companyCity = $validator->validateName($_POST['companyCity']);
+            $this->companyNap = $validator->validateInt($_POST['companyNap']);
+            $this->companyTelephone = $validator->validateString($_POST['companyTelephone']);
+            $this->companyEmail = $validator->validateEmail($_POST['companyEmail']);
+            $this->companySite = $validator->validateString($_POST['companySite']);
+            $this->productsId = $_POST['productsId'];
+            $this->productsDescription = $_POST['productsDescription'];
+            $this->productsPrice = $_POST['productsPrice'];
+            $this->productsSellDate = $_POST['productsSellDate'];
+            $this->productsQuantity = $_POST['productsQuantity'];
+            $this->clientId = $validator->validateInt($_POST['clientId']);
+            $this->clientName = $validator->validateName($_POST['clientName']);
+            $this->clientSurname = $validator->validateName($_POST['clientSurname']);
+            $this->clientCompanyName = $validator->validateName($_POST['clientCompanyName']);
+            $this->clientStreet = $validator->validateCapitalizedWords($_POST['clientStreet']);
+            $this->clientHouseNo = $validator->validateString($_POST['clientHouseNo']);
+            $this->clientEmail = $validator->validateEmail($_POST['clientEmail']);
+            $this->clientTelephone = $validator->validateTelephoneNumber($_POST['clientTelephone']);
+            $this->clientCity = $validator->validateName($_POST['clientCity']);
+            $this->clientNap = $validator->validateInt($_POST['clientNap']);
+            $this->typologyId = $validator->validateInt($_POST['typologyId']);
+            $this->typologyName = $validator->validateName($_POST['typologyName']);
+            //$paymentDate = $validator->validateString($_POST['paymentDate']);
 
             // verify if the fields values are valid
-            $allFieldAreValid = $validator->isFieldValueValid($clientName, 'description') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isNameFieldValid($clientSurname, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isNameFieldValid($companyName, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->validateCapitalizedWords($clientStreet, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid($clientHouseNo, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isEmailFieldValid($clientEmail, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid($clientTelephone, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isNameFieldValid($clientCity, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid($clientNap, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isNameFieldValid($typologyName, 'price') ? $allFieldAreValid : false;
-            $allFieldAreValid = $validator->isFieldValueValid($paymentDate, 'price') ? $allFieldAreValid : false;
+            $this->companyNameCSSValidityClass = $validator->isNameFieldValid($this->companyName);
+            $this->companyStreetCSSValidityClass = $validator->isNameFieldValid($this->companyStreet);
+            $this->companyHouseNoCSSValidityClass= $validator->isFieldValidWithoutTags($this->companyHouseNo);
+            $this->companyCityCSSValidityClass = $validator->isNameFieldValid($this->companyCity);
+            $this->companyNapCSSValidityClass = $validator->isFieldValid($this->companyNap );
+            $this->companyTelephoneCSSValidityClass = $validator->isFieldValidWithoutTags($this->companyTelephone);
+            $this->companyEmailCSSValidityClass = $validator->isEmailFieldValid($this->companyEmail);
+            $this->companySiteCSSValidityClass = $validator->isFieldValidWithoutTags($this->companySite);
+            $this->clientNameCSSValidityClass = $validator->isNameFieldValid($this->clientName);
+            $this->clientSurnameCSSValidityClass = $validator->isNameFieldValid($this->clientSurname);
+            $this->clientCompanyNameCSSValidityClass = $validator->isNameFieldValid($this->clientCompanyName);
+            $this->clientStreetCSSValidityClass = $validator->isFieldValidWithoutTags($this->clientStreet);
+            $this->clientHouseNoCSSValidityClass = $validator->isFieldValidWithoutTags($this->clientHouseNo);
+            $this->clientEmailCSSValidityClass = $validator->isEmailFieldValid($this->clientEmail);
+            $this->clientTelephoneCSSValidityClass = $validator->isFieldValidWithoutTags($this->clientTelephone);
+            $this->clientCityCSSValidityClass = $validator->isNameFieldValid($this->clientCity);
+            $this->clientNapCSSValidityClass = $validator->isFieldValid($this->clientNap);
+            $this->typologyNameCSSValidityClass = $validator->isNameFieldValid($this->typologyName);
+            //$allFieldAreValid = $validator->isFieldValueValid($paymentDate, 'price') ? $allFieldAreValid : false;
 
-            if ($allFieldAreValid) {
+            if ($validator->areAllFieldsValid()) {
                 // instance a new object of the model class "invoicesModel"
                 $invoicesModel = $this->model("InvoiceModel");
 
                 // insert the new invoice in the database
                 $invoicesModel->saveInvoice(
-                    $productsId,
-                    $productsDescription,
-                    $productsPrice,
-                    $productsSellDate,
-                    $productsQuantity,
-                    $clientId,
-                    $clientName,
-                    $clientSurname,
-                    $companyName,
-                    $clientStreet,
-                    $clientHouseNo,
-                    $clientEmail,
-                    $clientTelephone,
-                    $clientCity,
-                    $clientNap,
-                    $typologyId,
-                    $typologyName,
-                    $paymentDate
+                    $this->productsId,
+                    $this->productsDescription,
+                    $this->productsPrice,
+                    $this->productsSellDate,
+                    $this->productsQuantity,
+                    $this->clientId,
+                    $this->clientName,
+                    $this->clientSurname,
+                    $this->clientCompanyName,
+                    $this->clientStreet,
+                    $this->clientHouseNo,
+                    $this->clientEmail,
+                    $this->clientTelephone,
+                    $this->clientCity,
+                    $this->clientNap,
+                    $this->typologyId,
+                    $this->typologyName,
+                    null
                 );
 
                 // tell the save is not in progress
