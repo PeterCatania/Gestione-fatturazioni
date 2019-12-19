@@ -163,7 +163,7 @@ class InvoiceTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('print_no', 'PrintNo', 'INTEGER', true, null, null);
-        $this->addColumn('payment_date', 'PaymentDate', 'DATE', true, null, null);
+        $this->addColumn('payment_date', 'PaymentDate', 'DATE', false, null, null);
         $this->addColumn('creation_date', 'CreationDate', 'DATE', true, null, null);
         $this->addColumn('status', 'Status', 'VARCHAR', true, 7, null);
         $this->addColumn('callback', 'Callback', 'TINYINT', true, null, null);

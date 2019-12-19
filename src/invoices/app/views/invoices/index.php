@@ -324,6 +324,7 @@
 
                 <h3 class="mb-3 underlined-title">Lista Fatture</h3>
 
+                <?php if(!isset($_SESSION[USER_SESSION_DATA])) : ?>
                 <div class="row">
                     <!-- Button trigger modal -->
                     <button id="b-save-modal-invoice" type="button" class="btn btn-primary btn-wide mr-2 ml-3" data-toggle="modal" data-target="#save-modal-invoice">
@@ -331,12 +332,15 @@
                         Aggiungi
                     </button>
                 </div>
+                <?php endif; ?>
                 <!-- List of invoices -->
                 <div class="table-responsive">
                     <table class="table table-striped mt-md-4 mt-2" class="col-12">
                         <thead class="thead-dark">
                         <tr>
-                            <th class="mr-auto" scope="col"></th>
+                            <?php if(!isset($_SESSION[USER_SESSION_DATA])) : ?>
+                                <th class="mr-auto" scope="col"></th>
+                            <?php endif; ?>
                             <th class="d-none">Id</th>
                             <th scope="col">Tipologia</th>
                             <th scope="col">Creata il</th>
@@ -351,6 +355,7 @@
                                 $id = $invoice->getId();
                                 ?>
                                 <tr id="<?= "tr-invoice-" . $id ?>">
+                                    <?php if(!isset($_SESSION[USER_SESSION_DATA])) : ?>
                                     <td class="mr-auto pl-0">
                                         <div class="btn-group">
                                             <button class="btn-icon icon-save mr-2 ml-2" type="button" value="<?= $id ?>">
@@ -364,6 +369,7 @@
                                             </button>
                                         </div>
                                     </td>
+                                    <?php endif; ?>
                                     <td class="d-none">
                                         <input id="id-invoice-<?= $id ?>" class="input-table" value="<?= $id ?>" disabled>
                                     </td>
@@ -371,13 +377,13 @@
                                         <input id="typology-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getTypology()->getName() ?>" disabled>
                                     </td>
                                     <td>
-                                        <input id="creationDate-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getCreationDate() ?>" disabled>
+                                        <input id="creationDate-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getCreationDate()->format('d m Y') ?>" disabled>
                                     </td>
                                     <td>
-                                        <input id="paymentDate-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getPaymentDate() ?>" disabled>
+                                        <input id="paymentDate-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getPaymentDate()->format('d m Y') ?>" disabled>
                                     </td>
                                     <td>
-                                        <input id="printNo-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getPintNo() ?>" disabled>
+                                        <input id="printNo-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="<?= $invoice->getPrintNo() ?>" disabled>
                                     </td>
                                     <td>
                                         <input id="amount-invoice-<?= $id ?>" class="input-table form-control input-sm" type="text" value="" disabled>

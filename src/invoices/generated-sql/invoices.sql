@@ -130,7 +130,7 @@ CREATE TABLE `invoice`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `print_no` INTEGER NOT NULL,
-    `payment_date` DATE NOT NULL,
+    `payment_date` DATE,
     `creation_date` DATE NOT NULL,
     `status` VARCHAR(7) NOT NULL,
     `callback` TINYINT NOT NULL,

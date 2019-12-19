@@ -10,7 +10,7 @@ class Registration extends Controller
 {
     /**
      * The user registration fields values from the form,
-     * Their values will be printed in their corrispettive fields before save
+     * Their values will be printed in their corrective fields before save
      */
     private $username = '';
     private $email = '';
@@ -33,44 +33,59 @@ class Registration extends Controller
      */
     private function showView(){
         $this->header('Registrazione', $this->controllerName);
-        $this->view('registration/index');
+        $this->view(
+            'registration/index',
+            [
+                'username' => $this->username,
+                'email' => $this->email,
+                'password' => $this->password,
+                'confirmedPassword' => $this->confirmedPassword,
+                'usernameCSSValidityClass' => $this->usernameCSSValidityClass,
+                'emailCSSValidityClass' => $this->emailCSSValidityClass,
+                'passwordCSSValidityClass' => $this->passwordCSSValidityClass,
+                'confirmedPasswordCSSValidityClass' => $this->confirmedPasswordCSSValidityClass
+            ]
+        );
         $this->footer();
     }
 
-	/**
-	 * Method that comunicate with the default page.
-	 */
-	public function index()
-	{
-		session_start(); // important!
+    /**
+     * Method that communicate with the default page.
+     */
+    public function index()
+    {
+        session_start(); // important!
         $this->showView();
-	}
+    }
 
-	/**
-	 * Effectuate the registration, and redirect to the next view.
-	 */
-	public function register()
-	{
-		session_start(); // important!
+    /**
+     * Effectuate the registration, and redirect to the next view.
+     */
+    public function register()
+    {
+        session_start(); // important!
 
-		// effectuate the registration, if is submit a POST request
-		if (isset($_POST['register'])) {
-			// import the Validator Model class, and initialize a new instance
-			$validator = $this->model('Validator');
+        // effectuate the registration, if is submit a POST request
+        if (isset($_POST['register'])) {
+            // import the Validator Model class, and initialize a new instance
+            $validator = $this->model('Validator');
 
-			// get the validated data from the form that contains the information about a new user
-			$this->username = $validator->validateString($_POST['username']);
+            // get the validated data from the form that contains the information about a new user
+            $this->username = $validator->validateString($_POST['username']);
             $this->email = $validator->validateEmail($_POST['email']);
 
-			// get the hash of the password and it's confirmation from the form that contains the information about a new user
-            $this->password = hash(
-			    'sha256',
+            // get the hash of the password and it's confirmation from the form that contains the information about a new user
+            $passwordHash = hash(
+                'sha256',
                 $_POST['password']
             );
-            $this->confirmedPassword = hash(
-			    'sha256',
+            $confirmedPasswordHash = hash(
+                'sha256',
                 $_POST['confirmedPassword']
             );
+
+            $this->password = $_POST['password'];
+            $this->confirmedPassword = $_POST['confirmedPassword'];
 
             // verify if the fields values are valid
             $this->usernameCSSValidityClass = $validator->isNameFieldValid(
@@ -82,26 +97,26 @@ class Registration extends Controller
 
             // verify if the passwords are valid
             $this->passwordCSSValidityClass = $validator->isPasswordFieldValid(
-                $this->password,
+                $passwordHash,
                 $_POST['password']
             );
             $this->confirmedPasswordCSSValidityClass = $validator->isConfirmedPasswordFieldValid(
-                $this->password,
-                $this->confirmedPassword,
+                $passwordHash,
+                $confirmedPasswordHash,
                 $_POST['confirmedPassword']
             );
 
-			if ($validator->areAllFieldsValid()) {
+            if ($validator->areAllFieldsValid()) {
                 // instance a new object of the model class "UserModel"
                 $userModel = $this->model("UserModel");
 
                 // insert the new user in the database
-                $userModel->saveUser($this->username, $this->password, $this->email, 0);
+                $userModel->saveUser($this->username, $passwordHash, $this->email, 0);
 
                 $this->redirectToPage('home');
-			} else {
+            } else {
                 $this->showView();
-			}
-		}
-	}
+            }
+        }
+    }
 }

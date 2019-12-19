@@ -6,8 +6,8 @@ $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'classname' => 'Propel\\Runtime\\Connection\\ConnectionWrapper',
   'dsn' => 'mysql:host=localhost;dbname=invoices',
-  'user' => 'peter',
-  'password' => 'Password&1',
+  'user' => 'root',
+  'password' => 'Retipscience',
   'attributes' =>
   array (
     'ATTR_EMULATE_PREPARES' => false,

@@ -107,12 +107,12 @@ class UserTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
-    protected static $fieldNames = array(
-        self::TYPE_PHPNAME       => array('Id', 'Username', 'Password', 'Email', 'Enabled',),
-        self::TYPE_CAMELNAME     => array('id', 'username', 'password', 'email', 'enabled',),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_USERNAME, UserTableMap::COL_PASSWORD, UserTableMap::COL_EMAIL, UserTableMap::COL_ENABLED,),
-        self::TYPE_FIELDNAME     => array('id', 'username', 'password', 'email', 'enabled',),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4,)
+    protected static $fieldNames = array (
+        self::TYPE_PHPNAME       => array('Id', 'Username', 'Password', 'Email', 'Enabled', ),
+        self::TYPE_CAMELNAME     => array('id', 'username', 'password', 'email', 'enabled', ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_USERNAME, UserTableMap::COL_PASSWORD, UserTableMap::COL_EMAIL, UserTableMap::COL_ENABLED, ),
+        self::TYPE_FIELDNAME     => array('id', 'username', 'password', 'email', 'enabled', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -121,12 +121,12 @@ class UserTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
-    protected static $fieldKeys = array(
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Username' => 1, 'Password' => 2, 'Email' => 3, 'Enabled' => 4,),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'username' => 1, 'password' => 2, 'email' => 3, 'enabled' => 4,),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_USERNAME => 1, UserTableMap::COL_PASSWORD => 2, UserTableMap::COL_EMAIL => 3, UserTableMap::COL_ENABLED => 4,),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'username' => 1, 'password' => 2, 'email' => 3, 'enabled' => 4,),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4,)
+    protected static $fieldKeys = array (
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Username' => 1, 'Password' => 2, 'Email' => 3, 'Enabled' => 4, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'username' => 1, 'password' => 2, 'email' => 3, 'enabled' => 4, ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_USERNAME => 1, UserTableMap::COL_PASSWORD => 2, UserTableMap::COL_EMAIL => 3, UserTableMap::COL_ENABLED => 4, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'username' => 1, 'password' => 2, 'email' => 3, 'enabled' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -157,7 +157,8 @@ class UserTableMap extends TableMap
      * Build the RelationMap objects for this table relationships
      */
     public function buildRelations()
-    { } // buildRelations()
+    {
+    } // buildRelations()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -196,9 +197,11 @@ class UserTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[$indexType == TableMap::TYPE_NUM
-            ? 0 + $offset
-            : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+        return (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 0 + $offset
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
+        ];
     }
 
     /**
@@ -346,8 +349,8 @@ class UserTableMap extends TableMap
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-    public static function doDelete($values, ConnectionInterface $con = null)
-    {
+     public static function doDelete($values, ConnectionInterface $con = null)
+     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
@@ -408,8 +411,8 @@ class UserTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from User object
         }
 
-        if ($criteria->containsKey(UserTableMap::COL_ID) && $criteria->keyContainsValue(UserTableMap::COL_ID)) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_ID . ')');
+        if ($criteria->containsKey(UserTableMap::COL_ID) && $criteria->keyContainsValue(UserTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTableMap::COL_ID.')');
         }
 
 
@@ -422,6 +425,7 @@ class UserTableMap extends TableMap
             return $query->doInsert($con);
         });
     }
+
 } // UserTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //

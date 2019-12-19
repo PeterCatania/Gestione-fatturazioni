@@ -17,7 +17,7 @@ ini_set("display_errors", 1);
 /**
  * Define the URL of the site
  */
-define('URL', 'http://localhost/Gestione-fatturazioni/src/invoices/');
+define('URL', 'http://localhost:55777/Gestione-fatturazioni/src/invoices/');
 
 /**
  * Define the ROOT of the site
